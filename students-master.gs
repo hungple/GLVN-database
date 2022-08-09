@@ -1,4 +1,4 @@
-var VERSION = "20220729"
+var RELEASE = "20220810"
 
 // Std_VGz6v3
 var idCol               = 1;
@@ -47,13 +47,9 @@ function onOpen() {
   var sheet = SpreadsheetApp.getActiveSpreadsheet();
   var entries = [
     {
-      name : "Share GL classes (gl-classes)",
-      functionName : "shareClasses_gl"
+      name : "Share classes (gl-classes/vn-classes)",
+      functionName : "shareClasses"
     },
-    {
-      name : "Share VN classes (vn-classes)",
-      functionName : "shareClasses_vn"
-    },,
     {
       name : "1 - Update student final points (Std)",
       functionName : "updateFinalPoints"
@@ -67,12 +63,8 @@ function onOpen() {
       functionName : "updateConfirmationInfo"
     },
     {
-      name : "4a - Un-share GL classes (gl-classes)",
-      functionName : "unShareClasses_gl"
-    },
-    {
-      name : "4b - Un-share VN classes (vn-classes)",
-      functionName : "unShareClasses_vn"
+      name : "4 - Un-share classes (gl-classes/vn-classes)",
+      functionName : "unShareClasses"
     },
     {
       name : "5 - Save students into students-past folder",
@@ -82,8 +74,12 @@ function onOpen() {
       name : "6 - Update student classes for new registration (Std)",
       functionName : "updateClassesForNewReg"
     },
+    {
+      name : "7 - Clear data in external classes (gl-classes/vn-classes)",
+      functionName : "clearDataExternalClasses"
+    },
     // DO NOT DELETE THESE TWO FUNCTIONS
-    ,{
+    {
      name : "Update class sheets in this student-master (gl-classes/vn-classes : root only)",
      functionName : "updateSheetsInThisSpreadSheet"
     },
@@ -91,26 +87,26 @@ function onOpen() {
      name : "Clone classes using GL1A or VN1A (gl-classes/vn-classes : root only)",
      functionName : "cloneClassesUsingGL1AorVN1A"
     },
-    // {
-    //  name : "Update external class spreadSheets (gl-classes/vn-classes : root only)",
-    //  functionName : "updateExternalClassSpreadSheets"
-    // },
+    {
+     name : "Update external class spreadSheets (gl-classes/vn-classes : root only)",
+     functionName : "updateExternalClassSpreadSheets"
+    },
 
     {
-      name : "Version: " + VERSION,
-      functionName : "showversion"
+      name : "Release: " + RELEASE,
+      functionName : "showRelease"
     }
 
     ];
   sheet.addMenu("GLVN", entries);
 };
 
-function showversion() {
+function showRelease() {
   var ui = SpreadsheetApp.getUi();
 
   var response = ui.alert(
       'Information!!!',
-      'Version: ' + VERSION,
+      'Release: ' + RELEASE,
       ui.ButtonSet.OK);
 }
 
@@ -162,7 +158,7 @@ function getExternalClassSpreadsheetId(clsName, clsFolder) {
 }
 
 function getReportCardsFolderId(clsName, clsFolder) {
-  var folders = clsFolder.getFoldersByName(clsName + "-report-cards");
+  var folders = clsFolder.getFoldersByName(clsName + "-Report-Cards");
   if (folders.hasNext()) {
     var folder = folders.next();
     return folder.getId();
@@ -179,7 +175,7 @@ function getReportCardsFolderId(clsName, clsFolder) {
 // Share classes to the teachers
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-function shareClasses_gl() {
+function shareClasses() {
   var ui = SpreadsheetApp.getUi(); // Same variations.
 
   var response = ui.alert(
@@ -192,19 +188,6 @@ function shareClasses_gl() {
     var glReportCardTemplateId = getStr("GL_REPORT_CARD_TEMPLATE_ID");
     var classLibraryId         = getStr("CLASS_LIBRARY_ID");
     shareClassesImpl("gl-classes", glReportCardTemplateId, classLibraryId, true);
-  }
-}
-
-function shareClasses_vn() {
-  var ui = SpreadsheetApp.getUi(); // Same variations.
-
-  var response = ui.alert(
-      'Warning!!!',
-      'Do you want to share classes to the teachers?',
-      ui.ButtonSet.YES_NO);
-
-  // Process the user's response.
-  if (response == ui.Button.YES) {
     var vnReportCardTemplateId = getStr("VN_REPORT_CARD_TEMPLATE_ID");
     var classLibraryId         = getStr("CLASS_LIBRARY_ID");
     shareClassesImpl("vn-classes", vnReportCardTemplateId, classLibraryId, true);
@@ -508,11 +491,10 @@ function updateConfirmationInfoImpl() {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-// 4a - Un-share GL classes to the teachers
-// 4b - Un-share VN classes to the teachers
+// 4 - Un-share GL classes to the teachers
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-function unShareClasses_gl() {
+function unShareClasses() {
   var ui = SpreadsheetApp.getUi(); // Same variations.
 
   var response = ui.alert(
@@ -525,25 +507,12 @@ function unShareClasses_gl() {
     var glReportCardTemplateId = getStr("GL_REPORT_CARD_TEMPLATE_ID");
     var classLibraryId         = getStr("CLASS_LIBRARY_ID");
     shareClassesImpl("gl-classes", glReportCardTemplateId, classLibraryId, false);
-  }
-}
-
-
-function unShareClasses_vn() {
-  var ui = SpreadsheetApp.getUi(); // Same variations.
-
-  var response = ui.alert(
-      'Warning!!!',
-      'Do you want to stop sharing classes from the teachers?',
-      ui.ButtonSet.YES_NO);
-
-  // Process the user's response.
-  if (response == ui.Button.YES) {
     var vnReportCardTemplateId = getStr("VN_REPORT_CARD_TEMPLATE_ID");
     var classLibraryId         = getStr("CLASS_LIBRARY_ID");
     shareClassesImpl("vn-classes", vnReportCardTemplateId, classLibraryId, false);
   }
 }
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -696,6 +665,71 @@ function updateClassesForNewRegImpl() {
 
 
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// 7 - Clear data in external classes
+//
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+function clearDataExternalClasses() {
+  var ui = SpreadsheetApp.getUi(); // Same variations.
+
+  var response = ui.alert(
+      'Warning!!!',
+      'Do you want to clear data in external classes?',
+      ui.ButtonSet.YES_NO);
+
+  // Process the user's response.
+  if (response == ui.Button.YES) {
+    clearDataExternalClassesImpl("gl-classes");
+    clearDataExternalClassesImpl("vn-classes");
+  }
+}
+
+
+function clearDataExternalClassesImpl(sheetName) {
+
+
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetName);
+  var range = sheet.getRange(2, 1, 25, 15); //row, col, numRows, numCols
+
+  var clsName, action, clsFolder;
+
+  // iterate through all cells in the range
+  for (var cellRow = 1; cellRow <= range.getHeight(); cellRow++) {
+    clsName = range.getCell(cellRow, clsNameCol).getValue();
+    if( clsName == "")
+      break;
+
+    var actionCell = range.getCell(cellRow, actionCol);
+    action = actionCell.getValue();
+
+    if(action == 'x') {
+      var folderId = range.getCell(cellRow, clsFolderIdCol).getValue();
+      clsFolder = DriveApp.getFolderById(folderId);
+
+      // Open target class spreadsheet
+      var classId = getExternalClassSpreadsheetId(clsName, clsFolder);
+      var tss = SpreadsheetApp.openById(classId);
+
+      var delRange = tss.getSheetByName("attendance-HK1").getRange(3,6,60,20); //row, col, numRows, numCols
+      delRange.clearContent();
+      delRange = tss.getSheetByName("attendance-HK2").getRange(3,6,60,20); //row, col, numRows, numCols
+      delRange.clearContent();
+      delRange = tss.getSheetByName("grades").getRange(3,7,60,20); //row, col, numRows, numCols
+      delRange.clearContent();
+      delRange = tss.getSheetByName("honor-roll").getRange(3,6,20,1); //row, col, numRows, numCols
+      delRange.clearContent();
+      tss.getSheetByName("honor-roll").getRange("F3:F3").getCell(1, 1).setValue("1");
+      tss.getSheetByName("honor-roll").getRange("F4:F4").getCell(1, 1).setValue("2");
+      tss.getSheetByName("honor-roll").getRange("F5:F5").getCell(1, 1).setValue("3");
+      tss.getSheetByName("honor-roll").getRange("F6:F6").getCell(1, 1).setValue("4");
+
+      actionCell.setValue('');
+    }
+  }
+};
+
+
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -757,23 +791,23 @@ function updateSheetsInThisSpreadSheet_ClassSheet(sheet, clsName, clsFolder) {
   sheet.getRange("A1:A1").getCell(1, 1).setValue(clsName);
 
   var newValue
-  if(clsName.substr(0,2) == "GL") { // GL class sheet
-    newValue = `=query(studentsclass!1:902, "select A,B,C,D,E,K,L,N,O,V,U,S,Q where " & if(left(A1,1)="G","G","I") & "=" & mid(A1,3,1) & " and " & if(left(A1,1)="G","H","J") & "='" & right(A1,1) & "' order by C,E")`;
+  if (clsName.substr(0,2) == "GL") {
+    newValue = "=query(studentsclass!1:902, \"select A,B,C,D,E,K,L,N,O,V,U,S,Q where \" & if(left(A1,1)=\"G\",\"G\",\"I\") & \"=\" & mid(A1,3,1) & \" and \" & if(left(A1,1)=\"G\",\"H\",\"J\") & \"='\" & right(A1,1) & \"' order by C,E\")";
   }
   else { // VN class sheet
-    newValue = `=query(studentsclass!1:902, "select A,B,C,D,E,K,L,N,O,V,T,S,Q where " & if(left(A1,1)="G","G","I") & "=" & mid(A1,3,1) & " and " & if(left(A1,1)="G","H","J") & "='" & right(A1,1) & "' order by C,E")`;
+    newValue = "=query(studentsclass!1:902, \"select A,B,C,D,E,K,L,N,O,V,T,S,Q where \" & if(left(A1,1)=\"G\",\"G\",\"I\") & \"=\" & mid(A1,3,1) & \" and \" & if(left(A1,1)=\"G\",\"H\",\"J\") & \"='\" & right(A1,1) & \"' order by C,E\")";
   }
   sheet.getRange("B1:B1").getCell(1, 1).setValue(newValue);
 
 
   var classId = getExternalClassSpreadsheetId(clsName, clsFolder);
-  newValue = `=IMPORTRANGE("` + classId + `","Grades!F3:F80")`;
+  newValue = "=IMPORTRANGE(\"" + classId + "\",\"Grades!F3:F80\")";
   sheet.getRange("O2:O2").getCell(1, 1).setValue(newValue);
 
-  newValue = `=CONCATENATE(COUNTIFS(O2:O92, "0")," | ", MIN(O2:O92)," - ", MAX(O2:O92), " | ", COUNTIFS(O2:O92, Q1), ":", COUNTIFS(O2:O92, Q2)-COUNTIFS(O2:O92, Q1), ":", COUNTIFS(O2:O92, Q3)-COUNTIFS(O2:O92, Q2), ":", COUNTIFS(O2:O92, Q4)-COUNTIFS(O2:O92, Q3), ":", COUNTIFS(O2:O92, Q5))`;
+  newValue = "=CONCATENATE(COUNTIFS(O2:O92, \"0\"),\" | \", MIN(O2:O92),\" - \", MAX(O2:O92), \" | \", COUNTIFS(O2:O92, Q1), \":\", COUNTIFS(O2:O92, Q2)-COUNTIFS(O2:O92, Q1), \":\", COUNTIFS(O2:O92, Q3)-COUNTIFS(O2:O92, Q2), \":\", COUNTIFS(O2:O92, Q4)-COUNTIFS(O2:O92, Q3), \":\", COUNTIFS(O2:O92, Q5))";
   sheet.getRange("P1:P1").getCell(1, 1).setValue(newValue);
 
-  newValue = `=query(AdminGrades!B2:B6, "select B")`;
+  newValue = "=query(AdminGrades!B2:B6, \"select B\")";
   sheet.getRange("Q1:Q1").getCell(1, 1).setValue(newValue);
 }
 
@@ -857,18 +891,18 @@ function cloneClassesUsingGL1AorVN1AImpl2(sheetName, templateId) {
       /////////////////////////////////////////////////////////////////////////////
       // Save new class spreadsheet id into the class sheet (ex: GL1A) sheet in the master book
       /////////////////////////////////////////////////////////////////////////////
-      var tstr = `=IMPORTRANGE("` + newFile.getId() + `","Grades!F3:F80")`;
+      var tstr = "=IMPORTRANGE(\"" + newFile.getId() + "\",\"Grades!F3:F80\")";
       ss.getSheetByName(clsName).getRange("O2:O2").getCell(1, 1).setValue(tstr);
 
       /////////////////////////////////////////////////////////////////////////////
       // Save new class spreadsheet id into the honor-gl-import or honor-vn-import
       // sheets in the students-extra book
       /////////////////////////////////////////////////////////////////////////////
-      var imptStr = `=IMPORTRANGE("` + newFile.getId() + `","honor-roll!B3:F` + (3+MAX_HONOR_ROLL-1) + `")`;
+      var imptStr = "=IMPORTRANGE(\"" + newFile.getId() + "\",\"honor-roll!B3:F` + (3+MAX_HONOR_ROLL-1) + `\")";
       var studentsExtraId = getStr("STUDENTS_EXTRA_SPREADSHEET_ID");
       var studentsExtraSs = SpreadsheetApp.openById(studentsExtraId);
       var hrSheet = studentsExtraSs.getSheetByName("honor-" + sheetName.slice(0, 2)+"-import"); // honor-gl-import or honor-vn-import sheet
-      var hrRange = hrSheet.getRange(2, 1, 270, 15); //row, col, numRows, numCols
+      var hrRange = hrSheet.getRange(2, 1, 400, 15); //row, col, numRows, numCols
       var hrCell  = hrRange.getCell(((cellRow-1)*MAX_HONOR_ROLL)+1, 2);
       hrCell.setValue(imptStr);
 
@@ -968,11 +1002,11 @@ function updateExternalClassSpreadSheets_contactsSheet(tss, studentMasterSpreads
   // sheet
   var sheet = tss.getSheetByName(sn);
 
-  var newValue = `=IMPORTRANGE("` + studentMasterSpreadsheetId + `",A1&"!B1:N92")`;
+  var newValue = "=IMPORTRANGE(\"" + studentMasterSpreadsheetId + "\",A1&\"!B1:N92\")";
   sheet.getRange("A2:A2").getCell(1, 1).setValue(newValue);
 
   // teacher names
-  var newValue = `=IMPORTRANGE("` + studentMasterSpreadsheetId + `","` + clsName.slice(0,2).toLowerCase() + `-classes!D"&(2*mid(A1,3,1)+if(right(A1,1)="A",0,1)))`;
+  var newValue = "=IMPORTRANGE(\"" + studentMasterSpreadsheetId + "\",\"" + clsName.slice(0,2).toLowerCase() + "-classes!D\"&(2*mid(A1,3,1)+if(right(A1,1)=\"A\",0,1)))";
   sheet.getRange("B1:B1").getCell(1, 1).setValue(newValue);
 }
 
@@ -983,17 +1017,17 @@ function updateExternalClassSpreadSheets_attendanceSheet(tss, studentMasterSprea
   // sheet
   var sheet = tss.getSheetByName(sn);
 
-  var newValue = `=query(contacts!1:1, "select A,B")`;
+  var newValue = "=query(contacts!1:1, \"select A,B\")";
   sheet.getRange("A1:A1").getCell(1, 1).setValue(newValue);
 
-  newValue = '=query(contacts!2:92, "select C,E,G,I")'
+  newValue = "=query(contacts!2:92, \"select C,E,G,I\")";
   sheet.getRange("B2:B2").getCell(1, 1).setValue(newValue);
 
   if (hocKy=="HK1") {
-    newValue = `=IMPORTRANGE("` + studentMasterSpreadsheetId + `","calendar!B1:S1")`;
+    newValue = "=IMPORTRANGE(\"" + studentMasterSpreadsheetId + "\",\"calendar!B1:S1\")";
   }
   else {
-    newValue = `=IMPORTRANGE("` + studentMasterSpreadsheetId + `","calendar!B2:S2")`;
+    newValue = "=IMPORTRANGE(\"" + studentMasterSpreadsheetId + "\",\"calendar!B2:S2\")";
   }
   sheet.getRange("F2:F2").getCell(1, 1).setValue(newValue);
 }
@@ -1003,43 +1037,43 @@ function updateExternalClassSpreadSheets_gradesSheet(tss, studentMasterSpreadshe
   // sheet
   var sheet = tss.getSheetByName('grades');
 
-  var newValue = `=query(contacts!1:1, "select A,B")`;
+  var newValue = "=query(contacts!1:1, \"select A,B\")";
   sheet.getRange("A1:A1").getCell(1, 1).setValue(newValue);
 
-  newValue = `=query(contacts!2:90, "select A,B,C,E,J")`;
+  newValue = "=query(contacts!2:90, \"select A,B,C,E,J\")";
   sheet.getRange("A2:A2").getCell(1, 1).setValue(newValue);
 
   // teacher signature
-  var newValue = `=IMPORTRANGE("` + studentMasterSpreadsheetId + `","` + clsName.slice(0,2).toLowerCase() + `-classes!E"&(2*mid(A1,3,1)+if(right(A1,1)="A",0,1)))`;
+  var newValue = "=IMPORTRANGE(\"" + studentMasterSpreadsheetId + "\",\"" + clsName.slice(0,2).toLowerCase() + "-classes!E\"&(2*mid(A1,3,1)+if(right(A1,1)=\"A\",0,1)))";
   sheet.getRange("F1:F1").getCell(1, 1).setValue(newValue);
 
-  newValue = `=if(A3<>"",if(G3<>"d",ROUND(sum(H3:L3) + sum(S3:W3),2),""),"")`;
+  newValue = "=if(A3<>\"\",if(G3<>\"d\",ROUND(sum(H3:L3) + sum(S3:W3),2),\"\"),\"\")";
   sheet.getRange("F3:F3").getCell(1, 1).setValue(newValue);
   // IMPORTANT: need to copy to the rest of the cell Fs
 
-  newValue = `x=generate pdf\ne=pdf & email`;
+  newValue = "x=generate pdf\ne=pdf & email";
   sheet.getRange("G1:G1").getCell(1, 1).setValue(newValue);
 
-  sheet.getRange("H1:H1").getCell(1, 1).setValue(".1-5");
+  sheet.getRange("H1:H1").getCell(1, 1).setValue("0-5");
   sheet.getRange("H2:H2").getCell(1, 1).setValue("Part1");
-  sheet.getRange("I1:I1").getCell(1, 1).setValue(".1-5");
+  sheet.getRange("I1:I1").getCell(1, 1).setValue("0-5");
   sheet.getRange("I2:I2").getCell(1, 1).setValue("HWrk1");
-  sheet.getRange("J1:J1").getCell(1, 1).setValue(".1-15");
+  sheet.getRange("J1:J1").getCell(1, 1).setValue("0-15");
   sheet.getRange("J2:J2").getCell(1, 1).setValue("Quiz1");
-  sheet.getRange("K1:K1").getCell(1, 1).setValue(".1-25");
+  sheet.getRange("K1:K1").getCell(1, 1).setValue("0-25");
   sheet.getRange("K2:K2").getCell(1, 1).setValue("Exam1");
-  sheet.getRange("L1:L1").getCell(1, 1).setValue("0-20");
+  sheet.getRange("L1:L1").getCell(1, 1).setValue("blank-20");
   sheet.getRange("L2:L2").getCell(1, 1).setValue("Extr1");
   sheet.getRange("M1:M1").getCell(1, 1).setValue("0-20");
-  sheet.getRange("O1:O1").getCell(1, 1).setValue(".1-5");
+  sheet.getRange("O1:O1").getCell(1, 1).setValue("0-5");
   sheet.getRange("O2:O2").getCell(1, 1).setValue("Part2");
-  sheet.getRange("P1:P1").getCell(1, 1).setValue(".1-5");
+  sheet.getRange("P1:P1").getCell(1, 1).setValue("0-5");
   sheet.getRange("P2:P2").getCell(1, 1).setValue("HWrk2");
-  sheet.getRange("Q1:Q1").getCell(1, 1).setValue(".1-15");
+  sheet.getRange("Q1:Q1").getCell(1, 1).setValue("0-15");
   sheet.getRange("Q2:Q2").getCell(1, 1).setValue("Quiz2");
-  sheet.getRange("R1:R1").getCell(1, 1).setValue(".1-25");
+  sheet.getRange("R1:R1").getCell(1, 1).setValue("0-25");
   sheet.getRange("R2:R2").getCell(1, 1).setValue("Exam2");
-  sheet.getRange("S1:S1").getCell(1, 1).setValue("0-20");
+  sheet.getRange("S1:S1").getCell(1, 1).setValue("blank-20");
   sheet.getRange("S2:S2").getCell(1, 1).setValue("Extr2");
   sheet.getRange("T1:T1").getCell(1, 1).setValue("0-20");
 }
@@ -1050,10 +1084,10 @@ function updateExternalClassSpreadSheets_honorSheet(tss) {
   // sheet
   var sheet = tss.getSheetByName('honor-roll');
 
-  var newValue = `=query(contacts!1:1, "select A,B")`;
+  var newValue = "=query(contacts!1:1, \"select A,B\")";
   sheet.getRange("A1:A1").getCell(1, 1).setValue(newValue);
 
-  newValue = `=query(grades!2:80, "select A,B,C,D,F where F>0 order by F desc")`;
+  newValue = "=query(grades!2:80, \"select A,B,C,D,F where F>0 order by F desc\")";
   sheet.getRange("A2:A2").getCell(1, 1).setValue(newValue);
 }
 
@@ -1063,10 +1097,10 @@ function updateExternalClassSpreadSheets_reviewSheet(tss) {
   // sheet
   var sheet = tss.getSheetByName('comment-review');
 
-  var newValue = `=query(contacts!1:1, "select A,B")`;
+  var newValue = "=query(contacts!1:1, \"select A,B\")";
   sheet.getRange("A1:A1").getCell(1, 1).setValue(newValue);
 
-  newValue = `=query(grades!2:80, "select A,C,D,F,N,U where F>0 order by F desc")`;
+  newValue = "=query(grades!2:80, \"select A,C,D,F,N,U where F>0 order by F desc\")";
   sheet.getRange("A2:A2").getCell(1, 1).setValue(newValue);
 }
 
@@ -1075,6 +1109,6 @@ function updateExternalClassSpreadSheets_adminGradesSheet(tss, studentMasterSpre
   // sheet
   var sheet = tss.getSheetByName('adminGrades');
 
-  var newValue = `=IMPORTRANGE("` + studentMasterSpreadsheetId + `","adminGrades!1:10")`;
+  var newValue = "=IMPORTRANGE(\"" + studentMasterSpreadsheetId + "\",\"adminGrades!1:10\")";
   sheet.getRange("A1:A1").getCell(1, 1).setValue(newValue);
 }
