@@ -1,4 +1,4 @@
-var RELEASE = "20220810"
+var RELEASE = "20220811"
 
 // Std_VGz6v3
 var idCol               = 1;
@@ -51,16 +51,16 @@ function onOpen() {
       functionName : "shareClasses"
     },
     {
-      name : "1 - Update student final points (Std)",
-      functionName : "updateFinalPoints"
+      name : "1 - Save student final points (Std)",
+      functionName : "saveFinalPoints"
     },
     {
-      name : "2 - Update First Communion date and location (Std)",
-      functionName : "updateFCommunionInfo"
+      name : "2 - Save First Communion date and location (Std)",
+      functionName : "saveFCommunionInfo"
     },
     {
-      name : "3 - Update Confirmation date and location (Std)",
-      functionName : "updateConfirmationInfo"
+      name : "3 - Save Confirmation date and location (Std)",
+      functionName : "saveConfirmationInfo"
     },
     {
       name : "4 - Un-share classes (gl-classes/vn-classes)",
@@ -71,8 +71,8 @@ function onOpen() {
       functionName : "saveStudentsPast"
     },
     {
-      name : "6 - Update student classes for new registration (Std)",
-      functionName : "updateClassesForNewReg"
+      name : "6 - Increase student glG and vnG for new registration (Std)",
+      functionName : "increaseGlGVnGForNewReg"
     },
     {
       name : "7 - Clear data in external classes (gl-classes/vn-classes)",
@@ -282,10 +282,10 @@ function isNotAdmin(admins, gmail) {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-// 1 - Update Final Points
+// 1 - Save Final Points
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-function updateFinalPoints() {
+function saveFinalPoints() {
   var ui = SpreadsheetApp.getUi(); // Same variations.
 
   var response = ui.alert(
@@ -295,12 +295,12 @@ function updateFinalPoints() {
 
   // Process the user's response.
   if (response == ui.Button.YES) {
-    updateFinalPointImpl();
+    saveFinalPointsImpl();
   }
 }
 
 
-function updateFinalPointImpl() {
+function saveFinalPointsImpl() {
 
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Std_VGz6v3");
   var range = sheet.getRange(1, 1, 700, 34); //row, col, numRows, numCols
@@ -366,10 +366,10 @@ function getFinalGrade(className, id) { // sheet GL1A, GL1B, GL2A...
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-// 2 - Update first communion date and location
+// 2 - Save first communion date and location
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-function updateFCommunionInfo() {
+function saveFCommunionInfo() {
   var ui = SpreadsheetApp.getUi(); // Same variations.
 
   var response = ui.alert(
@@ -379,11 +379,11 @@ function updateFCommunionInfo() {
 
   // Process the user's response.
   if (response == ui.Button.YES) {
-    updateFCommunionInfoImpl();
+    saveFCommunionInfoImpl();
   }
 }
 
-function updateFCommunionInfoImpl() {
+function saveFCommunionInfoImpl() {
 
   // Get data from the Calendar sheet
   var varSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Calendar");
@@ -428,24 +428,24 @@ function updateFCommunionInfoImpl() {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-// 3 - Update Confirmation date and location
+// 3 - Save Confirmation date and location
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-function updateConfirmationInfo() {
+function saveConfirmationInfo() {
   var ui = SpreadsheetApp.getUi(); // Same variations.
 
   var response = ui.alert(
       'Warning!!!',
-      'Do you want to update Confirmation information for students?',
+      'Do you want to save Confirmation information for students?',
       ui.ButtonSet.YES_NO);
 
   // Process the user's response.
   if (response == ui.Button.YES) {
-    updateConfirmationInfoImpl();
+    saveConfirmationInfoImpl();
   }
 }
 
-function updateConfirmationInfoImpl() {
+function saveConfirmationInfoImpl() {
 
   //////////////////////////// Get data from the Calendar sheet  //////////////////////////////
   var varSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Calendar");
@@ -588,20 +588,20 @@ function saveStudentsPast() {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-// 6 - updateClassesForNewReg
+// 6 - increaseGlGVnGForNewReg
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-function updateClassesForNewReg() {
+function increaseGlGVnGForNewReg() {
   var ui = SpreadsheetApp.getUi(); // Same variations.
 
   var response = ui.alert(
       'Warning!!!',
-      'Do you want to set up classes for new registration process?',
+      'Do you want to increase glG and vnG for new registration process?',
       ui.ButtonSet.YES_NO);
 
   // Process the user's response.
   if (response == ui.Button.YES) {
-    updateClassesForNewRegImpl();
+    increaseGlGVnGForNewRegImpl();
   }
 }
 
@@ -615,7 +615,7 @@ function waitSeconds(iMilliSeconds) {
     }
 }
 
-function updateClassesForNewRegImpl() {
+function increaseGlGVnGForNewRegImpl() {
   var passing_point = getPassingPoint();
 
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Std_VGz6v3");
@@ -974,21 +974,21 @@ function updateExternalClassSpreadSheetsImpl2(sheetName) {
       var classId = getExternalClassSpreadsheetId(clsName, clsFolder);
       var tss = SpreadsheetApp.openById(classId);
 
-      // Update `contacts` sheet in each class spreadsheet
-      updateExternalClassSpreadSheets_contactsSheet(tss, ss.getId(), clsName);
+      // // Update `contacts` sheet in each class spreadsheet
+      // updateExternalClassSpreadSheets_contactsSheet(tss, ss.getId(), clsName);
 
-      // Update `attendance_HK1` sheet in each class spreadsheet
-      updateExternalClassSpreadSheets_attendanceSheet(tss, ss.getId(), "HK1");
+      // // Update `attendance_HK1` sheet in each class spreadsheet
+      // updateExternalClassSpreadSheets_attendanceSheet(tss, ss.getId(), "HK1");
 
-      // Update `attendance_HK2` sheet in each class spreadsheet
-      updateExternalClassSpreadSheets_attendanceSheet(tss, ss.getId(), "HK2");
+      // // Update `attendance_HK2` sheet in each class spreadsheet
+      // updateExternalClassSpreadSheets_attendanceSheet(tss, ss.getId(), "HK2");
 
       // Update `grades` sheet in each class spreadsheet
       updateExternalClassSpreadSheets_gradesSheet(tss, ss.getId(), clsName);
 
-      updateExternalClassSpreadSheets_honorSheet(tss);
-      updateExternalClassSpreadSheets_reviewSheet(tss);
-      updateExternalClassSpreadSheets_adminGradesSheet(tss, ss.getId());
+      // updateExternalClassSpreadSheets_honorSheet(tss);
+      // updateExternalClassSpreadSheets_reviewSheet(tss);
+      // updateExternalClassSpreadSheets_adminGradesSheet(tss, ss.getId());
 
       actionCell.setValue('');
     }
@@ -1037,45 +1037,46 @@ function updateExternalClassSpreadSheets_gradesSheet(tss, studentMasterSpreadshe
   // sheet
   var sheet = tss.getSheetByName('grades');
 
-  var newValue = "=query(contacts!1:1, \"select A,B\")";
-  sheet.getRange("A1:A1").getCell(1, 1).setValue(newValue);
+  var newValue;
+  // newValue = "=query(contacts!1:1, \"select A,B\")";
+  // sheet.getRange("A1:A1").getCell(1, 1).setValue(newValue);
 
-  newValue = "=query(contacts!2:90, \"select A,B,C,E,J\")";
-  sheet.getRange("A2:A2").getCell(1, 1).setValue(newValue);
+  // newValue = "=query(contacts!2:90, \"select A,B,C,E,J\")";
+  // sheet.getRange("A2:A2").getCell(1, 1).setValue(newValue);
 
-  // teacher signature
-  var newValue = "=IMPORTRANGE(\"" + studentMasterSpreadsheetId + "\",\"" + clsName.slice(0,2).toLowerCase() + "-classes!E\"&(2*mid(A1,3,1)+if(right(A1,1)=\"A\",0,1)))";
-  sheet.getRange("F1:F1").getCell(1, 1).setValue(newValue);
+  // // teacher signature
+  // var newValue = "=IMPORTRANGE(\"" + studentMasterSpreadsheetId + "\",\"" + clsName.slice(0,2).toLowerCase() + "-classes!E\"&(2*mid(A1,3,1)+if(right(A1,1)=\"A\",0,1)))";
+  // sheet.getRange("F1:F1").getCell(1, 1).setValue(newValue);
 
-  newValue = "=if(A3<>\"\",if(G3<>\"d\",ROUND(sum(H3:L3) + sum(S3:W3),2),\"\"),\"\")";
-  sheet.getRange("F3:F3").getCell(1, 1).setValue(newValue);
-  // IMPORTANT: need to copy to the rest of the cell Fs
+  // newValue = "=if(A3<>\"\",if(G3<>\"d\",ROUND(sum(H3:L3) + sum(S3:W3),2),\"\"),\"\")";
+  // sheet.getRange("F3:F3").getCell(1, 1).setValue(newValue);
+  // // IMPORTANT: need to copy to the rest of the cell Fs
 
-  newValue = "x=generate pdf\ne=pdf & email";
+  newValue = "generate=> x\ngen&email=> e";
   sheet.getRange("G1:G1").getCell(1, 1).setValue(newValue);
 
-  sheet.getRange("H1:H1").getCell(1, 1).setValue("0-5");
-  sheet.getRange("H2:H2").getCell(1, 1).setValue("Part1");
-  sheet.getRange("I1:I1").getCell(1, 1).setValue("0-5");
-  sheet.getRange("I2:I2").getCell(1, 1).setValue("HWrk1");
-  sheet.getRange("J1:J1").getCell(1, 1).setValue("0-15");
-  sheet.getRange("J2:J2").getCell(1, 1).setValue("Quiz1");
-  sheet.getRange("K1:K1").getCell(1, 1).setValue("0-25");
-  sheet.getRange("K2:K2").getCell(1, 1).setValue("Exam1");
-  sheet.getRange("L1:L1").getCell(1, 1).setValue("blank-20");
-  sheet.getRange("L2:L2").getCell(1, 1).setValue("Extr1");
-  sheet.getRange("M1:M1").getCell(1, 1).setValue("0-20");
-  sheet.getRange("O1:O1").getCell(1, 1).setValue("0-5");
-  sheet.getRange("O2:O2").getCell(1, 1).setValue("Part2");
-  sheet.getRange("P1:P1").getCell(1, 1).setValue("0-5");
-  sheet.getRange("P2:P2").getCell(1, 1).setValue("HWrk2");
-  sheet.getRange("Q1:Q1").getCell(1, 1).setValue("0-15");
-  sheet.getRange("Q2:Q2").getCell(1, 1).setValue("Quiz2");
-  sheet.getRange("R1:R1").getCell(1, 1).setValue("0-25");
-  sheet.getRange("R2:R2").getCell(1, 1).setValue("Exam2");
-  sheet.getRange("S1:S1").getCell(1, 1).setValue("blank-20");
-  sheet.getRange("S2:S2").getCell(1, 1).setValue("Extr2");
-  sheet.getRange("T1:T1").getCell(1, 1).setValue("0-20");
+  // sheet.getRange("H1:H1").getCell(1, 1).setValue("0-5");
+  // sheet.getRange("H2:H2").getCell(1, 1).setValue("Part1");
+  // sheet.getRange("I1:I1").getCell(1, 1).setValue("0-5");
+  // sheet.getRange("I2:I2").getCell(1, 1).setValue("HWrk1");
+  // sheet.getRange("J1:J1").getCell(1, 1).setValue("0-15");
+  // sheet.getRange("J2:J2").getCell(1, 1).setValue("Quiz1");
+  // sheet.getRange("K1:K1").getCell(1, 1).setValue("0-25");
+  // sheet.getRange("K2:K2").getCell(1, 1).setValue("Exam1");
+  // sheet.getRange("L1:L1").getCell(1, 1).setValue("blank-20");
+  // sheet.getRange("L2:L2").getCell(1, 1).setValue("Extr1");
+  // sheet.getRange("M1:M1").getCell(1, 1).setValue("0-20");
+  // sheet.getRange("O1:O1").getCell(1, 1).setValue("0-5");
+  // sheet.getRange("O2:O2").getCell(1, 1).setValue("Part2");
+  // sheet.getRange("P1:P1").getCell(1, 1).setValue("0-5");
+  // sheet.getRange("P2:P2").getCell(1, 1).setValue("HWrk2");
+  // sheet.getRange("Q1:Q1").getCell(1, 1).setValue("0-15");
+  // sheet.getRange("Q2:Q2").getCell(1, 1).setValue("Quiz2");
+  // sheet.getRange("R1:R1").getCell(1, 1).setValue("0-25");
+  // sheet.getRange("R2:R2").getCell(1, 1).setValue("Exam2");
+  // sheet.getRange("S1:S1").getCell(1, 1).setValue("blank-20");
+  // sheet.getRange("S2:S2").getCell(1, 1).setValue("Extr2");
+  // sheet.getRange("T1:T1").getCell(1, 1).setValue("0-20");
 }
 
 
