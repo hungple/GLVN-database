@@ -1,4 +1,4 @@
-var RELEASE = "20220811"
+var RELEASE = "20220812"
 
 // Std_VGz6v3
 var idCol               = 1;
@@ -215,7 +215,7 @@ function shareClassesImpl(sheetName, reportFormId, classLibraryId, isShared) {
       break;
 
     var actionCell = range.getCell(cellRow, actionCol);
-    action = actionCell.getValue();
+    action = actionCell.getValue().trim();
 
     if(action == "x" && gmails != "") {
 
@@ -239,7 +239,7 @@ function shareClassesImpl(sheetName, reportFormId, classLibraryId, isShared) {
 
           if(isShared == true){
             doc.addViewer(gmail);
-            libSpreadSheet.addViewer(gmail);
+            libSpreadSheet.addEditor(gmail);
           }
         }
         catch(e) {
