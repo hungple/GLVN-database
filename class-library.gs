@@ -1,7 +1,7 @@
-var RELEASE = "20220812"
+var RELEASE = "20220813"
 
 
-var DECIMAL_COL_LEN      = 5; //IMPORTANT: any point column must has name with lenght = 5. For example: Part1 or Hwrk1
+var DECIMAL_COL_LEN      = 5; //IMPORTANT: any point column must has a name which its lenght = 5. For example: Part1 or Hwrk1
 var EXTRA_CREDIT_COL_LEN = 6;
 var POINT_COL_START      = 8;
 var EMAIL_BODY           = "Mến chào quí Phụ Huynh,<br>Xin phụ huynh xem phiếu điểm đính kèm. Xin cám ơn.<br>Chương Trình GLVN.";
@@ -102,6 +102,8 @@ function createDoc(isHK2) {
   var sendEmail = false;
   var colNames = [];
   var colPoints = [];
+  var colMins = [];
+  var colMaxs = [];
 
   var folerId     = getReportCardFolderId();
 
@@ -121,7 +123,9 @@ function createDoc(isHK2) {
   for (var cellCol = POINT_COL_START; ; cellCol++) {
     var colRange = range.getCell(1, cellCol).getValue();
     if(colRange == "") { break; }
-    colNames[cellCol-POINT_COL_START] = colName;
+    var minMaxArr = colRange.split("-");
+    colMins[cellCol-POINT_COL_START] = minMaxArr[0];
+    colMaxs[cellCol-POINT_COL_START] = minMaxArr[1];
   }
 
   // iterate through all column names starting from the column right after the column `action`
@@ -147,8 +151,6 @@ function createDoc(isHK2) {
 
     if(action != '') {
       if(action == 'e' && sendEmail == false) {
-        var ui = SpreadsheetApp.getUi();
-
         var response = ui.alert(
           'Warning!!!',
           'Do you want to email to the report cards to the parents?',
@@ -199,15 +201,25 @@ function createDoc(isHK2) {
       // HK1 - fill in data for HK1
       var hk1Total = 0;
       for (var i = 0; i<halfCol-1; i++) {
-        if(colNames[i].length == DECIMAL_COL_LEN) { //columns that hold points
+        if (colNames[i].length == DECIMAL_COL_LEN) { //columns that hold points
           if(typeof(colPoints[i]) == 'number') {
-            copyBody.replaceText('@' + colNames[i] + '@', colPoints[i].toFixed(2));
-            hk1Total = hk1Total + parseFloat(colPoints[i]);
+            if (colPoints[i] >= colMins[i] && colPoints[i] <= colMaxs[i]) {
+              copyBody.replaceText('@' + colNames[i] + '@', colPoints[i].toFixed(2));
+              hk1Total = hk1Total + parseFloat(colPoints[i]);
+            }
+            else {
+              ui.alert(
+                'Error!!!',
+                'Row ' + cellRow + ' has an out of range number: "' + colPoints[i] + '"',
+                ui.ButtonSet.OK
+              );
+              return;
+            }
           }
           else {
-            var response = ui.alert(
+            ui.alert(
               'Error!!!',
-              'Row ' + cellRow + ' has a blank character or an invalid number "' + colPoints[i] + '"',
+              'Row ' + cellRow + ' has a blank character or a non-digit character: "' + colPoints[i] + '"',
               ui.ButtonSet.OK
             );
             return;
@@ -221,7 +233,7 @@ function createDoc(isHK2) {
           else
           {
             if(colPoints[i] != '') {
-              var response = ui.alert(
+              ui.alert(
                 'Error!!!',
                 'Row ' + cellRow + ' has an invalid number "' + colPoints[i] + '"',
                 ui.ButtonSet.OK
@@ -247,7 +259,7 @@ function createDoc(isHK2) {
       }
 
       copyBody.replaceText('@Comment1@', c1);
-      copyBody.replaceText('@sign1@', signature);
+      copyBody.replaceText('@Sign1@', signature);
 
       // HK2
       var hk2Total = 0;
@@ -255,13 +267,23 @@ function createDoc(isHK2) {
         for (var i = halfCol; i<colNames.length-1; i++) {
           if(colNames[i].length == DECIMAL_COL_LEN) { //columns that hold points
             if(typeof(colPoints[i]) == 'number') {
-              copyBody.replaceText('@' + colNames[i] + '@', colPoints[i].toFixed(2));
-              hk2Total = hk2Total + parseFloat(colPoints[i]);
+              if (colPoints[i] >= colMins[i] && colPoints[i] <= colMaxs[i]) {
+                copyBody.replaceText('@' + colNames[i] + '@', colPoints[i].toFixed(2));
+                hk2Total = hk2Total + parseFloat(colPoints[i]);
+              }
+              else {
+                ui.alert(
+                  'Error!!!',
+                  'Row ' + cellRow + ' has an out of range number: "' + colPoints[i] + '"',
+                  ui.ButtonSet.OK
+                );
+                return;
+              }
             }
             else {
-              var response = ui.alert(
+              ui.alert(
                 'Error!!!',
-                'Row ' + cellRow + ' has a blank character or an invalid number "' + colPoints[i] + '"',
+                'Row ' + cellRow + ' has a blank character or a non-digit character: "' + colPoints[i] + '"',
                 ui.ButtonSet.OK
               );
               return;
@@ -275,7 +297,7 @@ function createDoc(isHK2) {
             else
             {
               if(colPoints[i] != '') {
-                var response = ui.alert(
+                ui.alert(
                   'Error!!!',
                   'Row ' + cellRow + ' has an invalid number "' + colPoints[i] + '"',
                   ui.ButtonSet.OK
@@ -301,7 +323,7 @@ function createDoc(isHK2) {
         }
 
         copyBody.replaceText('@Comment2@', c2);
-        copyBody.replaceText('@sign2@', signature);
+        copyBody.replaceText('@Sign2@', signature);
 
         // fill in data for Yearly Total
         for (var i = 0; i<halfCol-1; i++) {
@@ -333,7 +355,7 @@ function createDoc(isHK2) {
         }
         copyBody.replaceText('@Total2@', '-');
         copyBody.replaceText('@Comment2@', "\n");
-        copyBody.replaceText('@sign2@', '');
+        copyBody.replaceText('@Sign2@', '');
 
         // fill in '-' for Yearly Total
         for (var i = 0; i<halfCol-1; i++) {
@@ -368,7 +390,6 @@ function createDoc(isHK2) {
       if(action == 'e' && email && email.length > 5) {
         // Attach PDF and send the email
         var subject = docName;
-        // email = "hle007@yahoo.com";
         MailApp.sendEmail(email, subject, EMAIL_BODY, {htmlBody: EMAIL_BODY, attachments: pdf});
       }
 
