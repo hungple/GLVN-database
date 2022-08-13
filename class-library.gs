@@ -1,7 +1,10 @@
-var RELEASE = "20220809"
-var DECIMAL_COL_LEN = 5; //IMPORTANT: any point column must has name with lenght = 5. For example: Part1 or Hwrk1
-var POINT_COL_START = 8;
-var EMAIL_BODY      = "Mến chào quí Phụ Huynh,<br>Xin phụ huynh xem phiếu điểm đính kèm. Xin cám ơn.<br>Chương Trình GLVN - MHT.";
+var RELEASE = "20220812"
+
+
+var DECIMAL_COL_LEN      = 5; //IMPORTANT: any point column must has name with lenght = 5. For example: Part1 or Hwrk1
+var EXTRA_CREDIT_COL_LEN = 6;
+var POINT_COL_START      = 8;
+var EMAIL_BODY           = "Mến chào quí Phụ Huynh,<br>Xin phụ huynh xem phiếu điểm đính kèm. Xin cám ơn.<br>Chương Trình GLVN.";
 
 var idCol          = 1;
 var fNameCol       = 3;
@@ -9,7 +12,7 @@ var lNameCol       = 4;
 var pEMailCol      = 5;
 var totalPointsCol = 6;
 var actionCol      = 7;
-  
+
 
 /**
  * The onOpen() function, when defined, is automatically invoked whenever the
@@ -67,56 +70,34 @@ function getReportCardFolderId() {
   return sheet.getRange("B3:B3").getCell(1, 1).getValue();
 }
 
-function getStr(key) {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("adminGrades");
-  var range = sheet.getRange(2, 1, 20, 2); //row, col, numRows, numCols
 
-  // iterate through all cells in the range
-  for (var cellRow = 1; cellRow <= range.getHeight(); cellRow++) {
-    var varName = range.getCell(cellRow, 1).getValue();
-    if( varName == key){
-      return range.getCell(cellRow, 2).getValue();
-    }
-  }
-  return "";
+function getSignature() {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("grades");
+  return sheet.getRange("F1:F1").getCell(1, 1).getValue();
 }
 
-function getGradePoint(key) {
-  return parseInt(getStr(key).substring(1));
-}
 
-function log(message) {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("log");
-  if (sheet != null) {
-    var textlogCell = sheet.getRange("A1:A1").getCell(1, 1);
-    var text = textlogCell.getValue();
-    textlogCell.setValue(text + "\n" + message);
+function getLetterGrade(point, maxPoint) {
+  if (point/maxPoint >= .9) {
+    return "A";
   }
-}
-
-function logClear() {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("log");
-  if (sheet != null) {
-    var textlogCell = sheet.getRange("A1:A1").getCell(1, 1);
-    textlogCell.setValue("");
+  else if (point/maxPoint >= .8) {
+    return "B";
   }
-}
-
-//================================================================================
-function getSignature(names) {
-  var tNames = names.split(",");
-  if(tNames.length > 1) {
-    var tName1 = tNames[1];
-    if(tName1.indexOf("sign:")>=0) {
-      return tName1.split(":")[1];
-    }
+  else if (point/maxPoint >= .7) {
+    return "C";
   }
-  return "";
+  else if (point/maxPoint >= .65) {
+    return "D";
+  }
+  else {
+    return "F";
+  }
 }
 
 //================================================================================
 function createDoc(isHK2) {
-  logClear();
+  var ui = SpreadsheetApp.getUi();
 
   var sendEmail = false;
   var colNames = [];
@@ -136,6 +117,13 @@ function createDoc(isHK2) {
     tmpName     = "HK2-Report-Card";
   }
 
+  // iterate through all range (min-max) column starting from the column right after the column `action`
+  for (var cellCol = POINT_COL_START; ; cellCol++) {
+    var colRange = range.getCell(1, cellCol).getValue();
+    if(colRange == "") { break; }
+    colNames[cellCol-POINT_COL_START] = colName;
+  }
+
   // iterate through all column names starting from the column right after the column `action`
   for (var cellCol = POINT_COL_START; ; cellCol++) {
     var colName = range.getCell(2, cellCol).getValue();
@@ -143,11 +131,7 @@ function createDoc(isHK2) {
     colNames[cellCol-POINT_COL_START] = colName;
   }
 
-  //Logger.log(colNames);
-
   var halfCol = colNames.length/2;
-
-  var PASSING_POINT = getGradePoint("GRADE_F");
 
   // iterate through all rows in the range
   for (var cellRow = 3; ; cellRow++) {
@@ -159,11 +143,9 @@ function createDoc(isHK2) {
     var lName = range.getCell(cellRow, lNameCol).getValue();
     var email = range.getCell(cellRow, pEMailCol).getValue().trim();
     var actionCell = range.getCell(cellRow, actionCol);
-    var action = actionCell.getValue();
+    var action = actionCell.getValue().trim();
 
-    log(fName + ' ' + lName);
-
-    if(action != '' && action != 'd') {
+    if(action != '') {
       if(action == 'e' && sendEmail == false) {
         var ui = SpreadsheetApp.getUi();
 
@@ -182,10 +164,7 @@ function createDoc(isHK2) {
         }
       }
 
-      var signature = getSignature(tNames);
-      if(action == 's') {
-        signature = ''
-      }
+      var signature = getSignature();
 
       var docName;
       if(email == "" || email.length < 6) {
@@ -199,18 +178,14 @@ function createDoc(isHK2) {
       for (var cCol = 0; cCol<colNames.length; cCol++) {
         colPoints[cCol] = range.getCell(cellRow, cCol+POINT_COL_START).getValue();
       }
-      log(colPoints);
 
       var formId      = getReportCardTemplateId();
-      //Logger.log(formId);
 
       // Get document template, copy it as a new temp doc, and save the Doc’s id
       var copyId = DriveApp.getFileById(formId).makeCopy(docName).getId();
 
       // Open the temporary document
       var copyDoc = DocumentApp.openById(copyId);
-
-      log(copyDoc.getName());
 
       // Get the document’s body section
       var copyBody = copyDoc.getActiveSection();
@@ -225,15 +200,11 @@ function createDoc(isHK2) {
       var hk1Total = 0;
       for (var i = 0; i<halfCol-1; i++) {
         if(colNames[i].length == DECIMAL_COL_LEN) { //columns that hold points
-          //Logger.log(colNames[i]);
           if(typeof(colPoints[i]) == 'number') {
             copyBody.replaceText('@' + colNames[i] + '@', colPoints[i].toFixed(2));
             hk1Total = hk1Total + parseFloat(colPoints[i]);
           }
           else {
-            //copyBody.replaceText('@' + colNames[i] + '@', '-');
-            var ui = SpreadsheetApp.getUi();
-
             var response = ui.alert(
               'Error!!!',
               'Row ' + cellRow + ' has a blank character or an invalid number "' + colPoints[i] + '"',
@@ -242,11 +213,31 @@ function createDoc(isHK2) {
             return;
           }
         }
+        else if(colNames[i].length == EXTRA_CREDIT_COL_LEN) {
+          if(typeof(colPoints[i]) == 'number') {
+            copyBody.replaceText('@' + colNames[i] + '@', colPoints[i].toFixed(2));
+            hk1Total = hk1Total + parseFloat(colPoints[i]) + 10;
+          }
+          else
+          {
+            if(colPoints[i] != '') {
+              var response = ui.alert(
+                'Error!!!',
+                'Row ' + cellRow + ' has an invalid number "' + colPoints[i] + '"',
+                ui.ButtonSet.OK
+              );
+              return;
+            }
+            else {
+              copyBody.replaceText('@' + colNames[i] + '@', "");
+            }
+          }
+        }
         else { //columns that hold text or attendance
           copyBody.replaceText('@' + colNames[i] + '@', colPoints[i]);
         }
       }
-      copyBody.replaceText('@Total1@', hk1Total.toFixed(2));
+      copyBody.replaceText('@Total1@', getLetterGrade(hk1Total, 50));
       var c1 = colPoints[halfCol-1];
       if(c1.length < 70) {
         c1 = c1 + "\n\n";
@@ -263,14 +254,11 @@ function createDoc(isHK2) {
       if(isHK2) { // fill in data for HK2
         for (var i = halfCol; i<colNames.length-1; i++) {
           if(colNames[i].length == DECIMAL_COL_LEN) { //columns that hold points
-            //Logger.log(colNames[i]);
             if(typeof(colPoints[i]) == 'number') {
               copyBody.replaceText('@' + colNames[i] + '@', colPoints[i].toFixed(2));
               hk2Total = hk2Total + parseFloat(colPoints[i]);
             }
             else {
-              var ui = SpreadsheetApp.getUi();
-
               var response = ui.alert(
                 'Error!!!',
                 'Row ' + cellRow + ' has a blank character or an invalid number "' + colPoints[i] + '"',
@@ -279,11 +267,31 @@ function createDoc(isHK2) {
               return;
             }
           }
+          else if(colNames[i].length == EXTRA_CREDIT_COL_LEN) {
+            if(typeof(colPoints[i]) == 'number') {
+              copyBody.replaceText('@' + colNames[i] + '@', colPoints[i].toFixed(2));
+              hk2Total = hk2Total + parseFloat(colPoints[i]) + 10;
+            }
+            else
+            {
+              if(colPoints[i] != '') {
+                var response = ui.alert(
+                  'Error!!!',
+                  'Row ' + cellRow + ' has an invalid number "' + colPoints[i] + '"',
+                  ui.ButtonSet.OK
+                );
+                return;
+              }
+              else {
+                copyBody.replaceText('@' + colNames[i] + '@', "");
+              }
+            }
+          }
           else { //columns that hold text or attendance
             copyBody.replaceText('@' + colNames[i] + '@', colPoints[i]);
           }
         }
-        copyBody.replaceText('@Total2@', hk2Total.toFixed(2));
+        copyBody.replaceText('@Total2@', getLetterGrade(hk2Total, 50));
         var c2 = colPoints[colNames.length-1];
         if(c2.length < 70) {
           c2 = c2 + "\n\n";
@@ -297,26 +305,27 @@ function createDoc(isHK2) {
 
         // fill in data for Yearly Total
         for (var i = 0; i<halfCol-1; i++) {
-          if(colNames[i].length == DECIMAL_COL_LEN) {
-            var tempTotal = colPoints[i]+colPoints[i+halfCol];
-            if(typeof(tempTotal) == 'number') {
+          if(colNames[i].length == DECIMAL_COL_LEN || colNames[i].length == EXTRA_CREDIT_COL_LEN) {
+            var tempTotal = 0;
+            if(typeof(colPoints[i]) == 'number') {
+              tempTotal = colPoints[i];
+            }
+            if(typeof(colPoints[i+halfCol]) == 'number') {
+              tempTotal = tempTotal + colPoints[i+halfCol];
+            }
+            if(tempTotal > 0) {
               copyBody.replaceText('@' + colNames[i].substring(0,colNames[i].length-1) + '3@', tempTotal.toFixed(2));
             }
             else {
-              copyBody.replaceText('@' + colNames[i].substring(0,colNames[i].length-1) + '3@', '-');
+              copyBody.replaceText('@' + colNames[i].substring(0,colNames[i].length-1) + '3@', '');
             }
           }
           else {
             copyBody.replaceText('@' + colNames[i].substring(0,colNames[i].length-1) + '3@', colPoints[i]+colPoints[i+halfCol]);
           }
         }
-        copyBody.replaceText('@Total3@', (hk1Total + hk2Total).toFixed(2));
-        if (hk1Total + hk2Total >= PASSING_POINT) {
-          copyBody.replaceText('@Pass@', 'Được lên lớp - Passed');
-        }
-        else {
-          copyBody.replaceText('@Pass@', 'Ở lại lớp - Does Not Pass');
-        }
+        copyBody.replaceText('@Total3@', getLetterGrade(hk1Total + hk2Total, 100));
+
       }
       else { // fill in '-' for HK2 because this is processed for HK1
         for (var i = halfCol; i<colNames.length-1; i++) {
@@ -331,7 +340,6 @@ function createDoc(isHK2) {
           copyBody.replaceText('@' + colNames[i].substring(0,colNames[i].length-1) + '3@', '-');
         }
         copyBody.replaceText('@Total3@', '-');
-        copyBody.replaceText('@Pass@', '');
       }
 
 
@@ -345,7 +353,6 @@ function createDoc(isHK2) {
       DriveApp.getFileById(copyId).setTrashed(true);
 
       // Delete old file
-      log("Delete old file");
       var files = DriveApp.getFolderById(folerId).getFilesByName(docName + ".pdf");
       while (files.hasNext()) {
         var file = files.next();
@@ -355,7 +362,6 @@ function createDoc(isHK2) {
       }
 
       // Save pdf
-      log("Create pdf");
       DriveApp.getFolderById(folerId).createFile(pdf);
 
       // Send email
