@@ -1,4 +1,4 @@
-var RELEASE = "20220813"
+var RELEASE = "20220814"
 
 
 var DECIMAL_COL_LEN      = 5; //IMPORTANT: any point column must has a name which its lenght = 5. For example: Part1 or Hwrk1
