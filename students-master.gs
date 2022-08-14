@@ -1,4 +1,4 @@
-var RELEASE = "20220812"
+var RELEASE = "20220814"
 
 // Std_VGz6v3
 var idCol               = 1;
@@ -844,6 +844,10 @@ function cloneClassesUsingGL1AorVN1AImpl() {
   cloneClassesUsingGL1AorVN1AImpl2("vn-classes", vnClassTemplateId);
 }
 
+function debugCloneClassesUsingGL1AorVN1AImpl2 () {
+  cloneClassesUsingGL1AorVN1AImpl2("gl-classes", "1NT3efSzhBashDiKfOARRvm3Jy24qfYDm62xpFkZIhlI");
+}
+
 function cloneClassesUsingGL1AorVN1AImpl2(sheetName, templateId) {
 
   var ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -864,6 +868,19 @@ function cloneClassesUsingGL1AorVN1AImpl2(sheetName, templateId) {
     if(action == 'x' && (clsName != "GL1A" || clsName != "VN1A")) {
       var folderId = range.getCell(cellRow, clsFolderIdCol).getValue();
       clsFolder = DriveApp.getFolderById(folderId);
+
+            /////////////////////////////////////////////////////////////////////////////
+      // Create GLxx-report-cards folder if not exist
+      /////////////////////////////////////////////////////////////////////////////
+      var reportCardsFolderId;
+      var reportCardfolders = clsFolder.getFoldersByName(clsName + "-Report-Cards");
+      if (reportCardfolders.hasNext()) {
+        reportCardsFolderId = reportCardfolders.next().getId();
+      }
+      else {
+        var reportFolder = clsFolder.createFolder(clsName + "-Report-Cards");
+        reportCardsFolderId = reportFolder.getId();
+      }
 
       /////////////////////////////////////////////////////////////////////////////
       // Rename GLxx to "bk"
@@ -887,9 +904,10 @@ function cloneClassesUsingGL1AorVN1AImpl2(sheetName, templateId) {
       /////////////////////////////////////////////////////////////////////////////
       var newss = SpreadsheetApp.openById(newFile.getId());
       newss.getSheetByName("contacts").getRange("A1:A1").getCell(1, 1).setValue(clsName);
+      newss.getSheetByName("admin").getRange("B3:B3").getCell(1, 1).setValue(reportCardsFolderId);
 
       /////////////////////////////////////////////////////////////////////////////
-      // Save new class spreadsheet id into the class sheet (ex: GL1A) sheet in the master book
+      // Save new class spreadsheet id into the class worksheet (ex: GL1A) sheet in the master book
       /////////////////////////////////////////////////////////////////////////////
       var tstr = "=IMPORTRANGE(\"" + newFile.getId() + "\",\"Grades!F3:F80\")";
       ss.getSheetByName(clsName).getRange("O2:O2").getCell(1, 1).setValue(tstr);
@@ -906,14 +924,9 @@ function cloneClassesUsingGL1AorVN1AImpl2(sheetName, templateId) {
       var hrCell  = hrRange.getCell(((cellRow-1)*MAX_HONOR_ROLL)+1, 2);
       hrCell.setValue(imptStr);
 
-      /////////////////////////////////////////////////////////////////////////////
-      // Create GLxx-report-cards folder if not exist
-      /////////////////////////////////////////////////////////////////////////////
-      var reportCardfolders = clsFolder.getFoldersByName(clsName + "-report-cards");
-      if (! reportCardfolders.hasNext()) {
-        clsFolder.createFolder(clsName + "-report-cards");
-      }
 
+
+      // Clear action x
       actionCell.setValue('');
     }
   }
