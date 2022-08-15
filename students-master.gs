@@ -1,4 +1,4 @@
-var RELEASE = "20220814"
+var RELEASE = "20220815"
 
 // Std_VGz6v3
 var idCol               = 1;
@@ -44,61 +44,23 @@ var MAX_HONOR_ROLL = 20;
  * https://developers.google.com/apps-script/service_spreadsheet
  */
 function onOpen() {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet();
-  var entries = [
-    {
-      name : "Share classes (gl-classes/vn-classes)",
-      functionName : "shareClasses"
-    },
-    {
-      name : "1 - Save student final points (Std)",
-      functionName : "saveFinalPoints"
-    },
-    {
-      name : "2 - Save First Communion date and location (Std)",
-      functionName : "saveFCommunionInfo"
-    },
-    {
-      name : "3 - Save Confirmation date and location (Std)",
-      functionName : "saveConfirmationInfo"
-    },
-    {
-      name : "4 - Un-share classes (gl-classes/vn-classes)",
-      functionName : "unShareClasses"
-    },
-    {
-      name : "5 - Save students into students-past folder",
-      functionName : "saveStudentsPast"
-    },
-    {
-      name : "6 - Increase student glG and vnG for new registration (Std)",
-      functionName : "increaseGlGVnGForNewReg"
-    },
-    {
-      name : "7 - Clear data in external classes (gl-classes/vn-classes)",
-      functionName : "clearDataExternalClasses"
-    },
-    // DO NOT DELETE THESE TWO FUNCTIONS
-    {
-     name : "Update class sheets in this student-master (gl-classes/vn-classes : root only)",
-     functionName : "updateSheetsInThisSpreadSheet"
-    },
-    {
-     name : "Clone classes using GL1A or VN1A (gl-classes/vn-classes : root only)",
-     functionName : "cloneClassesUsingGL1AorVN1A"
-    },
-    {
-     name : "Update external class spreadSheets (gl-classes/vn-classes : root only)",
-     functionName : "updateExternalClassSpreadSheets"
-    },
-
-    {
-      name : "Release: " + RELEASE,
-      functionName : "showRelease"
-    }
-
-    ];
-  sheet.addMenu("GLVN", entries);
+  var ui = SpreadsheetApp.getUi();
+  ui.createMenu('GLVN')
+      .addItem('Release: ' + RELEASE, 'showRelease')
+      .addItem('Share classes (gl-classes/vn-classes)', 'shareClasses')
+      .addItem('Unshare classes (gl-classes/vn-classes)', 'unShareClasses')
+      .addSeparator()
+      .addItem('1 - Save student final points (Std)', 'saveFinalPoints')
+      .addItem('2 - Save First Communion date and location (Std)', 'saveFCommunionInfo')
+      .addItem('3 - Save Confirmation date and location (Std)', 'saveConfirmationInfo')
+      .addItem('4 - Save students into students-past folder', 'saveStudentsPast')
+      .addItem('5 - Increase glG and vnG for new registration (Std)', 'increaseGlGVnGForNewReg')
+      .addItem('6 - Clear old data in external classes (gl-classes/vn-classes)', 'clearDataExternalClasses')
+      .addSeparator()
+      .addItem('Update class sheets in this student-master (gl-classes/vn-classes : root only)', 'updateSheetsInThisSpreadSheet')
+      .addItem('Clone classes using GL1A or VN1A (gl-classes/vn-classes : root only', 'cloneClassesUsingGL1AorVN1A')
+      .addItem('Update external class spreadSheets (gl-classes/vn-classes : root only)', 'updateExternalClassSpreadSheets')
+      .addToUi();
 };
 
 function showRelease() {
