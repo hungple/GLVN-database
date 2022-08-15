@@ -151,7 +151,6 @@ function shareClasses() {
     var classLibraryId         = getStr("CLASS_LIBRARY_ID");
     shareClassesImpl("gl-classes", glReportCardTemplateId, classLibraryId, true);
     var vnReportCardTemplateId = getStr("VN_REPORT_CARD_TEMPLATE_ID");
-    var classLibraryId         = getStr("CLASS_LIBRARY_ID");
     shareClassesImpl("vn-classes", vnReportCardTemplateId, classLibraryId, true);
   }
 }
@@ -867,6 +866,10 @@ function cloneClassesUsingGL1AorVN1AImpl2(sheetName, templateId) {
       var newss = SpreadsheetApp.openById(newFile.getId());
       newss.getSheetByName("contacts").getRange("A1:A1").getCell(1, 1).setValue(clsName);
       newss.getSheetByName("admin").getRange("B3:B3").getCell(1, 1).setValue(reportCardsFolderId);
+      newss.getSheetByName("grades").getRange("K3:K3").getCell(1, 1).setValue(genTestPoint(clsName, .01));
+      newss.getSheetByName("grades").getRange("K4:K4").getCell(1, 1).setValue(genTestPoint(clsName, .02));
+      newss.getSheetByName("grades").getRange("K5:K5").getCell(1, 1).setValue(genTestPoint(clsName, .03));
+      newss.getSheetByName("grades").getRange("K6:K6").getCell(1, 1).setValue(genTestPoint(clsName, .04));
 
       /////////////////////////////////////////////////////////////////////////////
       // Save new class spreadsheet id into the class worksheet (ex: GL1A) sheet in the master book
@@ -878,7 +881,7 @@ function cloneClassesUsingGL1AorVN1AImpl2(sheetName, templateId) {
       // Save new class spreadsheet id into the honor-gl-import or honor-vn-import
       // sheets in the students-extra book
       /////////////////////////////////////////////////////////////////////////////
-      var imptStr = "=IMPORTRANGE(\"" + newFile.getId() + "\",\"honor-roll!B3:F` + (3+MAX_HONOR_ROLL-1) + `\")";
+      var imptStr = "=IMPORTRANGE(\"" + newFile.getId() + "\",\"honor-roll!B3:F" + (3+MAX_HONOR_ROLL-1) + "\")";
       var studentsExtraId = getStr("STUDENTS_EXTRA_SPREADSHEET_ID");
       var studentsExtraSs = SpreadsheetApp.openById(studentsExtraId);
       var hrSheet = studentsExtraSs.getSheetByName("honor-" + sheetName.slice(0, 2)+"-import"); // honor-gl-import or honor-vn-import sheet
@@ -894,7 +897,25 @@ function cloneClassesUsingGL1AorVN1AImpl2(sheetName, templateId) {
   }
 }
 
+function genTestPoint(clsName, delta) {
+  var point = parseInt(clsName.charAt(2), 10);
+  if (clsName.charAt(0) == 'V') {
+    point = point + 8;
+  }
 
+  if (clsName.charAt(3) == 'A') {
+    point = point + 0.1;
+  }
+  else {
+    point = point + 0.2;
+  }
+  point = point + delta;
+  return point;
+}
+
+function testGenTestPoint() {
+  var point = genTestPoint("VN2B", 0.01)
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //
