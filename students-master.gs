@@ -982,9 +982,11 @@ function updateExternalClassSpreadSheetsImpl2(sheetName) {
       // Update `grades` sheet in each class spreadsheet
       updateExternalClassSpreadSheets_gradesSheet(tss, ss.getId(), clsName);
 
-      // updateExternalClassSpreadSheets_honorSheet(tss);
+      updateExternalClassSpreadSheets_honorSheet(tss);
       // updateExternalClassSpreadSheets_reviewSheet(tss);
       // updateExternalClassSpreadSheets_adminGradesSheet(tss, ss.getId());
+
+      updateStudentsExtraSpreadSheet(sheetName, classId, cellRow);
 
       actionCell.setValue('');
     }
@@ -1048,8 +1050,8 @@ function updateExternalClassSpreadSheets_gradesSheet(tss, studentMasterSpreadshe
   // sheet.getRange("F3:F3").getCell(1, 1).setValue(newValue);
   // // IMPORTANT: need to copy to the rest of the cell Fs
 
-  newValue = "generate=> x\ngen&email=> e";
-  sheet.getRange("G1:G1").getCell(1, 1).setValue(newValue);
+  // newValue = "generate=> x\ngen&email=> e";
+  // sheet.getRange("G1:G1").getCell(1, 1).setValue(newValue);
 
   // sheet.getRange("H1:H1").getCell(1, 1).setValue("0-5");
   // sheet.getRange("H2:H2").getCell(1, 1).setValue("Part1");
@@ -1073,6 +1075,12 @@ function updateExternalClassSpreadSheets_gradesSheet(tss, studentMasterSpreadshe
   // sheet.getRange("S1:S1").getCell(1, 1).setValue("blank-20");
   // sheet.getRange("S2:S2").getCell(1, 1).setValue("Extr2");
   // sheet.getRange("T1:T1").getCell(1, 1).setValue("0-20");
+
+  sheet.getRange("K3:K3").getCell(1, 1).setValue(genTestPoint(clsName, .01));
+  sheet.getRange("K4:K4").getCell(1, 1).setValue(genTestPoint(clsName, .02));
+  sheet.getRange("K5:K5").getCell(1, 1).setValue(genTestPoint(clsName, .03));
+  sheet.getRange("K6:K6").getCell(1, 1).setValue(genTestPoint(clsName, .04));
+
 }
 
 
@@ -1081,11 +1089,18 @@ function updateExternalClassSpreadSheets_honorSheet(tss) {
   // sheet
   var sheet = tss.getSheetByName('honor-roll');
 
-  var newValue = "=query(contacts!1:1, \"select A,B\")";
-  sheet.getRange("A1:A1").getCell(1, 1).setValue(newValue);
+  // sheet.getRange("A1:A1").getCell(1, 1).setValue(
+  //   "=query(contacts!1:1, \"select A,B\")"
+  // );
 
-  newValue = "=query(grades!2:80, \"select A,B,C,D,F where F>0 order by F desc\")";
-  sheet.getRange("A2:A2").getCell(1, 1).setValue(newValue);
+  // sheet.getRange("A2:A2").getCell(1, 1).setValue(
+  //   "=query(grades!2:80, \"select A,B,C,D,F where F>0 order by F desc\")"
+  // );
+
+  // sheet.getRange("F3:F3").getCell(1, 1).setValue('1');
+  sheet.getRange("F4:F4").getCell(1, 1).setValue('2');
+  // sheet.getRange("F5:F5").getCell(1, 1).setValue('3');
+  // sheet.getRange("F6:F6").getCell(1, 1).setValue('4');
 }
 
 
@@ -1108,4 +1123,18 @@ function updateExternalClassSpreadSheets_adminGradesSheet(tss, studentMasterSpre
 
   var newValue = "=IMPORTRANGE(\"" + studentMasterSpreadsheetId + "\",\"adminGrades!1:10\")";
   sheet.getRange("A1:A1").getCell(1, 1).setValue(newValue);
+}
+
+function updateStudentsExtraSpreadSheet(sheetName, classId, cellRow) {
+  /////////////////////////////////////////////////////////////////////////////
+  // Save new class spreadsheet id into the honor-gl-import or honor-vn-import
+  // sheets in the students-extra book
+  /////////////////////////////////////////////////////////////////////////////
+  var imptStr = "=IMPORTRANGE(\"" + classId + "\",\"honor-roll!B3:F" + (3+MAX_HONOR_ROLL-1) + "\")";
+  var studentsExtraId = getStr("STUDENTS_EXTRA_SPREADSHEET_ID");
+  var studentsExtraSs = SpreadsheetApp.openById(studentsExtraId);
+  var hrSheet = studentsExtraSs.getSheetByName("honor-" + sheetName.slice(0, 2)+"-import"); // honor-gl-import or honor-vn-import sheet
+  var hrRange = hrSheet.getRange(2, 1, 400, 15); //row, col, numRows, numCols
+  var hrCell  = hrRange.getCell(((cellRow-1)*MAX_HONOR_ROLL)+1, 2);
+  hrCell.setValue(imptStr);
 }
