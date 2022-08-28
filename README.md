@@ -15,18 +15,18 @@ The first time you run any menu item in GLVN menu, Google will ask you to author
  
 4. Test GLVN menu items in class spreadsheets and verify all functions. Administrators should test the class spreadsheets before teachers entering any data. If a bug is found after teachers entered data, we might need to spend more time to correct any issue. (normal)
  
-5. Update code for spreadsheets students-master, students-extra, and class-library. Code in class-library is used for all class spreadsheets. However, in some cases, the library was not refreshed. In these cases, administrators will need to copy code for all class spreadsheets as well. Code can be found here https://github.com/hungple/GLVN-database. Please see session 4 for how to copy the source code. (normal-hard)
+5. Update code for spreadsheets students-master, students-extra, and class-library. Code in class-library is used for all class spreadsheets. However, in some cases, the library was not refreshed. In these cases, administrators will need to copy code for all class spreadsheets as well. Code can be found here https://github.com/hungple/GLVN-database. Please see section IV for how to copy the source code. (normal-hard)
  
-6. Create custom GLxC or VNxC classes including GL9A (post confirmation). To create GLxC, clone from GL1A and update all ids. Similarly, to create VNxC, clone from VN1A. (hard)
+6. Create custom GLxC or VNxC classes including GL9A (post confirmation). To create GLxC, clone from GL1A and update all ids. Similarly, to create VNxC, clone from VN1A. Please see section V for detail. (hard)
  
 7. Become owner of GLVN-database spreadsheets. (very hard. However, if you are computer engineer/programmer, the code is very easy to understand)
  
 
 ### III. Owner’s responsibilities:
  
-1 Maintain source code in https://github.com/hungple/GLVN-database
+1. Maintain source code in https://github.com/hungple/GLVN-database
 
-2 Maintain all formulas, functions, and formats in all spreadsheets.
+2. Maintain all formulas, functions, and formats in all spreadsheets.
 
 
 ### IV. Copying source code to Google spreadsheets
