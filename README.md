@@ -54,15 +54,16 @@ Here is the instruction how to copy source code to spreadsheets.
 Here are flows of data between spreadsheets:
  
 #### GL1A spreadsheet:
-`students-master`.`Std_zzz` -> `students-master`.`studentsclass` -> `students-master`.`GL1A` -> `GL1A`.`contacts` -> `GL1A`.`attendance-HK1/2`, `GL1A`.`graces`
+- `students-master`.`Std_zzz` -> `students-master`.`studentsclass` -> `students-master`.`GL1A` -> `GL1A`.`contacts` -> `GL1A`.`attendance-HK1/2`, `GL1A`.`graces`
  
-#### All students:
-students-master.Std -> students-master.students -> students-extra.students-import ->students-extra.students-mini, students-extra.students-wide, students-extra.students-registration
+#### All students / First communion / Confirmation:
+- `students-master`.`Std_zzz` -> `students-master`.`students` -> `students-extra`.`students-import` -> `students-extra`.`students-mini`, `students-extra`.`students-wide`, `students-extra`.`students-registration`. 
+- `students-master`.`Std_zzz` -> `students-master`.`eucharist` -> `students-extra`.`eucharist-import` -> `students-extra`.`eucharist-certificates. The same applies to confirmation as well.
  
 #### Total points / final point:
-GL1A.grades [column F] -> students-master.GL1A[column P] ->  students-master.Std [column AG and AH] (by selecting menu item Save student final points )
+- `GL1A`.`grades[column F]` -> `students-master`.`GL1A[column P]` ->  `students-master`.`Std_zzz[column AG and AH]` (by selecting menu item Save student final points )
  
 #### Honor roll:
-GL1A.honor-roll -> students-extra.honor-gl-import ->  students-extra.honor-gl-1, honor-gl-2, honor-gl-3, students-extra.eucharist-certificates. The same applies to confirmation as well.
+- `GL1A`.`honor-roll` -> `students-extra`.`honor-gl-import` -> `students-extra`.`honor-gl-1`, `honor-gl-2`, `honor-gl-3`, `honor-gl-4`. The same applies to VN classes as well.
 
 
