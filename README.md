@@ -19,7 +19,7 @@ The first time you run any menu item in GLVN menu, Google will ask you to author
  
 6. Create custom GLxC or VNxC classes including GL9A (post confirmation). To create GLxC, clone from GL1A and update all ids. Similarly, to create VNxC, clone from VN1A. Please see section V for detail. (hard)
  
-7. Become owner of GLVN-database spreadsheets. (very hard. However, if you are computer engineer/programmer, the code is very easy to understand)
+7. Become an owner of GLVN-database spreadsheets. (very hard. However, if you are computer engineer/programmer, the code is very easy to understand)
  
 
 ### III. Owner’s responsibilities:
