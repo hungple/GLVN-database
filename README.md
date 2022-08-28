@@ -54,7 +54,7 @@ Here is the instruction how to copy source code to spreadsheets.
 Here are flows of data between spreadsheets:
  
 #### GL1A spreadsheet:
-students-master.Std -> students-master.studentsclass -> students-master.GL1A -> GL1A.contacts -> GL1A.attendance-HK1/2, GL1A.graces
+`students-master`.`Std_zzz` -> `students-master`.`studentsclass` -> `students-master`.`GL1A` -> `GL1A`.`contacts` -> `GL1A`.`attendance-HK1/2`, `GL1A`.`graces`
  
 #### All students:
 students-master.Std -> students-master.students -> students-extra.students-import ->students-extra.students-mini, students-extra.students-wide, students-extra.students-registration
