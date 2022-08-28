@@ -1,4 +1,4 @@
-var RELEASE = "20220815"
+var RELEASE = "20220826"
 
 // Std_VGz6v3
 var idCol               = 1;
@@ -751,7 +751,7 @@ function updateSheetsInThisSpreadSheet_ClassSheet(sheet, clsName, clsFolder) {
 
   sheet.getRange("A1:A1").getCell(1, 1).setValue(clsName);
 
-  var newValue
+  var newValue;
   if (clsName.substr(0,2) == "GL") {
     newValue = "=query(studentsclass!1:902, \"select A,B,C,D,E,K,L,N,O,V,U,S,Q where \" & if(left(A1,1)=\"G\",\"G\",\"I\") & \"=\" & mid(A1,3,1) & \" and \" & if(left(A1,1)=\"G\",\"H\",\"J\") & \"='\" & right(A1,1) & \"' order by C,E\")";
   }
@@ -823,72 +823,100 @@ function cloneClassesUsingGL1AorVN1AImpl2(sheetName, templateId) {
     if( clsName == "")
       break;
 
+    var classFile;
+    var classSs;
+
     var actionCell = range.getCell(cellRow, actionCol);
     action = actionCell.getValue();
 
-    if(action == 'x' && (clsName != "GL1A" || clsName != "VN1A")) {
+    if(action == 'x') {
       var folderId = range.getCell(cellRow, clsFolderIdCol).getValue();
       clsFolder = DriveApp.getFolderById(folderId);
 
-            /////////////////////////////////////////////////////////////////////////////
-      // Create GLxx-report-cards folder if not exist
-      /////////////////////////////////////////////////////////////////////////////
-      var reportCardsFolderId;
-      var reportCardfolders = clsFolder.getFoldersByName(clsName + "-Report-Cards");
-      if (reportCardfolders.hasNext()) {
-        reportCardsFolderId = reportCardfolders.next().getId();
-      }
-      else {
-        var reportFolder = clsFolder.createFolder(clsName + "-Report-Cards");
-        reportCardsFolderId = reportFolder.getId();
+      if(clsName != "GL1A" && clsName != "VN1A") { // don't replace GL1A or VN1A
+
+        /////////////////////////////////////////////////////////////////////////////
+        // Create GLxx-report-cards folder if not exist
+        /////////////////////////////////////////////////////////////////////////////
+        var reportCardsFolderId;
+        var reportCardfolders = clsFolder.getFoldersByName(clsName + "-Report-Cards");
+        if (reportCardfolders.hasNext()) {
+          reportCardsFolderId = reportCardfolders.next().getId();
+        }
+        else {
+          var reportFolder = clsFolder.createFolder(clsName + "-Report-Cards");
+          reportCardsFolderId = reportFolder.getId();
+        }
+
+        /////////////////////////////////////////////////////////////////////////////
+        // Rename GLxx to "bk"
+        /////////////////////////////////////////////////////////////////////////////
+        var files = clsFolder.getFilesByName(clsName);
+        if (files.hasNext()) {
+          var file = files.next();
+          if (file) {
+            file.setName("bk");
+          }
+        }
+
+
+        /////////////////////////////////////////////////////////////////////////////
+        // Make a copy and save it into the class folder
+        /////////////////////////////////////////////////////////////////////////////
+        var file = DriveApp.getFileById(templateId);
+        classFile = file.makeCopy(clsName, clsFolder);
+
+        /////////////////////////////////////////////////////////////////////////////
+        // Open the new spreadsheet and setup basic functions
+        /////////////////////////////////////////////////////////////////////////////
+        classSs = SpreadsheetApp.openById(classFile.getId());
+        classSs.getSheetByName("contacts").getRange("A1:A1").getCell(1, 1).setValue(clsName);
+        classSs.getSheetByName("admin").getRange("B3:B3").getCell(1, 1).setValue(reportCardsFolderId);
       }
 
-      /////////////////////////////////////////////////////////////////////////////
-      // Rename GLxx to "bk"
-      /////////////////////////////////////////////////////////////////////////////
-      var files = clsFolder.getFilesByName(clsName);
-      if (files.hasNext()) {
-        var file = files.next();
-        if (file) {
-          file.setName("bk");
+      if (! classFile) { // This must be GL1A or VN1A
+        var files = clsFolder.getFilesByName(clsName);
+        if (files.hasNext()) {
+          classFile = files.next();
+          classSs = SpreadsheetApp.openById(classFile.getId());
         }
       }
 
-      /////////////////////////////////////////////////////////////////////////////
-      // Make a copy and save it into the class folder
-      /////////////////////////////////////////////////////////////////////////////
-      var file = DriveApp.getFileById(templateId);
-      var newFile = file.makeCopy(clsName, clsFolder);
 
-      /////////////////////////////////////////////////////////////////////////////
-      // Open the new spreadsheet and setup basic functions
-      /////////////////////////////////////////////////////////////////////////////
-      var newss = SpreadsheetApp.openById(newFile.getId());
-      newss.getSheetByName("contacts").getRange("A1:A1").getCell(1, 1).setValue(clsName);
-      newss.getSheetByName("admin").getRange("B3:B3").getCell(1, 1).setValue(reportCardsFolderId);
-      newss.getSheetByName("grades").getRange("K3:K3").getCell(1, 1).setValue(genTestPoint(clsName, .01));
-      newss.getSheetByName("grades").getRange("K4:K4").getCell(1, 1).setValue(genTestPoint(clsName, .02));
-      newss.getSheetByName("grades").getRange("K5:K5").getCell(1, 1).setValue(genTestPoint(clsName, .03));
-      newss.getSheetByName("grades").getRange("K6:K6").getCell(1, 1).setValue(genTestPoint(clsName, .04));
+      if (classSs) {
+        /////////////////////////////////////////////////////////////////////////////
+        // For testing
+        /////////////////////////////////////////////////////////////////////////////
+        classSs.getSheetByName("grades").getRange("K3:K3").getCell(1, 1).setValue(genTestPoint(clsName, .01));
+        classSs.getSheetByName("grades").getRange("K4:K4").getCell(1, 1).setValue(genTestPoint(clsName, .02));
+        classSs.getSheetByName("grades").getRange("K5:K5").getCell(1, 1).setValue(genTestPoint(clsName, .03));
+        classSs.getSheetByName("grades").getRange("K6:K6").getCell(1, 1).setValue(genTestPoint(clsName, .04));
+        classSs.getSheetByName("grades").getRange("S3:S3").getCell(1, 1).setValue(genTestPoint(clsName, .01));
+        classSs.getSheetByName("grades").getRange("S4:S4").getCell(1, 1).setValue(genTestPoint(clsName, .02));
+        classSs.getSheetByName("grades").getRange("S5:S5").getCell(1, 1).setValue(genTestPoint(clsName, .03));
+        classSs.getSheetByName("grades").getRange("S6:S6").getCell(1, 1).setValue(genTestPoint(clsName, .04));
+      }
 
-      /////////////////////////////////////////////////////////////////////////////
-      // Save new class spreadsheet id into the class worksheet (ex: GL1A) sheet in the master book
-      /////////////////////////////////////////////////////////////////////////////
-      var tstr = "=IMPORTRANGE(\"" + newFile.getId() + "\",\"Grades!F3:F80\")";
-      ss.getSheetByName(clsName).getRange("O2:O2").getCell(1, 1).setValue(tstr);
+      if (classFile) {
+        /////////////////////////////////////////////////////////////////////////////
+        // Update students-master spreadsheet
+        // Save new class spreadsheet id into the class worksheet (ex: GL1A) sheet
+        /////////////////////////////////////////////////////////////////////////////
+        var tstr = "=IMPORTRANGE(\"" + classFile.getId() + "\",\"Grades!F3:F80\")";
+        ss.getSheetByName(clsName).getRange("O2:O2").getCell(1, 1).setValue(tstr);
 
-      /////////////////////////////////////////////////////////////////////////////
-      // Save new class spreadsheet id into the honor-gl-import or honor-vn-import
-      // sheets in the students-extra book
-      /////////////////////////////////////////////////////////////////////////////
-      var imptStr = "=IMPORTRANGE(\"" + newFile.getId() + "\",\"honor-roll!B3:F" + (3+MAX_HONOR_ROLL-1) + "\")";
-      var studentsExtraId = getStr("STUDENTS_EXTRA_SPREADSHEET_ID");
-      var studentsExtraSs = SpreadsheetApp.openById(studentsExtraId);
-      var hrSheet = studentsExtraSs.getSheetByName("honor-" + sheetName.slice(0, 2)+"-import"); // honor-gl-import or honor-vn-import sheet
-      var hrRange = hrSheet.getRange(2, 1, 400, 15); //row, col, numRows, numCols
-      var hrCell  = hrRange.getCell(((cellRow-1)*MAX_HONOR_ROLL)+1, 2);
-      hrCell.setValue(imptStr);
-
+        /////////////////////////////////////////////////////////////////////////////
+        // Update students-extra spreadsheet
+        // Save new class spreadsheet id into the honor-gl-import or honor-vn-import sheet
+        /////////////////////////////////////////////////////////////////////////////
+        var imptStr = "=IMPORTRANGE(\"" + classFile.getId() + "\",\"honor-roll!B3:F" + (3+MAX_HONOR_ROLL-1) + "\")";
+        var studentsExtraId = getStr("STUDENTS_EXTRA_SPREADSHEET_ID");
+        var studentsExtraSs = SpreadsheetApp.openById(studentsExtraId);
+        var hrSheet = studentsExtraSs.getSheetByName("honor-" + sheetName.slice(0, 2)+"-import"); // honor-gl-import or honor-vn-import sheet
+        var hrRange = hrSheet.getRange(2, 1, 500, 15); //row, col, numRows, numCols
+        var hrCell  = hrRange.getCell(((cellRow-1)*MAX_HONOR_ROLL)+1, 2);
+        hrCell.setValue(imptStr);
+      }
 
 
       // Clear action x
