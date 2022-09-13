@@ -13,7 +13,7 @@
  
 2. Register new students during registration time or update student information such as updating email addresses. When teachers send out report cards, some email might be bounded due to invalid email addresses. (easy)
  
-3. Share (or unshare) class folders and spreadsheets. To share class folders and spreadsheets to teachers, go to students-master spreadsheet > gl-classes/vn-classes tab > enter an x in the action coloumn and then select GLVN menu > Share classes. Note: the first you use GLVN menu, Google will ask you to authorize the app script before you can run the script. Please see section IV for more information. (normal)
+3. Share (or unshare) class folders and spreadsheets. To share class folders and spreadsheets to teachers, go to students-master spreadsheet > gl-classes/vn-classes tab > enter an x in the action column and then select GLVN menu > Share classes. Note: the first you use GLVN menu, Google will ask you to authorize the app script before you can run the script. Please see section IV for more information. (normal)
 
 4. Setting up for new school year by running the 6 annual admin steps in students-master spreadsheet. The 6 annual admin steps need to be executed **only once** after we are done with the current school year and getting ready for new registration. (normal)
  
@@ -53,11 +53,11 @@ Here is the instruction how to copy source code to spreadsheets.
 8. Go back to your Google sheet and refresh it.
 
 
-### VI. Data flow
+### VI. Dataflow
  
-Here are flows of data between spreadsheets:
+Even though there are many spreadsheets in GLVN databae, the real student data is entered in the students-master spreadsheet. Student grades are entered in each class spreadsheet. The rest of data in other spreadsheets is imported from different spreadsheets or different tabs. Here are dataflow paths between spreadsheets:
  
-#### GL1A spreadsheet:
+#### GLxx/VNxx spreadsheet (GL1A is used in this example. The same applies to all other classes):
 - `students-master`.`Std_zzz` -> `students-master`.`studentsclass` -> `students-master`.`GL1A` -> `GL1A`.`contacts` -> `GL1A`.`attendance-HK1`, `GL1A`.`attendance-HK2`, and `GL1A`.`graces`
  
 #### All students / First communion / Confirmation:
@@ -67,7 +67,7 @@ Here are flows of data between spreadsheets:
 #### Total points / final point:
 - `GL1A`.`grades[column F]` -> `students-master`.`GL1A[column P]` ->  `students-master`.`Std_zzz[column AG and AH]` (by selecting menu item Save student final points )
  
-#### Honor roll:
+#### Honor roll (GL1A is used in this example. The same applies to all other classes):
 - `GL1A`.`honor-roll` -> `students-extra`.`honor-gl-import` -> `students-extra`.`honor-gl-1`, `honor-gl-2`, `honor-gl-3`, `honor-gl-4`. The same applies to VN classes as well.
 
 
