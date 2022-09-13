@@ -56,8 +56,10 @@ Here is the instruction how to copy source code to spreadsheets.
 ### VI. Dataflow
  
 Even though there are many spreadsheets in GLVN databae, the real student data is entered in the students-master spreadsheet. Student grades are entered in each class spreadsheet. The rest of data in other spreadsheets is imported from different spreadsheets or different tabs. Here are dataflow paths between spreadsheets:
- 
-#### GLxx/VNxx spreadsheet (GL1A is used in this example. The same applies to all other classes):
+
+**Note:** GL1A is used in the example below. The same applies to all other classes.
+
+#### GLxx/VNxx spreadsheet:
 - `students-master`.`Std_zzz` -> `students-master`.`studentsclass` -> `students-master`.`GL1A` -> `GL1A`.`contacts` -> `GL1A`.`attendance-HK1`, `GL1A`.`attendance-HK2`, and `GL1A`.`graces`
  
 #### All students / First communion / Confirmation:
@@ -65,9 +67,9 @@ Even though there are many spreadsheets in GLVN databae, the real student data i
 - `students-master`.`Std_zzz` -> `students-master`.`eucharist` -> `students-extra`.`eucharist-import` -> `students-extra`.`eucharist-certificates`. The same applies to confirmation as well.
  
 #### Total points / final point:
-- `GL1A`.`grades[column F]` -> `students-master`.`GL1A[column P]` ->  `students-master`.`Std_zzz[column AG and AH]` (by selecting menu item Save student final points )
+- `GL1A`.`grades[column F]` -> `students-master`.`GL1A[column P]` ->  `students-master`.`Std_zzz[column AG and AH]` (by selecting GLVN menu item > Save student final points )
  
-#### Honor roll (GL1A is used in this example. The same applies to all other classes):
+#### Honor roll:
 - `GL1A`.`honor-roll` -> `students-extra`.`honor-gl-import` -> `students-extra`.`honor-gl-1`, `honor-gl-2`, `honor-gl-3`, `honor-gl-4`. The same applies to VN classes as well.
 
 
