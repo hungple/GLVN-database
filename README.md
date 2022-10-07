@@ -28,10 +28,11 @@
 
 ### III. Owner’s responsibilities:
  
-1. Maintain source code in https://github.com/hungple/GLVN-database
+1. Watch for activities in all GLVN databases
 
-2. Maintain all formulas, functions, and formats in all spreadsheets.
+2. Maintain all formulas, functions, and formats in all spreadsheets
 
+3. Maintain source code in https://github.com/hungple/GLVN-database
 
 ### IV. Authorizing Google apps script
 
