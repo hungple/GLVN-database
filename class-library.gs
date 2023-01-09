@@ -1,4 +1,4 @@
-var RELEASE = "20220814"
+var RELEASE = "20230108"
 
 
 var DECIMAL_COL_LEN      = 5; //IMPORTANT: any point column must has a name which its lenght = 5. For example: Part1 or Hwrk1
@@ -13,6 +13,8 @@ var pEMailCol      = 5;
 var totalPointsCol = 6;
 var actionCol      = 7;
 
+// For debugging purpose
+var DEBUG_SPREADSHEET_ID = "1eyllhOnvlg7077oN7KFD8gWRG8uZlqSttJM3HsgOJno"; // MHT GL8B
 
 /**
  * The onOpen() function, when defined, is automatically invoked whenever the
@@ -61,18 +63,30 @@ function showRelease() {
 
 function getReportCardTemplateId() {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("admin");
+  if (sheet == null) { // use GL8B for debugging
+    var gl8BSpreadSheet = SpreadsheetApp.openById(DEBUG_SPREADSHEET_ID);
+    sheet = gl8BSpreadSheet.getSheetByName("admin");
+  }
   return sheet.getRange("B2:B2").getCell(1, 1).getValue();
 }
 
 
 function getReportCardFolderId() {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("admin");
+  if (sheet == null) { // use GL8B for debugging
+    var gl8BSpreadSheet = SpreadsheetApp.openById(DEBUG_SPREADSHEET_ID);
+    sheet = gl8BSpreadSheet.getSheetByName("admin");
+  }
   return sheet.getRange("B3:B3").getCell(1, 1).getValue();
 }
 
 
 function getSignature() {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("grades");
+  if (sheet == null) { // use GL8B for debugging
+    var gl8BSpreadSheet = SpreadsheetApp.openById(DEBUG_SPREADSHEET_ID);
+    sheet = gl8BSpreadSheet.getSheetByName("grades");
+  }
   return sheet.getRange("F1:F1").getCell(1, 1).getValue();
 }
 
@@ -108,6 +122,10 @@ function createDoc(isHK2) {
   var folerId     = getReportCardFolderId();
 
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("grades");
+  if (sheet == null) { // use GL8B for debugging
+    var gl8BSpreadSheet = SpreadsheetApp.openById(DEBUG_SPREADSHEET_ID);
+    sheet = gl8BSpreadSheet.getSheetByName("grades");
+  }
   var range = sheet.getRange(1, 1, 70, 30); //row, col, numRows, numCols
   //////////////////////////////////////////////////////////////////////////////
 
@@ -228,7 +246,7 @@ function createDoc(isHK2) {
         else if(colNames[i].length == EXTRA_CREDIT_COL_LEN) {
           if(typeof(colPoints[i]) == 'number') {
             copyBody.replaceText('@' + colNames[i] + '@', colPoints[i].toFixed(2));
-            hk1Total = hk1Total + parseFloat(colPoints[i]) + 10;
+            hk1Total = hk1Total + parseFloat(colPoints[i]);
           }
           else
           {
@@ -292,7 +310,7 @@ function createDoc(isHK2) {
           else if(colNames[i].length == EXTRA_CREDIT_COL_LEN) {
             if(typeof(colPoints[i]) == 'number') {
               copyBody.replaceText('@' + colNames[i] + '@', colPoints[i].toFixed(2));
-              hk2Total = hk2Total + parseFloat(colPoints[i]) + 10;
+              hk2Total = hk2Total + parseFloat(colPoints[i]);
             }
             else
             {
