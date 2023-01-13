@@ -36,7 +36,7 @@
 
 ### IV. Authorizing Google apps script
 
-The first time you run any menu item in GLVN menu, Google will ask you to authorize or trust the script that is used in GLVN spreadsheets. To authorize, please follow the instruction here https://kierandixon.com/authorize-google-apps-script/ or watch the first half of this video clip https://www.youtube.com/watch?v=4sFTQ9UAtuo&ab_channel=SheetsNinja
+From time to time, Google might ask you to authorize or trust the script that is used in GLVN spreadsheets. To authorize, please follow the instruction here https://kierandixon.com/authorize-google-apps-script/ or watch the first half of this video clip https://www.youtube.com/watch?v=4sFTQ9UAtuo&ab_channel=SheetsNinja
 
 
 ### V. Copying source code to Google spreadsheets
