@@ -1,10 +1,10 @@
-var RELEASE = "202200809"
+var RELEASE = "20230413"
 
 // students-registration
-var idCol       = 1;
-var snCol       = 2;
-var fnCol       = 3;
-var mnCol       = 4;
+var idCol       = 1;  
+var snCol       = 2; 
+var fnCol       = 3; 
+var mnCol       = 4; 
 var lnCol       = 5;
 var geCol       = 6;
 var glnCol      = 7;
@@ -76,7 +76,7 @@ function onOpen() {
   {
     name : "Release: " + RELEASE,
     functionName : "showRelease"
-  }
+  }  
 
   ];
   sheet.addMenu("GLVN", entries);
@@ -84,7 +84,7 @@ function onOpen() {
 
 function showRelease() {
   var ui = SpreadsheetApp.getUi();
-
+  
   var response = ui.alert(
       'Information!!!',
       'Release: ' + RELEASE,
@@ -152,7 +152,7 @@ function getRegFolderId() {
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 function emailRegForms() {
   var ui = SpreadsheetApp.getUi(); // Same variations.
-
+  
   var response = ui.alert(
       'Warning!!!',
       'Do you want to email the registration forms to the parents?',
@@ -170,46 +170,46 @@ function createRegForms() {
 }
 
 function createRegFormsImpl() {
-
+  
   ////////////////////////////////////////////////////////////////////////////////////
 
-
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("registration-print");
+  
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("students-registration");
   var range = sheet.getRange(1, 1, 700, 25); //row, col, numRows, numCols <= need to update numRows
-  var rowStartCell = sheet.getRange("Z1:Z1").getCell(1, 1); // <= need to update column
-  Logger.log("rowStartCell: " + rowStartCell);
-
+  var rowStartCell = sheet.getRange("AA1:AA1").getCell(1, 1); // <= need to update column
+  Logger.log("rowStartCell: " + rowStartCell.getValue());
+  
   ////////////////////////////////////////////////////////////////////////////////////
 
   var schName     = getSchoolName();
-
+  
   var docName, id, orderby, fn, ln;
-
+  
   for (var cellRow = rowStartCell.getValue()+1; ; cellRow++) {
-    id = range.getCell(cellRow, idCol).getValue();
+    id = range.getCell(cellRow, idCol).getValue(); 
     if(id == "") break;
 
     var gln, vnn;
     gln = range.getCell(cellRow, glnCol).getValue();
     vnn = range.getCell(cellRow, vnnCol).getValue();
-
+    
     if ((gln != '' && gln.substring(0,1) == 8) && (vnn != '' && vnn.substring(0,1) == 8)) { continue; }
-
+    
     if (schName == 'OLR') {
       orderby  = range.getCell(cellRow, lnCol).getValue().substring(0, 9) + '-' + range.getCell(cellRow, addrCol).getValue().substring(0, 9);
     }
     else { //MHT
       orderby  = range.getCell(cellRow, addrCol).getValue().substring(0, 9) + '-GL' + gln;
     }
-
+    
     fn       = range.getCell(cellRow, fnCol).getValue();
     ln       = range.getCell(cellRow, lnCol).getValue();
-
+    
     docName = orderby + '-' + fn + '-' + ln + '-' + id + "-regForm";
 
     var formId      = getRegTemplateId();
     var folerId     = getRegFolderId();
-
+    
     // Get document template, copy it as a new temp doc, and save the Doc’s id
     var copyId = DriveApp.getFileById(formId).makeCopy(docName).getId();
 
@@ -251,7 +251,7 @@ function createRegFormsImpl() {
       copyBody.replaceText('@bad@', ' ');
       copyBody.replaceText('@bal@', ' ');
     }
-
+    
     Logger.log("EUD");
     if (range.getCell(cellRow, eudCol).getValue() != '') {
       copyBody.replaceText('@eu@', 'Y');
@@ -264,7 +264,7 @@ function createRegFormsImpl() {
       copyBody.replaceText('@eud@', ' ');
       copyBody.replaceText('@eul@', ' ');
     }
-
+    
     if (range.getCell(cellRow, codCol).getValue() != '') {
       copyBody.replaceText('@co@', 'Y');
       copyBody.replaceText('@cod@', Utilities.formatDate(new Date(range.getCell(cellRow, codCol).getValue()), "GMT", "MMM d, yyyy"));
@@ -301,22 +301,22 @@ function createRegFormsImpl() {
 
     // Convert temporary document to PDF
     var pdf = DriveApp.getFileById(copyId).getAs("application/pdf");
-
+    
     // Delete temp file
     DriveApp.getFileById(copyId).setTrashed(true);
-
+      
     // Delete old file
     //var files = DriveApp.getFolderById(folerId).getFilesByName(docName + ".pdf");
     //while (files.hasNext()) {
       //var file = files.next();
       //if(file.getOwner().getEmail() == Session.getActiveUser()) {
-        //file.setTrashed(true);
-      //}
+        //file.setTrashed(true); 
+      //}        
     //}
 
     // Save pdf
     DriveApp.getFolderById(folerId).createFile(pdf);
-
+    
     // Update current index
     rowStartCell.setValue(cellRow);
 
@@ -324,12 +324,12 @@ function createRegFormsImpl() {
     //if(email != "") {
     //    var body = "Kính Gửi Quý Phụ Huynh học sinh " + fName + " " + lName + ","
     //     + "<br>Xin phụ huynh xem đơn ghi danh và thông báo đính kèm. Xin cám ơn.<br>Chương Trình GLVN Andre Dũng Lạc.";
-
+      
         //Logger.log("Email address:" + email + "<");
         //email = "hle007@yahoo.com";
     //    MailApp.sendEmail(email, "Đơn Ghi Danh Niên Khóa 2018-2019", body, {htmlBody: body, attachments: pdf});
-    //}
-
+    //} 
+    
   }
 }
 
@@ -341,7 +341,7 @@ function createRegFormsImpl() {
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 function emailNewSchoolYearLetters() {
   var ui = SpreadsheetApp.getUi(); // Same variations.
-
+  
   var response = ui.alert(
       'Warning!!!',
       'Do you want to email to the parents?',
@@ -356,14 +356,14 @@ function emailNewSchoolYearLetters() {
 
 
 function emailNewSchoolYearLettersImpl() {
-
+  
   var folerId      = "0B3pmm9KdF9FjZFNsN3VQS0w4N0E";
   var formId       = "14W4HjxDuQSGqJgPNNWSOX96WvKAlyKvcvre9WED_WXk";
-
-  var idCol       = 1;
-  var sNameCol    = 2;
-  var fNameCol    = 3;
-  var mNameCol    = 4;
+  
+  var idCol       = 1;  
+  var sNameCol    = 2; 
+  var fNameCol    = 3; 
+  var mNameCol    = 4; 
   var lNameCol    = 5;
 
   var glLevelCol  = 8;
@@ -371,34 +371,34 @@ function emailNewSchoolYearLettersImpl() {
   var vnLevelCol  = 10;
   var vnNameCol   = 11;
   var tsSizeCol   = 12;
-  var faNameCol   = 13;
+  var faNameCol   = 13; 
   var moNameCol   = 14;
   var addrCol     = 15;
   var phone1Col   = 16;
   var phone2Col   = 17;
   var emailCol    = 18;
   var serviceDateCol   = 19;
-
+  
   var locCol      = 23;
-
+  
   var startCol    = 25;
-
+  
   var folder = DriveApp.getFolderById(folerId);
-
+    
 
   ////////////////////////////////// Get index //////////////////////////////////////
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Main");
-  var range = sheet.getRange(1, 1, 700, 27); //row, col, numRows, numCols
+  var range = sheet.getRange(1, 1, 700, 27); //row, col, numRows, numCols 
   var rowStartCell = range.getCell(2, startCol);
   var rowStart = rowStartCell.getValue()+1;
-
+    
   var reportFolder = DriveApp.getFolderById(folerId);
-
+  
   var id, glName, vnName, fName, lName, fullName, email, docName, address, sdate_tmp, sdate, loc_tmp, loc;
-
+  
   // iterate through all cells in the range
   for (var cellRow = rowStart; ; cellRow++) {
-    id = range.getCell(cellRow, idCol).getValue();
+    id = range.getCell(cellRow, idCol).getValue(); 
 
     if(id == "") break;
 
@@ -410,9 +410,9 @@ function emailNewSchoolYearLettersImpl() {
     email       = range.getCell(cellRow, emailCol).getValue();
     sdate       = Utilities.formatDate(range.getCell(cellRow, serviceDateCol).getValue(), "GMT", "MMM d, yyyy");
     loc_tmp     = range.getCell(cellRow, locCol).getValue();
-
+    
     if(email == "") {
-
+    
     docName = glName + '_' + fName + '_' + lName + ' ' + id + "_nsyLetter";
     fullName = fName + ' ' + lName;
     if(loc_tmp == 1) {
@@ -421,10 +421,10 @@ function emailNewSchoolYearLettersImpl() {
     else {
       loc = "Nguyện Đường Các Thánh Tử Đạo.";
     }
-
+    
     //sdate = new Date(sdate_tmp);
 
-
+    
     // Get document template, copy it as a new temp doc, and save the Doc’s id
     var copyId = DriveApp.getFileById(formId).makeCopy(docName).getId();
 
@@ -447,17 +447,17 @@ function emailNewSchoolYearLettersImpl() {
 
     // Convert temporary document to PDF
     var pdf = DriveApp.getFileById(copyId).getAs("application/pdf");
-
+    
     // Delete temp file
     DriveApp.getFileById(copyId).setTrashed(true);
-
+      
     // Delete old file
     //var files = folder.getFilesByName(docName + ".pdf");
     //while (files.hasNext()) {
       //var file = files.next();
       //if(file.getOwner().getEmail() == Session.getActiveUser()) {
-        //file.setTrashed(true);
-      //}
+        //file.setTrashed(true); 
+      //}        
     //}
 
     // Save pdf
@@ -472,22 +472,22 @@ function emailNewSchoolYearLettersImpl() {
     if(email != "") {
         var body = "Kính Gửi Quý Phụ Huynh Học Sinh em " + fullName + ","
          + "<br>Xin quí Phụ Huynh xem thư thông báo đính kèm. Xin cám ơn.<br>Chương Trình GLVN Andre Dũng Lạc.";
-
+      
         //Logger.log("Email address:" + email + "<");
         //email = "hle007@yahoo.com";
         //MailApp.sendEmail(email, "Thông Báo Phụ Huynh, Khai Giảng và họp niên khóa 2017-2018", body, {htmlBody: body, attachments: pdf});
-    }
-
+    } 
+    
   }
 }
 
 function createEuchCertificates() {
   // last update: 4/23/2022
-
+  
   ////////////////////////////////////////////////////////////////////////////////////
   var folerId     = "1Sn5I1a0I-j0WGMA9KROhkNQww5rojHCn";
   var formId      = "1W2h4WQq5KqOlDJAVWH1pljc7SwcYfcr3eLofhY9Xqvc";
-
+ 
   var idCol       = 1;
   var sNameCol    = 2;
   var fNameCol    = 3;
@@ -500,15 +500,15 @@ function createEuchCertificates() {
   ////////////////////////////////////////////////////////////////////////////////////
 
   var docName, id, sName, fName, mName, lName;
-
+  
   // iterate through all cells in the range
   for (var cellRow = rowStartCell.getValue()+1; ; cellRow++) {
-
+    
     id = range.getCell(cellRow, idCol).getValue();
     if(id == "") { break; }
 
     fName = range.getCell(cellRow, fNameCol).getValue();
-    sName = range.getCell(cellRow, sNameCol).getValue();
+    sName = range.getCell(cellRow, sNameCol).getValue(); 
     mName = range.getCell(cellRow, mNameCol).getValue();
     lName = range.getCell(cellRow, lNameCol).getValue();
 
@@ -516,7 +516,7 @@ function createEuchCertificates() {
 
     // Get document template, copy it as a new temp doc, and save the Doc’s id
     var copyId = DriveApp.getFileById(formId).makeCopy(docName).getId();
-
+    
     // Open the temporary document
     var copyDoc = DocumentApp.openById(copyId);
 
@@ -537,19 +537,19 @@ function createEuchCertificates() {
 
     // Delete temp file
     DriveApp.getFileById(copyId).setTrashed(true);
-
+ 
     // Delete old file
     var files = DriveApp.getFolderById(folerId).getFilesByName(docName + ".pdf");
     while (files.hasNext()) {
       var file = files.next();
       if(file.getOwner().getEmail() == Session.getActiveUser()) {
-        file.setTrashed(true);
-      }
+        file.setTrashed(true); 
+      }        
     }
-
+    
     // Save pdf
     DriveApp.getFolderById(folerId).createFile(pdf);
-
+    
     // Update current index
     rowStartCell.setValue(cellRow);
   }
@@ -558,24 +558,24 @@ function createEuchCertificates() {
 
 function createConfCertificates() {
   // last update: 4/23/2022
-
+  
   ////////////////////////////////////////////////////////////////////////////////////
   var folerId     = "153ucgAbXdJjuWgA7_60T3HktlEf69HLw";
   var formId      = "1_i2AyOOX62KcB16c97BQZLt9B5KMZ6i2XmsvSvevJdc";
-
-  var idCol       = 1;
+  
+  var idCol       = 1; 
   var sNameCol    = 2;
   var fNameCol    = 3;
   var mNameCol    = 4;
   var lNameCol    = 5;
-
+  
   var classesSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("conf-certificates");
   var range = classesSheet.getRange(1, 1, 100, 12); //row, col, numRows, numCols
   var rowStartCell = sheet.getRange("G1:G1").getCell(1, 1);
   ////////////////////////////////////////////////////////////////////////////////////
-
+  
   var docName, id, sName, fName, mName, lName;
-
+  
   // iterate through all cells in the range
   for (var cellRow = rowStartCell.getValue()+1; ; cellRow++) {
 
@@ -583,15 +583,15 @@ function createConfCertificates() {
     if(id == "") { break; }
 
     fName = range.getCell(cellRow, fNameCol).getValue();
-    sName = range.getCell(cellRow, sNameCol).getValue();
+    sName = range.getCell(cellRow, sNameCol).getValue(); 
     mName = range.getCell(cellRow, mNameCol).getValue();
     lName = range.getCell(cellRow, lNameCol).getValue();
-
+    
     docName = fName + '-' + lName + '-' + id + "-certificate";
-
+    
     // Get document template, copy it as a new temp doc, and save the Doc’s id
     var copyId = DriveApp.getFileById(formId).makeCopy(docName).getId();
-
+    
     // Open the temporary document
     var copyDoc = DocumentApp.openById(copyId);
 
@@ -612,19 +612,19 @@ function createConfCertificates() {
 
     // Delete temp file
     DriveApp.getFileById(copyId).setTrashed(true);
-
+  
     // Delete old file
     var files = DriveApp.getFolderById(folerId).getFilesByName(docName + ".pdf");
     while (files.hasNext()) {
       var file = files.next();
       if(file.getOwner().getEmail() == Session.getActiveUser()) {
-        file.setTrashed(true);
-      }
+        file.setTrashed(true); 
+      }        
     }
-
+    
     // Save pdf
     DriveApp.getFolderById(folerId).createFile(pdf);
-
+    
     // Update current index
     rowStartCell.setValue(cellRow);
   }
@@ -636,34 +636,34 @@ function createLetters() {
   ////////////////////////////////////////////////////////////////////////////////////
   var folerId     = "0B3pmm9KdF9FjUjhLNkx5Rkx0eVE";
   var formId      = "1UfaYxDrU1Nd75dnj6N022p22hU8eG4soKyjKnq_8OIE";
-
+  
   var idCol       = 1;
   var sNameCol    = 2;
   var fNameCol    = 3;
   var mNameCol    = 4;
   var lNameCol    = 5;
-
+  
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Print");
   var range = sheet.getRange(1, 1, 130, 20); //row, col, numRows, numCols <= need to update numRows
   var rowStartCell = range.getCell(2, 6); // <= need to update column
   ////////////////////////////////////////////////////////////////////////////////////
 
   var docName, id, fName, lName;
-
+  
   // iterate through all cells in the range
   for (var cellRow = rowStartCell.getValue()+1; ; cellRow++) {
-
+    
     id = range.getCell(cellRow, idCol).getValue();
     if(id == "") { break; }
 
     fName = range.getCell(cellRow, fNameCol).getValue();
     lName = range.getCell(cellRow, lNameCol).getValue();
-
+    
     docName = fName + '-' + lName + '-' + id + "-letter";
 
     // Get document template, copy it as a new temp doc, and save the Doc’s id
     var copyId = DriveApp.getFileById(formId).makeCopy(docName).getId();
-
+    
     // Open the temporary document
     var copyDoc = DocumentApp.openById(copyId);
 
@@ -672,7 +672,7 @@ function createLetters() {
 
     // Replace place holder keys,in our google doc template
     copyBody.replaceText('@fname@', fName);
-
+      
     // Save and close the temporary document
     copyDoc.saveAndClose();
 
@@ -681,14 +681,14 @@ function createLetters() {
 
     // Delete temp file
     DriveApp.getFileById(copyId).setTrashed(true);
-
+ 
     // Delete old file
     var files = DriveApp.getFolderById(folerId).getFilesByName(docName + ".pdf");
     while (files.hasNext()) {
       var file = files.next();
       if(file.getOwner().getEmail() == Session.getActiveUser()) {
-        file.setTrashed(true);
-      }
+        file.setTrashed(true); 
+      }        
     }
 
     // Save pdf
@@ -704,39 +704,39 @@ function createLetters() {
 
 function emailParents() {
   return;
-
+  
   var folerId     = "1tErqKzDkNu20Ud9axdcbk-DfJI2p1v8Q";
   var formId      = "1UCgE_NVE0SqsjuomxdefnDJpe-C5m8dumZUEiHaAQn8";
 
   var docName     = "XTRLLD";
-
-  var idCol       = 1;
-  var fNameCol    = 3;
+    
+  var idCol       = 1;  
+  var fNameCol    = 3; 
   var lNameCol    = 5;
   var addrCol     = 9;
   //var emailCol    = 13;
   //var serviceDateCol = 15;
-
+  
   var folder = DriveApp.getFolderById(folerId);
-
+    
   var sm = isScriptMode();
   if(sm!="yes") {
     throw new Error("Script mode: " + sm);
     return;
   }
-
+  
   //////////////////// Get global variables from the Admin sheet /////////////////////
   var parentSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("ParrentEmails");
-  var parentRange = parentSheet.getRange(1, 1, 700, 15); //row, col, numRows, numCols
+  var parentRange = parentSheet.getRange(1, 1, 700, 15); //row, col, numRows, numCols 
   var rowStartCell = parentRange.getCell(2, 6);
   var rowStart = rowStartCell.getValue() + 1;
-
-
+    
+ 
   var id, fname, lname, sname, addr, docPrefix;
-
+  
   // iterate through all cells in the range
   for (var cellRow = rowStart; ; cellRow++) {
-    id         = parentRange.getCell(cellRow, idCol).getValue();
+    id         = parentRange.getCell(cellRow, idCol).getValue(); 
     fname     = parentRange.getCell(cellRow, fNameCol).getValue();
     lname     = parentRange.getCell(cellRow, lNameCol).getValue();
     //glLevel    = parentRange.getCell(cellRow, glLevelCol).getValue();
@@ -746,9 +746,9 @@ function emailParents() {
     addr       = parentRange.getCell(cellRow, addrCol).getValue();
     //email      = parentRange.getCell(cellRow, emailCol).getValue();
     //serviceDate = Utilities.formatDate(parentRange.getCell(cellRow, serviceDateCol).getValue(), "GMT", "MMM d, yyyy");
-
+    
     if(id == "") break;
-
+    
     // prepare string for substituion
     sname = fname + " " + lname;
     //pname = "Parents of " + sname;
@@ -760,23 +760,23 @@ function emailParents() {
     //if(vnLevel != "") {
       //vnnam = "VN" + vnLevel + vnName;
     //}
-
+    
     docPrefix = id;
     //if(email == "") {
       //docPrefix = "_";
     //}
-
+      
     var subject = id + "_" + docName + "_" + sname;
-
+    
     // Get document template, copy it as a new temp doc, and save the Doc’s id
     var copyId = DriveApp.getFileById(templateId).makeCopy(subject).getId();
-
+    
     // Open the temporary document
     var copyDoc = DocumentApp.openById(copyId);
-
+    
     // Get the document’s body section
     var copyBody = copyDoc.getActiveSection();
-
+    
     // Replace place holder,in our google doc template
     copyBody.replaceText('@sname@', sname);
     copyBody.replaceText('@address@', addr);
@@ -785,13 +785,13 @@ function emailParents() {
     //copyBody.replaceText('@vnname@', vnnam);
     //copyBody.replaceText('@date@', serviceDate);
     //copyBody.replaceText('@loc@', loc);
-
+    
     // Save and close the temporary document
     copyDoc.saveAndClose();
-
+    
     // Convert temporary document to PDF
     var pdf = DriveApp.getFileById(copyId).getAs("application/pdf");
-
+    
     // save pdf
     folder.createFile(pdf);
 
@@ -802,7 +802,7 @@ function emailParents() {
     Logger.log(Session.getActiveUser().getEmail());
     var email2 = Session.getEffectiveUser().getEmail();
     Logger.log(email2);
-
+ 
     // Attach PDF and send the email
     if(email != "") {
       //var body = "Mến chào quí Phụ Huynh,<br>Xin quí Phụ Huynh đem theo đơn ghi danh khi đi ghi danh cho em " + fname + " " + lname + ".  Xin cám ơn. \nTrường GLVN Andre Dũng Lạc.";
@@ -810,12 +810,12 @@ function emailParents() {
       Logger.log("Email address:" + email + "<");
       email = "hle007@yahoo.com";
       MailApp.sendEmail(email, subject, body, {htmlBody: body, attachments: pdf});
-    }
-*/
-
+    } 
+*/    
+    
     // Update current index
     rowStartCell.setValue(cellRow);
-
+    
   }
 }
 
@@ -836,20 +836,20 @@ function getStr(key) {
 
 function createAwardCertificatesGL() {
   var folerId     = getStr("GL_CERTIFICATE_FOLDER_ID");
-
+  
   createCertificates(folerId, "gl-all");
 }
 
 function createAwardCertificatesVN() {
   var folerId     = getStr("VN_CERTIFICATE_FOLDER_ID");
-
+  
   createCertificates(folerId, "vn-all");
 }
 
 
 function createCertificates(folerId, sheetname) {
   // last update: 5/8/2022
-
+  
   var formId                      = getStr("CERTIFICATE_TEMPLATE_ID");
   var first_title                 = getStr("FIRST_TITLE");
   var second_title                = getStr("SECOND_TITLE");
@@ -870,23 +870,23 @@ function createCertificates(folerId, sheetname) {
   var rowStartCell = sheet.getRange("G1:G1").getCell(1, 1); // <= need to update column
   ////////////////////////////////////////////////////////////////////////////////////
   Logger.log("start cell: " + rowStartCell.getValue());
-
+  
   var cName, sName, fName, lName, ranking;
-
+  
   // iterate through all cells in the range
   for (var cellRow = rowStartCell.getValue(); ; cellRow++) {
-
-    cName = range.getCell(cellRow, cNameCol).getValue();
+    
+    cName = range.getCell(cellRow, cNameCol).getValue(); 
     if(cName == "") { break; }
 
-    sName   = range.getCell(cellRow, sNameCol).getValue();
-    fName   = range.getCell(cellRow, fNameCol).getValue();
-    lName   = range.getCell(cellRow, lNameCol).getValue();
-    ranking = range.getCell(cellRow, rankingCol).getValue();
-
-
+    sName   = range.getCell(cellRow, sNameCol).getValue(); 
+    fName   = range.getCell(cellRow, fNameCol).getValue(); 
+    lName   = range.getCell(cellRow, lNameCol).getValue(); 
+    ranking = range.getCell(cellRow, rankingCol).getValue(); 
+    
+    
     docName = ranking + '-' + cName + '-' + fName + '-' + lName;
-
+      
     // Get document template, copy it as a new temp doc, and save the Doc’s id
     var copyId = DriveApp.getFileById(formId).makeCopy(docName).getId();
 
@@ -896,7 +896,7 @@ function createCertificates(folerId, sheetname) {
     // Get the document’s body section
     var copyBody = copyDoc.getActiveSection();
 
-    // Replace place holder keys,in our google doc template
+    // Replace place holder keys,in our google doc template  
     if (ranking == 1) {
       copyBody.replaceText('@Tit@', first_title);
       copyBody.replaceText('@Mes@', first_second_third_message);
@@ -919,7 +919,7 @@ function createCertificates(folerId, sheetname) {
     }
     else {
       copyBody.replaceText('@SNa@', fName + ' ' + lName);
-    }
+    }  
 
     if (cName.charAt(0) == 'G') {
       copyBody.replaceText('@CNa@', 'Lớp Giáo Lý ' + cName);
@@ -942,10 +942,10 @@ function createCertificates(folerId, sheetname) {
     while (files.hasNext()) {
       var file = files.next();
       if(file.getOwner().getEmail() == Session.getActiveUser()) {
-        file.setTrashed(true);
-      }
+        file.setTrashed(true); 
+      }        
     }
-
+ 
     // Save pdf
     DriveApp.getFolderById(folerId).createFile(pdf);
 
