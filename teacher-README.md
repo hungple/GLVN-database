@@ -1,5 +1,5 @@
 # How to send report cards
-This document is for teacher who teaches any GL and/or VN class.
+This document is for teachers who teach any GL and/or VN class.
 
 ### I. Accessing GLVN spreadsheets
 
