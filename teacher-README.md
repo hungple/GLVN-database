@@ -33,7 +33,7 @@ This is the most important sheet of the spreadsheet. You are required to enter g
 <img width="740" alt="image" src="https://github.com/hungple/GLVN-database/assets/25112201/75e6e229-2f47-47bc-952d-5e82e66c9e28">
 
 #### honor-roll: 
-Lists students in order from the top score to lowest score. As a result, the top students will be sent to the honor roll. In most of the cases, you are not required to change anything unless you want different students to receive different awards. If you want to change anything is this sheet, please let the director of your school know. 
+Lists students in order from the top score to lowest score. As a result, the top students will be sent to the honor roll. In most of the cases, you are not required to change anything unless you want different students to receive different awards. If you want to change anything in this sheet, please let the director of your school know. 
 
 <img width="315" alt="image" src="https://github.com/hungple/GLVN-database/assets/25112201/cc483357-a75f-4f89-905f-8dbcff3f238b">
 
