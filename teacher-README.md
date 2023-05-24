@@ -113,7 +113,7 @@ From time to time, Google might ask you to authorize or trust the script that is
 - Click on `Allow` button
 
 #### Note:
-If there is no popup windows showing the script is running, you can re-select GLVN menu item again. If you authorize from the previous step, it should not ask you to authorize the script again.
+If there is no popup windows showing the script is running, you can re-select GLVN menu item again. If you authorize from the previous step successfully, it should not ask you to authorize the script again.
 
 <br>
 or watch the first half of this video clip https://www.youtube.com/watch?v=4sFTQ9UAtuo&ab_channel=SheetsNinja
