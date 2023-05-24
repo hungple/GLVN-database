@@ -61,8 +61,8 @@ This is exam column. This column is required. The valid value is from 0 to 25. T
 
 #### Extra1 / Extra2
 This is extra credit column. This column is optional. The valid value is blank or from 0 to 20. If you leave this column blank, the script that generates report cards won't print out anything. If you enter 0, the script will print out 0 for the extra credit.
-<br>
-**Note**:
+
+#### Note:
 Even though this column can accept a value up to 20, it does not mean that you have to use this column. In fact, this column should be used for special cases only. If you give too many points for many students, there will be a lot of students can have a total point greater than 100 points but only limited top students can receive award certificates. For example the list below. There are 4 students who have total score from 100 to 101.5; however, these students did not receive any award certificates. The parents of these students might ask why their child get perfect score and not receive and award.
 
 <img width="209" alt="image" src="https://github.com/hungple/GLVN-database/assets/25112201/b420d9a4-88ed-467b-9bae-bb14c75f4bef">
@@ -88,7 +88,7 @@ If you are able to run the script, you will a popup message as shown below. The 
 
 <img width="477" alt="image" src="https://github.com/hungple/GLVN-database/assets/25112201/9f91cf7b-d88a-4c38-8e82-665ec105c5a5">
 
-**Note**:
+#### Note:
 - Before you send report cards to the parents, you should use the option to generate report cards and review them before sending them to the parents.
 - For the first time or from time to time, Google might ask you to authorize the script. Please follow section V. to authorize the script.
  
@@ -111,7 +111,8 @@ From time to time, Google might ask you to authorize or trust the script that is
 ![image](https://github.com/hungple/GLVN-database/assets/25112201/f3faf444-b62a-421b-860a-973bd9f2f6e6)
 - Click on `Allow` button
 
-**Note**: If there is no popup windows showing the script is running, you can re-select GLVN menu item again. If you authorize from the previous step, it should not ask you to authorize the script again.
+#### Note:
+If there is no popup windows showing the script is running, you can re-select GLVN menu item again. If you authorize from the previous step, it should not ask you to authorize the script again.
 
 <br>
 or watch the first half of this video clip https://www.youtube.com/watch?v=4sFTQ9UAtuo&ab_channel=SheetsNinja
