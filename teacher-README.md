@@ -93,5 +93,25 @@ If you are able to run the script, you will a popup message as shown below. The 
  
 ### V. Authorizing Google apps script
 
-From time to time, Google might ask you to authorize or trust the script that is used in GLVN spreadsheets. To authorize, please follow the instruction here https://kierandixon.com/authorize-google-apps-script/ or watch the first half of this video clip https://www.youtube.com/watch?v=4sFTQ9UAtuo&ab_channel=SheetsNinja
+From time to time, Google might ask you to authorize or trust the script that is used in GLVN spreadsheets. To authorize, please follow the steps below:
+
+![image](https://github.com/hungple/GLVN-database/assets/25112201/143981ee-5a19-4584-874a-3cd437b9e7a7)
+- Click on `Continue` button.
+
+![image](https://github.com/hungple/GLVN-database/assets/25112201/7ba1149e-f9f5-47ef-9e6b-d6b2e273e7f9)
+- Click on the Google account that you want to use to send out report cards.
+
+![image](https://github.com/hungple/GLVN-database/assets/25112201/53f3651d-662f-4176-9d1b-b29009a9e409)
+- Click on `Advanced` link
+
+![image](https://github.com/hungple/GLVN-database/assets/25112201/c2dfdf98-3073-44e7-97b2-b25dd11b02a4)
+- Click on `Go to GL1A-app (unsafe)` link
+
+![image](https://github.com/hungple/GLVN-database/assets/25112201/f3faf444-b62a-421b-860a-973bd9f2f6e6)
+- Click on `Allow` button
+
+**Note**: If there is no popup windows showing the script is running, you can re-select GLVN menu item again. If you authorize from the previous step, it should not ask you to authorize the script again.
+
+<br>
+or watch the first half of this video clip https://www.youtube.com/watch?v=4sFTQ9UAtuo&ab_channel=SheetsNinja
 
