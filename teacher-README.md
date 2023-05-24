@@ -61,8 +61,9 @@ This is exam column. This column is required. The valid value is from 0 to 25. T
 
 #### Extra1 / Extra2
 This is extra credit column. This column is optional. The valid value is blank or from 0 to 20. If you leave this column blank, the script that generates report cards won't print out anything. If you enter 0, the script will print out 0 for the extra credit.
+<br>
 **Note**:
-Even this column can accept a value up to 20, it does not mean that you have to use this column. In fact, this column should be used for special cases only. If you give too many points for many students, there will be a lot of students can have a total point greater than 100 points but only limited top students can receive award certificates. For example the list below. There are 4 students who have total score from 100 to 101.5; however, these students did not receive any award certificates. The parents of these students might ask why their child get perfect score and not receive and award.
+Even though this column can accept a value up to 20, it does not mean that you have to use this column. In fact, this column should be used for special cases only. If you give too many points for many students, there will be a lot of students can have a total point greater than 100 points but only limited top students can receive award certificates. For example the list below. There are 4 students who have total score from 100 to 101.5; however, these students did not receive any award certificates. The parents of these students might ask why their child get perfect score and not receive and award.
 
 <img width="209" alt="image" src="https://github.com/hungple/GLVN-database/assets/25112201/b420d9a4-88ed-467b-9bae-bb14c75f4bef">
 
