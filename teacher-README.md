@@ -1,76 +1,97 @@
-# GLVN-database
-
+# How to send report cards
+This document is for teacher who teaches any GL and/or VN class.
 
 ### I. Accessing GLVN spreadsheets
 
 1. Enter https://drive.google.com/ into the address bar of your browser
 2. Select `Shared with me`
+3. If you can not see your class folder, you can search for your class folder in the search box.
+
+<img width="588" alt="image" src="https://github.com/hungple/GLVN-database/assets/25112201/7520c410-6e03-41da-8e30-f45a9d8a8c11">
 
 
-### II. Administrator's responsibilities
+### II. Directory overview
+In this section, GL1A is used as your class.
 
-1. Help other teachers to use GLVN class spreadsheets. Administrators should not generate report cards for other teachers. If any teacher does not want to use Google spreadsheet, we can give him/her blank report cards to fill in manually. (easy)
- 
-2. Register new students during registration time or update student information such as updating email addresses. When teachers send out report cards, some email might be bounded due to invalid email addresses. (easy)
- 
-3. Share (or unshare) class folders and spreadsheets. To share class folders and spreadsheets to teachers, go to students-master spreadsheet > gl-classes/vn-classes tab > enter an x in the action column and then select GLVN menu > Share classes. Note: the first you use GLVN menu, Google will ask you to authorize the app script before you can run the script. Please see section IV for more information. (normal)
+#### GL1A-Report-Cards: 
+A directory to hold report cards. When you generate and email resport cards, the report cards will be generated in this folder. You don't need to save report cards if you send report cards to the parents. In case you need to save the report cards, please save them in your own Google drive or somewhere. The old report cards will be deleted after the school year ends.
 
-4. Setting up for new school year by running the 6 annual admin steps in students-master spreadsheet. The 6 annual admin steps need to be executed **only once** after we are done with the current school year and getting ready for new registration. (normal)
- 
-5. Test GLVN menu items in class spreadsheets and verify all functions. Administrators should test the class spreadsheets before teachers entering any data. If a bug is found after teachers entered data, we might need to spend more time to correct any issue. (normal)
- 
-6. Update code for spreadsheets students-master, students-extra, and class-library. Code in class-library is used for all class spreadsheets. However, in some cases, the library was not refreshed. In these cases, administrators will need to copy code for all class spreadsheets as well. Code can be found here https://github.com/hungple/GLVN-database. Please see section V for how to copy the source code. (normal-hard)
- 
-7. Create custom GLxC or VNxC classes including GL9A (post confirmation). To create GLxC, clone from GL1A and update all ids. Similarly, to create VNxC, clone from VN1A. Please see section VI for detail. (hard)
- 
-8. Become an owner of GLVN-database spreadsheets. (very hard. However, if you are computer engineer/programmer, the code is very easy to understand)
+#### GL1A:
+A spreadsheet to hold your student information.
+
+### III. Spreadshet overview
+
+#### contacts: 
+Contains contact information for your students. This sheet is read only. If you want to change anything, please contact your school administrators.
+
+#### attendance-HK1 / attendance-HK2: 
+You can use this sheet to keep track of your student attendance. However, this sheet is option. You are not required to use this sheet. You can clone this sheet to use for different purposes. You can also print out as blank sheet to use as offline sheet in class.
+
+#### grades: 
+This is the most important sheet of the spreadsheet. You are required to enter grades/scores and all other needed information of students during the school year.
+
+<img width="740" alt="image" src="https://github.com/hungple/GLVN-database/assets/25112201/75e6e229-2f47-47bc-952d-5e82e66c9e28">
+
+#### honor-roll: 
+Lists students in order from the top score to lowest score. As a result, the top students will be sent to the honor roll. In most of the cases, you are not required to change anything unless you want different students to receive different awards. If you want to change anything is this sheet, please let the director of your school know. 
+
+<img width="315" alt="image" src="https://github.com/hungple/GLVN-database/assets/25112201/cc483357-a75f-4f89-905f-8dbcff3f238b">
+
+#### comment-review:
+Lists students in order from the top score to lowest score. As a result, you can review your comments easier.
+
+<img width="929" alt="image" src="https://github.com/hungple/GLVN-database/assets/25112201/1bc8d6c0-d40f-4219-9c59-f691cef9e2ba">
+
+
+
+### IV. Entering grade points, attendance and comments
  
 
-### III. Owner’s responsibilities:
+#### Part1 / Part2
+This is participate column. You can use this column for participation in class, prayer and/or attendance. This column is required. The valid value is from 0 to 5. The script that generates report cards won't process if the column is not filled in.
+
+#### HWrk1 / HWrk2
+This is homework column. This column is required. The valid value is from 0 to 5. The script that generates report cards won't process if the column is not filled in.
+
+#### Quiz1 / Quiz2
+This is quiz column. This column is required. The valid value is from 0 to 15. The script that generates report cards won't process if the column is not filled in.
+
+#### Exam1 / Exam2
+This is exam column. This column is required. The valid value is from 0 to 25. The script that generates report cards won't process if the column is not filled in.
+
+#### Extra1 / Extra2
+This is extra credit column. This column is optional. The valid value is blank or from 0 to 20. If you leave this column blank, the script that generates report cards won't print out anything. If you enter 0, the script will print out 0 for the extra credit.
+**Note**:
+Even this column can accept a value up to 20, it does not mean that you have to use this column. In fact, this column should be used for special cases only. If you give too many points for many students, there will be a lot of students can have a total point greater than 100 points but only limited top students can receive award certificates. For example the list below. There are 4 students who have total score from 100 to 101.5; however, these students did not receive any award certificates. The parents of these students might ask why their child get perfect score and not receive and award.
+
+<img width="209" alt="image" src="https://github.com/hungple/GLVN-database/assets/25112201/b420d9a4-88ed-467b-9bae-bb14c75f4bef">
+
+#### Absence1 / Absence2
+This is absence column. This column is optional. The valid value is from 0 to 20. If you leave this column blank, the script that generates report cards won't print out anything.
+
+#### Comment1 / Comment2
+This is comment column. This column is optional. However, you should write very meaningful messages to your students. If you leave blank, it will look very bad in the report cards.
+
+#### Action
+This column is used with the `GLVN` menu items 
+<br>
+<img width="410" alt="image" src="https://github.com/hungple/GLVN-database/assets/25112201/eb38f3b7-9caa-4363-a2db-7a89dd77424c">
+
+Enter `x` for each row of student if you want to generate report card. The report cards can be found in `GL1A-Report-Cards` folder.
+<img width="541" alt="image" src="https://github.com/hungple/GLVN-database/assets/25112201/44fa9f47-c34f-4583-8112-e1027130a059">
+
+Enter `e` for each row of student if you want to generate and email report card. The report cards can be found in `GL1A-Report-Cards` folder. The emails and report cards can be found in your `sent` folder.
+<img width="879" alt="image" src="https://github.com/hungple/GLVN-database/assets/25112201/ca646bbb-a705-4883-800e-76af80e42434">
+
+If you are able to run the script, you will a popup message as shown below. The message will be disappeared when the script is completed.
+
+<img width="477" alt="image" src="https://github.com/hungple/GLVN-database/assets/25112201/9f91cf7b-d88a-4c38-8e82-665ec105c5a5">
+
+**Note**:
+- Before you send report cards to the parents, you should use the option to generate report cards and review them before sending them to the parents.
+- For the first time or from time to time, Google might ask you to authorize the script. Please follow section V. to authorize the script.
  
-1. Watch for activities in all GLVN databases
-
-2. Maintain all formulas, functions, and formats in all spreadsheets
-
-3. Maintain source code in https://github.com/hungple/GLVN-database
-
-### IV. Authorizing Google apps script
+### V. Authorizing Google apps script
 
 From time to time, Google might ask you to authorize or trust the script that is used in GLVN spreadsheets. To authorize, please follow the instruction here https://kierandixon.com/authorize-google-apps-script/ or watch the first half of this video clip https://www.youtube.com/watch?v=4sFTQ9UAtuo&ab_channel=SheetsNinja
-
-
-### V. Copying source code to Google spreadsheets
-
-Each GLVN spreadsheet has a release date in GLVN menu. If the release date is older than the one in the source code, you should copy the source code to the spreadsheet. For students-master and students-extra, just copy the respectively source code into the spreadsheet. For class spreadsheets (GL1A, VN1A..), you need to copy source code from class-library.gs into class-library spreadsheet. The code in class-library spreadsheet is used in all class spreadsheets. In some cases, the library does not work. In this case, you will need to copy code from class-library.gs to all class spreadsheets.
-
-Here is the instruction how to copy source code to spreadsheets.
-1. Select all the lines and then press Ctrl-C. Alternatively, you can click on the Raw button and then press Ctrl-A and then Ctrl-C to copy all the lines.
-2. Open your class Google spreadsheet
-3. Select grades tab > Extensions menu > Apps Script menu item
-4. Click on the code editor
-5. Press Ctrl-A and then Ctrl-V
-6. Press Ctrl-S to save the new change
-7. Close the code editor
-8. Go back to your Google sheet and refresh it.
-
-
-### VI. Dataflow
- 
-Even though there are many spreadsheets in GLVN databae, the real student data is entered in the students-master spreadsheet. Student grades are entered in each class spreadsheet. The rest of data in other spreadsheets is imported from different spreadsheets or different tabs. Here are dataflow paths between spreadsheets:
-
-**Note:** GL1A is used in the example below. The same applies to all other classes.
-
-#### GLxx/VNxx spreadsheet:
-- `students-master`.`Std_zzz` -> `students-master`.`studentsclass` -> `students-master`.`GL1A` -> `GL1A`.`contacts` -> `GL1A`.`attendance-HK1`, `GL1A`.`attendance-HK2`, and `GL1A`.`graces`
- 
-#### All students / First communion / Confirmation:
-- `students-master`.`Std_zzz` -> `students-master`.`students` -> `students-extra`.`students-import` -> `students-extra`.`students-mini`, `students-extra`.`students-wide`, `students-extra`.`students-registration`. 
-- `students-master`.`Std_zzz` -> `students-master`.`eucharist` -> `students-extra`.`eucharist-import` -> `students-extra`.`eucharist-certificates`. The same applies to confirmation as well.
- 
-#### Total points / final point:
-- `GL1A`.`grades[column F]` -> `students-master`.`GL1A[column P]` ->  `students-master`.`Std_zzz[column AG and AH]` (by selecting GLVN menu item > Save student final points )
- 
-#### Honor roll:
-- `GL1A`.`honor-roll` -> `students-extra`.`honor-gl-import` -> `students-extra`.`honor-gl-1`, `honor-gl-2`, `honor-gl-3`, `honor-gl-4`. The same applies to VN classes as well.
-
 
