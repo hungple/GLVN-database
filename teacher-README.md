@@ -91,6 +91,7 @@ If you are able to run the script, a message `Running script` is poped up as sho
 
 #### Note:
 - Before you send report cards to the parents, you should use the option `x` to generate report cards and review them before sending them to the parents.
+- If you received any bounced email, check with the parent to get the correct email. Please contact your school administrators to update the email address.
 - For the first time or from time to time, Google might ask you to authorize the script. Please follow section V. to authorize the script.
  
 ### V. Authorizing Google apps script
