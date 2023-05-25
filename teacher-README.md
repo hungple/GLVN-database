@@ -90,7 +90,7 @@ If you are able to run the script, a message `Running script` is poped up as sho
 <img width="477" alt="image" src="https://github.com/hungple/GLVN-database/assets/25112201/9f91cf7b-d88a-4c38-8e82-665ec105c5a5">
 
 #### Note:
-- Before you send report cards to the parents, you should use the option to generate report cards and review them before sending them to the parents.
+- Before you send report cards to the parents, you should use the option `x` to generate report cards and review them before sending them to the parents.
 - For the first time or from time to time, Google might ask you to authorize the script. Please follow section V. to authorize the script.
  
 ### V. Authorizing Google apps script
