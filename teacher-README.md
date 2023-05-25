@@ -78,11 +78,11 @@ This column is used with the `GLVN` menu items
 <br>
 <img width="410" alt="image" src="https://github.com/hungple/GLVN-database/assets/25112201/eb38f3b7-9caa-4363-a2db-7a89dd77424c">
 
-Enter `x` for each row of student if you want to generate report card. The report cards can be found in `GL1A-Report-Cards` folder.
+Enter `x` for each row of students if you want to generate report card. The report cards can be found in `GL1A-Report-Cards` folder.
 ![image](https://github.com/hungple/GLVN-database/assets/25112201/80ff9c61-e269-49d6-8037-af353fa700b5)
 
 
-Enter `e` for each row of student if you want to generate and email report card. The report cards can be found in `GL1A-Report-Cards` folder. The emails and report cards can be found in your `sent` folder.
+Enter `e` for each row of students if you want to generate and email report card. The report cards can be found in `GL1A-Report-Cards` folder. The emails and report cards can be found in your `sent` folder.
 <img width="879" alt="image" src="https://github.com/hungple/GLVN-database/assets/25112201/ca646bbb-a705-4883-800e-76af80e42434">
 
 If you are able to run the script, you will a popup message as shown below. The message will be disappeared when the script is completed.
