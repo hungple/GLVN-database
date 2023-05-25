@@ -85,7 +85,7 @@ Enter `x` for each row of students if you want to generate report card. The repo
 Enter `e` for each row of students if you want to generate and email report card. The report cards can be found in `GL1A-Report-Cards` folder. The emails and report cards can be found in your `sent` folder.
 <img width="879" alt="image" src="https://github.com/hungple/GLVN-database/assets/25112201/ca646bbb-a705-4883-800e-76af80e42434">
 
-If you are able to run the script, you will a popup message as shown below. The message will be disappeared when the script is completed.
+If you are able to run the script, a message `Running script` is poped up as shown below. The message will be disappeared when the script is completed.
 
 <img width="477" alt="image" src="https://github.com/hungple/GLVN-database/assets/25112201/9f91cf7b-d88a-4c38-8e82-665ec105c5a5">
 
