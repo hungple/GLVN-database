@@ -1,13 +1,21 @@
 # GLVN-database
 
+### I. Features
+1. Registration
+2. Share/unshare spreadshet to teachers. Teachers can only see their own classes but not others.
+3. Create/email report cards for HK1/HK2
+4. Create/email admission leters
+5. Create/email registration forms for current students
+6. Create award certificates
+7. Create eucharist/confirmation certificates
 
-### I. Accessing GLVN spreadsheets
+### II. Accessing GLVN spreadsheets
 
 1. Enter https://drive.google.com/ into the address bar of your browser
 2. Select `Shared with me`
 
 
-### II. Administrator's responsibilities
+### III. Administrator's responsibilities
 
 1. Help other teachers to use GLVN class spreadsheets. Administrators should not generate report cards for other teachers. If any teacher does not want to use Google spreadsheet, we can give him/her blank report cards to fill in manually. (easy)
  
@@ -26,7 +34,7 @@
 8. Become an owner of GLVN-database spreadsheets. (very hard. However, if you are computer engineer/programmer, the code is very easy to understand)
  
 
-### III. Owner’s responsibilities:
+### IV. Owner’s responsibilities:
  
 1. Watch for activities in all GLVN databases
 
@@ -34,12 +42,12 @@
 
 3. Maintain source code in https://github.com/hungple/GLVN-database
 
-### IV. Authorizing Google apps script
+### V. Authorizing Google apps script
 
 From time to time, Google might ask you to authorize or trust the script that is used in GLVN spreadsheets. To authorize, please follow the instruction here https://kierandixon.com/authorize-google-apps-script/ or watch the first half of this video clip https://www.youtube.com/watch?v=4sFTQ9UAtuo&ab_channel=SheetsNinja
 
 
-### V. Copying source code to Google spreadsheets
+### VI. Copying source code to Google spreadsheets
 
 Each GLVN spreadsheet has a release date in GLVN menu. If the release date is older than the one in the source code, you should copy the source code to the spreadsheet. For students-master and students-extra, just copy the respectively source code into the spreadsheet. For class spreadsheets (GL1A, VN1A..), you need to copy source code from class-library.gs into class-library spreadsheet. The code in class-library spreadsheet is used in all class spreadsheets. In some cases, the library does not work. In this case, you will need to copy code from class-library.gs to all class spreadsheets.
 
@@ -54,7 +62,7 @@ Here is the instruction how to copy source code to spreadsheets.
 8. Go back to your Google sheet and refresh it.
 
 
-### VI. Dataflow
+### VII. Dataflow
  
 Even though there are many spreadsheets in GLVN databae, the real student data is entered in the students-master spreadsheet. Student grades are entered in each class spreadsheet. The rest of data in other spreadsheets is imported from different spreadsheets or different tabs. Here are dataflow paths between spreadsheets:
 
