@@ -1,19 +1,20 @@
-var RELEASE = "20230611"
+var RELEASE = "20230913"
 
 // Std_VGz6v3
-var idCol               = 1;
-var glGCol              = 7;
-var glNCol              = 8;
-var vnGCol              = 9;
-var vnNCol              = 10;
+var idCol               = 1;  
+var glGCol              = 7; 
+var glNCol              = 8; 
+var vnGCol              = 9; 
+var vnNCol              = 10; 
 var isRegCol            = 11;
+var birthDateCol        = 21;
 
 var euchDateCol         = 26; // Z
 var euchLocationCol     = 27; // AA
 var confDateCol         = 28; // AB
 var confLocationCol     = 29; // AC
 
-var glFinalPointCol     = 33; // AG
+var glFinalPointCol     = 33; // AG 
 var vnFinalPointCol     = 34; // AH
 
 
@@ -51,12 +52,13 @@ function onOpen() {
       .addItem('Unshare classes (gl-classes/vn-classes)', 'unShareClasses')
       .addSeparator()
       .addItem('1 - Save student final points (Std)', 'saveFinalPoints')
-      .addItem('2 - Save First Communion date and location (Std)', 'saveFCommunionInfo')
+      .addItem('2 - Save First Communion date and location (Std)', 'saveEucharistInfo')
       .addItem('3 - Save Confirmation date and location (Std)', 'saveConfirmationInfo')
-      .addItem('4 - Save students into students-past folder', 'saveStudentsPast')
+      .addItem('4 - Save students into students-past folder (should use root)', 'saveStudentsPast')
       .addItem('5 - Increase glG and vnG for new registration (Std)', 'increaseGlGVnGForNewReg')
       .addItem('6 - Clear old data in external classes (gl-classes/vn-classes : root)', 'clearDataExternalClasses')
       .addSeparator()
+      .addItem('Delete old students (Std : root only)', 'deleteOldStudents')
       .addItem('Update class sheets in this student-master (gl-classes/vn-classes : root only)', 'updateSheetsInThisSpreadSheet')
       .addItem('Clone classes using GL1A or VN1A (gl-classes/vn-classes : root only', 'cloneClassesUsingGL1AorVN1A')
       .addItem('Update external class spreadSheets (gl-classes/vn-classes : root only)', 'updateExternalClassSpreadSheets')
@@ -65,7 +67,7 @@ function onOpen() {
 
 function showRelease() {
   var ui = SpreadsheetApp.getUi();
-
+  
   var response = ui.alert(
       'Information!!!',
       'Release: ' + RELEASE,
@@ -78,7 +80,7 @@ function showRelease() {
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 function getStr(key) {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Admin");
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("admin");
   var range = sheet.getRange(2, 1, 20, 2); //row, col, numRows, numCols
 
   // iterate through all cells in the range
@@ -134,12 +136,12 @@ function getReportCardsFolderId(clsName, clsFolder) {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-// Share classes to the teachers
+// Share classes to the teachers & Un-share GL classes to the teachers
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 function shareClasses() {
-  var ui = SpreadsheetApp.getUi(); // Same variations.
-
+  var ui = SpreadsheetApp.getUi();
+  
   var response = ui.alert(
       'Warning!!!',
       'Do you want to share classes to the teachers?',
@@ -155,309 +157,9 @@ function shareClasses() {
   }
 }
 
-function shareClassesImpl(sheetName, reportFormId, classLibraryId, isShared) {
-
-  var admins = getStr("ADMIN_IDS").split(",");
-  for (var i = 0; i < admins.length; i++) {
-    admins[i] = admins[i].trim();
-  }
-
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetName);
-  var range = sheet.getRange(2, 1, 25, 15); //row, col, numRows, numCols
-
-  var clsName, gmails, clsFolder, action;
-
-  // iterate through all cells in the range
-  for (var cellRow = 1; cellRow <= range.getHeight(); cellRow++) {
-    clsName = range.getCell(cellRow, classes_clsNameCol).getValue();
-    gmails = range.getCell(cellRow, classes_gmailCol).getValue().trim();
-
-    if( clsName == "")
-      break;
-
-    var actionCell = range.getCell(cellRow, classes_actionCol);
-    action = actionCell.getValue().trim().toLowerCase();
-
-    if(action == "x" && gmails != "") {
-
-      clsFolder = DriveApp.getFolderById(range.getCell(cellRow, classes_clsFolderIdCol).getValue());
-
-      var gmailArr = removeLastComma(gmails).split(",");
-      for (i = 0; i < gmailArr.length; i++) {
-        gmailArr[i] = gmailArr[i].trim();
-      }
-
-      // Share report card template and class library
-      var doc = DocumentApp.openById(reportFormId);
-      var libSpreadSheet = SpreadsheetApp.openById(classLibraryId);
-
-      for (var i = 0; i < gmailArr.length; i++) {
-        var gmail = gmailArr[i];
-        try {
-          //Only remove this gmail but don't remove other viewers
-          doc.removeViewer(gmail);
-          libSpreadSheet.removeViewer(gmail);
-
-          if(isShared == true){
-            doc.addViewer(gmail);
-            libSpreadSheet.addEditor(gmail);
-          }
-        }
-        catch(e) {
-        } //ignore error
-      }
-
-      // Share the whole class folder
-      try {
-        var editors = clsFolder.getEditors();
-        for (var j = 0; j < editors.length; j++) {
-          if(isNotAdmin(admins, editors[j].getEmail())){
-            clsFolder.removeEditor(editors[j].getEmail());
-          }
-        }
-
-        // add new editor
-        for (var i = 0; i < gmailArr.length; i++) {
-          var gmail = gmailArr[i];
-          if(isShared == true){
-            clsFolder.addEditor(gmail);
-          }
-        }
-      }
-      catch(e) {
-      } //ignore error
-
-      actionCell.setValue('');
-    }
-  }
-};
-
-function isNotAdmin(admins, gmail) {
-  for (var i = 0; i < admins.length; i++) {
-    if(admins[i].toUpperCase() === gmail.toUpperCase()) {
-      return false;
-    }
-  }
-  return true;
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// 1 - Save Final Points
-//
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-function saveFinalPoints() {
-  var ui = SpreadsheetApp.getUi(); // Same variations.
-
-  var response = ui.alert(
-      'Warning!!!',
-      'Do you want to update pass/fail for students?',
-      ui.ButtonSet.YES_NO);
-
-  // Process the user's response.
-  if (response == ui.Button.YES) {
-    saveFinalPointsImpl();
-  }
-}
-
-
-function saveFinalPointsImpl() {
-
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Std_VGz6v3");
-  var range = sheet.getRange(1, 1, 700, 34); //row, col, numRows, numCols
-  var rowStartCell = sheet.getRange("AI1:AI1").getCell(1, 1);
-
-  ////////////////////////////////////////////////////////////////////////////////////
-  ////////////////////////////////////////////////////////////////////////////////////
-
-  var rowStart = rowStartCell.getValue()+1;
-
-  var id, isReg, glLevel, glName, vnLevel, vnName;
-  // iterate through all cells in the range
-  for (var cellRow = rowStart; ; cellRow++) {
-    id = range.getCell(cellRow, idCol).getValue();
-
-    if(id == "") break;
-
-    isReg   = range.getCell(cellRow, isRegCol).getValue();
-    glLevel = range.getCell(cellRow, glGCol).getValue();
-    glName  = range.getCell(cellRow, glNCol).getValue();
-    vnLevel = range.getCell(cellRow, vnGCol).getValue();
-    vnName  = range.getCell(cellRow, vnNCol).getValue();
-
-    if(isReg == "x") {
-      if(glName != "") {
-        range.getCell(cellRow, glFinalPointCol).setValue(getFinalGrade("GL" + glLevel + glName, id));
-      }
-
-      if(vnName != "") {
-        range.getCell(cellRow, vnFinalPointCol).setValue(getFinalGrade("VN" + vnLevel + vnName, id));
-      }
-    }
-
-    // update rowStart cell
-    rowStartCell.setValue(cellRow);
-  }
-
-};
-
-
-function getFinalGrade(className, id) { // sheet GL1A, GL1B, GL2A...
-
-  //========================================================================
-
-  var sheet =SpreadsheetApp.getActiveSpreadsheet().getSheetByName(className);
-  if(sheet != null) {
-    var range = sheet.getRange(2, 1, 60, 20); //row, col, numRows, numCols
-
-    var idCell, totalPointsCell;
-
-    // iterate through all cells in the range
-    for (var cellRow = 1; cellRow <= range.getHeight(); cellRow++) {
-      idCell = range.getCell(cellRow, class_idCol);
-      totalPointsCell = range.getCell(cellRow, class_totalPointsCol);
-      if(idCell.getValue() == id) {
-        return totalPointsCell.getValue();
-      }
-    }
-  }
-  return 0;
-};
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// 2 - Save first communion date and location
-//
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-function saveFCommunionInfo() {
-  var ui = SpreadsheetApp.getUi(); // Same variations.
-
-  var response = ui.alert(
-      'Warning!!!',
-      'Do you want to update communion information for students?',
-      ui.ButtonSet.YES_NO);
-
-  // Process the user's response.
-  if (response == ui.Button.YES) {
-    saveFCommunionInfoImpl();
-  }
-}
-
-function saveFCommunionInfoImpl() {
-
-  // Get data from the Calendar sheet
-  var varSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Calendar");
-  var varRange = varSheet.getRange(1, 1, 10, 11); //row, col, numRows, numCols
-  var commDate = varRange.getCell(3, 2).getValue(); //row, col
-  var commLocation = getStr("CHURCH_INFO");
-  var passing_point = getPassingPoint();
-
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Std_VGz6v3");
-  var range = sheet.getRange(1, 1, 700, 34); //row, col, numRows, numCols
-  var rowStartCell = sheet.getRange("AI1:AI1").getCell(1, 1); // <= Need to update column
-
-  ////////////////////////////////////////////////////////////////////////////////////
-  ////////////////////////////////////////////////////////////////////////////////////
-
-  var rowStart = rowStartCell.getValue()+1;
-
-  var id, isReg, glLevel, glName, glFinalPoint;
-  // iterate through all cells in the range
-  for (var cellRow = rowStart; ; cellRow++) {
-    id = range.getCell(cellRow, idCol).getValue();
-
-    if(id == "") break;
-
-    isReg   = range.getCell(cellRow, isRegCol).getValue();
-    glLevel = range.getCell(cellRow, glGCol).getValue();
-    glName  = range.getCell(cellRow, glNCol).getValue();
-    glFinalPoint  = range.getCell(cellRow, glFinalPointCol).getValue();
-
-    if(isReg == "x" && glLevel == 3 && glName != "" && glFinalPoint >= passing_point) {
-      range.getCell(cellRow, euchDateCol).setValue(commDate);
-      range.getCell(cellRow, euchLocationCol).setValue(commLocation);
-    }
-
-    // update rowStart cell
-    rowStartCell.setValue(cellRow);
-  }
-
-};
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// 3 - Save Confirmation date and location
-//
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-function saveConfirmationInfo() {
-  var ui = SpreadsheetApp.getUi(); // Same variations.
-
-  var response = ui.alert(
-      'Warning!!!',
-      'Do you want to save Confirmation information for students?',
-      ui.ButtonSet.YES_NO);
-
-  // Process the user's response.
-  if (response == ui.Button.YES) {
-    saveConfirmationInfoImpl();
-  }
-}
-
-function saveConfirmationInfoImpl() {
-
-  //////////////////////////// Get data from the Calendar sheet  //////////////////////////////
-  var varSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Calendar");
-  var varRange = varSheet.getRange(1, 1, 10, 11); //row, col, numRows, numCols
-  var confDate = varRange.getCell(4, 2).getValue(); //row, col
-  var confLocation = getStr("CHURCH_INFO");
-
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Std_VGz6v3");
-  var range = sheet.getRange(1, 1, 700, 34); //row, col, numRows, numCols
-  var rowStartCell = sheet.getRange("AI1:AI1").getCell(1, 1); // <= Need to update column
-
-  ////////////////////////////////////////////////////////////////////////////////////
-  ////////////////////////////////////////////////////////////////////////////////////
-
-
-  var rowStart = rowStartCell.getValue()+1;
-  var id, isReg, glLevel, glName, glFinalPoint;
-  // iterate through all cells in the range
-  for (var cellRow = rowStart; ; cellRow++) {
-    id = range.getCell(cellRow, idCol).getValue();
-
-    if(id == "") break;
-
-    isReg   = range.getCell(cellRow, isRegCol).getValue();
-    glLevel = range.getCell(cellRow, glGCol).getValue();
-    glName  = range.getCell(cellRow, glNCol).getValue();
-    glFinalPoint  = range.getCell(cellRow, glFinalPointCol).getValue();
-
-    if(isReg == "x" && glLevel == 8 && glName != "" && glFinalPoint >= 65) {
-      range.getCell(cellRow, confDateCol).setValue(confDate);
-      range.getCell(cellRow, confLocationCol).setValue(confLocation);
-    }
-
-    // update rowStart cell
-    rowStartCell.setValue(cellRow);
-  }
-
-};
-
-
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// 4 - Un-share GL classes to the teachers
-//
-/////////////////////////////////////////////////////////////////////////////////////////////////////
 function unShareClasses() {
-  var ui = SpreadsheetApp.getUi(); // Same variations.
-
+  var ui = SpreadsheetApp.getUi();
+  
   var response = ui.alert(
       'Warning!!!',
       'Do you want to stop sharing classes from the teachers?',
@@ -475,13 +177,389 @@ function unShareClasses() {
 }
 
 
+function shareClassesImpl(sheetName, reportFormId, classLibraryId, isShared) {
+  
+  var admins = getStr("ADMIN_IDS").split(",");
+  for (var i = 0; i < admins.length; i++) {
+    admins[i] = admins[i].trim();
+  }
+  
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetName);
+  var range = sheet.getRange(2, 1, 25, 15); //row, col, numRows, numCols
+
+  var clsName, gmails, clsFolder, action;
+  
+  // iterate through all cells in the range
+  for (var cellRow = 1; cellRow <= range.getHeight(); cellRow++) {
+    clsName = range.getCell(cellRow, classes_clsNameCol).getValue();
+    gmails = range.getCell(cellRow, classes_gmailCol).getValue().trim();
+    
+    if( clsName == "")
+      break;
+
+    var actionCell = range.getCell(cellRow, classes_actionCol);
+    action = actionCell.getValue().trim().toLowerCase();
+    
+    if(action == "x" && gmails != "") {
+
+      clsFolder = DriveApp.getFolderById(range.getCell(cellRow, classes_clsFolderIdCol).getValue());
+
+      var gmailArr = removeLastComma(gmails).split(",");
+      for (i = 0; i < gmailArr.length; i++) {
+        gmailArr[i] = gmailArr[i].trim();
+      }
+
+      // Share report card template and class library
+      var doc = DocumentApp.openById(reportFormId);
+      var libSpreadSheet = SpreadsheetApp.openById(classLibraryId);
+
+      for (var i = 0; i < gmailArr.length; i++) {
+        var gmail = gmailArr[i];
+        try {
+          //Only remove this gmail but don't remove other viewers or admins (admin also a teacher)
+          if(isNotAdmin(admins, gmail)) {
+            doc.removeViewer(gmail);
+            libSpreadSheet.removeViewer(gmail);
+
+            if(isShared == true){
+              doc.addViewer(gmail);
+              libSpreadSheet.addEditor(gmail);
+            }
+          }
+        }
+        catch(e) {
+        } //ignore error
+      }
+
+      // Share the whole class folder
+      try {
+        // remove current editors except admins
+        var editors = clsFolder.getEditors();
+        for (var j = 0; j < editors.length; j++) {
+          if(isNotAdmin(admins, editors[j].getEmail())){
+            clsFolder.removeEditor(editors[j].getEmail());           
+          }
+        }
+        
+        // add new editors
+        for (var i = 0; i < gmailArr.length; i++) {
+          var gmail = gmailArr[i];
+          if(isShared == true){
+            clsFolder.addEditor(gmail);
+          }
+        }
+      }
+      catch(e) {
+      } //ignore error
+      
+      actionCell.setValue('');
+    }
+  }
+};
+
+function isNotAdmin(admins, gmail) {
+  for (var i = 0; i < admins.length; i++) {
+    if(admins[i].toUpperCase() === gmail.toUpperCase()) {
+      return false;
+    }
+  }
+  return true;
+}
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-// 5 - saveStudentsPast
+// 1 - Save Final Points
+//
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+function saveFinalPoints() {
+  var ui = SpreadsheetApp.getUi(); // Same variations.
+  
+  var response = ui.alert(
+      'Warning!!!',
+      'Do you want to update pass/fail for students?',
+      ui.ButtonSet.YES_NO);
+
+  // Process the user's response.
+  if (response == ui.Button.YES) {
+    saveFinalPointsImpl();
+  }
+}
+
+
+function saveFinalPointsImpl() {
+  
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Std_VGz6v3");
+  var range = sheet.getRange(1, 1, 700, 34); //row, col, numRows, numCols 
+  var rowStartCell = sheet.getRange("AI1:AI1").getCell(1, 1);
+
+  ////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////
+
+  var rowStart = rowStartCell.getValue();
+  
+  var id, isReg, glLevel, glName, vnLevel, vnName; 
+  // iterate through all cells in the range
+  for (var cellRow = rowStart; ; cellRow++) {
+    id = range.getCell(cellRow, idCol).getValue(); 
+
+    if(id == "") break;
+    
+    isReg   = range.getCell(cellRow, isRegCol).getValue();
+    glLevel = range.getCell(cellRow, glGCol).getValue();
+    glName  = range.getCell(cellRow, glNCol).getValue();
+    vnLevel = range.getCell(cellRow, vnGCol).getValue();
+    vnName  = range.getCell(cellRow, vnNCol).getValue();
+    
+    if(isReg == "x") {
+      if(glName != "") {
+        range.getCell(cellRow, glFinalPointCol).setValue(getFinalGrade("GL" + glLevel + glName, id));
+      }
+      else {
+        range.getCell(cellRow, glFinalPointCol).setValue('');
+      }
+      
+      if(vnName != "") {
+        range.getCell(cellRow, vnFinalPointCol).setValue(getFinalGrade("VN" + vnLevel + vnName, id));
+      }
+      else {
+        range.getCell(cellRow, vnFinalPointCol).setValue('');
+      }
+    }
+    else {
+      range.getCell(cellRow, glFinalPointCol).setValue('');
+      range.getCell(cellRow, vnFinalPointCol).setValue('');
+    }
+   
+    // update rowStart cell
+    rowStartCell.setValue(cellRow);
+  }
+  
+};
+
+
+function getFinalGrade(className, id) { // sheet GL1A, GL1B, GL2A...
+  
+  //========================================================================
+  
+  var sheet =SpreadsheetApp.getActiveSpreadsheet().getSheetByName(className);
+  if(sheet != null) {
+    var range = sheet.getRange(2, 1, 60, 20); //row, col, numRows, numCols
+  
+    var idCell, totalPointsCell;
+  
+    // iterate through all cells in the range
+    for (var cellRow = 1; cellRow <= range.getHeight(); cellRow++) {
+      idCell = range.getCell(cellRow, class_idCol);
+      totalPointsCell = range.getCell(cellRow, class_totalPointsCol);
+      if(idCell.getValue() == id) {
+        return totalPointsCell.getValue();
+      }
+    }
+  }
+  return 0;
+};
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// 1 - Save Final Points
+// 2 - Save eucharist date and location
+// 3 - Save confirmation date and location
+// 5 - increaseGlGVnGForNewReg
+//
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+function saveFinalPoints() {
+  var ui = SpreadsheetApp.getUi(); // Same variations.
+  
+  var response = ui.alert(
+      'Warning!!!',
+      'Do you want to update final points for students?',
+      ui.ButtonSet.YES_NO);
+
+  // Process the user's response.
+  if (response == ui.Button.YES) {
+    saveStdInfoImpl('saveFP');
+  }
+}
+
+function saveEucharistInfo() {
+  var ui = SpreadsheetApp.getUi(); // Same variations.
+  
+  var response = ui.alert(
+      'Warning!!!',
+      'Do you want to update first communion information for students?',
+      ui.ButtonSet.YES_NO);
+
+  // Process the user's response.
+  if (response == ui.Button.YES) {
+    saveStdInfoImpl('eucharist');
+  }
+}
+
+function saveConfirmationInfo() {
+  var ui = SpreadsheetApp.getUi(); // Same variations.
+  
+  var response = ui.alert(
+      'Warning!!!',
+      'Do you want to save confirmation information for students?',
+      ui.ButtonSet.YES_NO);
+
+  // Process the user's response.
+  if (response == ui.Button.YES) {
+    saveStdInfoImpl('confirmation');
+  }
+}
+
+function increaseGlGVnGForNewReg() {
+  var ui = SpreadsheetApp.getUi(); // Same variations.
+  
+  var response = ui.alert(
+      'Warning!!!',
+      'Do you want to increase glG and vnG for new registration process?',
+      ui.ButtonSet.YES_NO);
+
+  // Process the user's response.
+  if (response == ui.Button.YES) {
+    saveStdInfoImpl('newReg');
+  }
+}
+
+
+function saveStdInfoImpl(task) {
+  
+  //////////////////////// Get data from the Calendar sheet  ///////////////////////// 
+  var calSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Calendar");
+  var calRange = calSheet.getRange(1, 1, 10, 11); //row, col, numRows, numCols 
+  var commDate = calRange.getCell(3, 2).getValue(); //row, col
+  var commLocation = getStr("CHURCH_INFO");
+  var confDate = calRange.getCell(4, 2).getValue(); //row, col
+  var confLocation = getStr("CHURCH_INFO");
+  var passing_point = getPassingPoint();
+
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Std_VGz6v3");
+  var range = sheet.getRange(1, 1, 700, 34); //row, col, numRows, numCols 
+  var rowStartCell = sheet.getRange("AI1:AI1").getCell(1, 1); // <= Need to update column
+
+  ////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////
+
+  var rowStart = rowStartCell.getValue();
+  
+  var id, isReg, glG, glN, vnG, vnN, glFinalPoint, vnFinalPoint; 
+  // iterate through all cells in the range
+  for (var cellRow = rowStart; ; cellRow++) {
+    id = range.getCell(cellRow, idCol).getValue(); 
+
+    if(id == "") break;
+    
+    isReg  = range.getCell(cellRow, isRegCol).getValue();
+    glG    = range.getCell(cellRow, glGCol).getValue();
+    glN    = range.getCell(cellRow, glNCol).getValue();
+    vnG    = range.getCell(cellRow, vnGCol).getValue();
+    vnN    = range.getCell(cellRow, vnNCol).getValue();
+    glFinalPoint = range.getCell(cellRow, glFinalPointCol).getValue();
+    vnFinalPoint = range.getCell(cellRow, vnFinalPointCol).getValue();
+
+    if(task == 'saveFP') {
+      if(isReg == "x") {
+        if(glN != "") {
+          range.getCell(cellRow, glFinalPointCol).setValue(getFinalGrade("GL" + glG + glN, id));
+        }
+        else {
+          range.getCell(cellRow, glFinalPointCol).setValue('');
+        }
+        
+        if(vnN != "") {
+          range.getCell(cellRow, vnFinalPointCol).setValue(getFinalGrade("VN" + vnG + vnN, id));
+        }
+        else {
+          range.getCell(cellRow, vnFinalPointCol).setValue('');
+        }
+      }
+      else {
+        range.getCell(cellRow, glFinalPointCol).setValue('');
+        range.getCell(cellRow, vnFinalPointCol).setValue('');
+      }
+    }
+    else if(task == 'eucharist') {
+      if(isReg == "x" && glG == 3 && glN != "" && glFinalPoint >= passing_point) {
+        range.getCell(cellRow, euchDateCol).setValue(commDate);
+        range.getCell(cellRow, euchLocationCol).setValue(commLocation);
+      }
+    }
+    else if(task == 'confirmation') {
+      if(isReg == "x" && glG == 8 && glN != "" && glFinalPoint >= passing_point) {
+        range.getCell(cellRow, confDateCol).setValue(confDate);
+        range.getCell(cellRow, confLocationCol).setValue(confLocation);
+      }
+    }
+    else if(task == 'newReg') {
+      if(isReg == "x") {
+        if(glG > 0 && glN != "" && glFinalPoint >= passing_point) {
+          range.getCell(cellRow, glGCol).setValue(glG + 1);
+        }
+        
+        if(vnG > 0 && vnN != "" && vnFinalPoint >= passing_point) {
+          range.getCell(cellRow, vnGCol).setValue(vnG + 1);
+        }
+        
+        // Clear the x
+        range.getCell(cellRow, isRegCol).setValue('');
+        
+        // Clear glFinalPoint and vnFinalPoint
+        
+        waitSeconds(500);
+      }
+    }
+
+ 
+    // update rowStart cell
+    rowStartCell.setValue(cellRow);
+  }
+  
+};
+
+
+function getFinalGrade(className, id) { // sheet GL1A, GL1B, GL2A...
+  
+  //========================================================================
+  
+  var sheet =SpreadsheetApp.getActiveSpreadsheet().getSheetByName(className);
+  if(sheet != null) {
+    var range = sheet.getRange(2, 1, 60, 20); //row, col, numRows, numCols
+  
+    var idCell, totalPointsCell;
+  
+    // iterate through all cells in the range
+    for (var cellRow = 1; cellRow <= range.getHeight(); cellRow++) {
+      idCell = range.getCell(cellRow, class_idCol);
+      totalPointsCell = range.getCell(cellRow, class_totalPointsCol);
+      if(idCell.getValue() == id) {
+        return totalPointsCell.getValue();
+      }
+    }
+  }
+  return 0;
+};
+
+function waitSeconds(iMilliSeconds) {
+    var counter= 0
+        , start = new Date().getTime()
+        , end = 0;
+    while (counter < iMilliSeconds) {
+        end = new Date().getTime();
+        counter = end - start;
+    }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// 4 - saveStudentsPast
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 function saveStudentsPast() {
-
+  
   var fcomStr = "=query(students!1:999, \"select A,B,C,D,E,F,L,M,N,O,P,Q,R,T,U,V,W,X,Y,Z,AA,AB,AC,AD,AE where G=3 and AG>=" + getPassingPoint() + " order by C,E\")";
   var confStr = "=query(students!1:999, \"select A,B,C,D,E,F,L,M,N,O,P,Q,R,T,U,V,W,X,Y,Z,AA,AB,AC,AD,AE where G=8 and AG>=" + getPassingPoint() + " order by C,E\")";
 
@@ -490,17 +568,17 @@ function saveStudentsPast() {
   ////////////////////////////////////////////////////////////////////////////////////
 
   var studentsPastFolderId = getStr("STUDENTS_PAST_FOLDER_ID");
-
+  
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var file = DriveApp.getFileById(ss.getId());
   var clsFolder = DriveApp.getFolderById(studentsPastFolderId);
-
+  
   // Make a copy
   var newFile = file.makeCopy("new-file", clsFolder);
 
   // Open the new spreadsheet
   var ss = SpreadsheetApp.openById(newFile.getId());
-
+  
   // Remove links to all class spreadsheets
   ss.getSheetByName("GL1A").getRange("O2:O2").getCell(1, 1).setValue("");
   ss.getSheetByName("GL1B").getRange("O2:O2").getCell(1, 1).setValue("");
@@ -536,7 +614,7 @@ function saveStudentsPast() {
   ss.getSheetByName("VN8B").getRange("O2:O2").getCell(1, 1).setValue("");
   //ss.getSheetByName("gl-classes").getRange("G2:H17").clear();
   //ss.getSheetByName("vn-classes").getRange("G2:H17").clear();
-
+  
   // Update First Communion sheet
   ss.getSheetByName("Eucharist").getRange("A1:A1").getCell(1, 1).setValue(fcomStr);
 
@@ -547,93 +625,16 @@ function saveStudentsPast() {
 
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// 6 - increaseGlGVnGForNewReg
-//
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-function increaseGlGVnGForNewReg() {
-  var ui = SpreadsheetApp.getUi(); // Same variations.
-
-  var response = ui.alert(
-      'Warning!!!',
-      'Do you want to increase glG and vnG for new registration process?',
-      ui.ButtonSet.YES_NO);
-
-  // Process the user's response.
-  if (response == ui.Button.YES) {
-    increaseGlGVnGForNewRegImpl();
-  }
-}
-
-function waitSeconds(iMilliSeconds) {
-    var counter= 0
-        , start = new Date().getTime()
-        , end = 0;
-    while (counter < iMilliSeconds) {
-        end = new Date().getTime();
-        counter = end - start;
-    }
-}
-
-function increaseGlGVnGForNewRegImpl() {
-  var passing_point = getPassingPoint();
-
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Std_VGz6v3");
-  var range = sheet.getRange(1, 1, 700, 38); //row, col, numRows, numCols
-  var rowStartCell = sheet.getRange("AI1:AI1").getCell(1, 1); // <= Need to update column
-
-  ////////////////////////////////////////////////////////////////////////////////////
-  ////////////////////////////////////////////////////////////////////////////////////
-
-
-  var id, isReg, glG, glN, vnG, vnN, glFinalPoint, vnFinalPoint;
-  // iterate through all cells in the range
-  for (var cellRow = rowStartCell.getValue(); ; cellRow++) {
-    id = range.getCell(cellRow, idCol).getValue();
-    if(id == "") break;
-
-    isReg   = range.getCell(cellRow, isRegCol).getValue();
-    glG     = range.getCell(cellRow, glGCol).getValue();
-    glN     = range.getCell(cellRow, glNCol).getValue();
-    vnG     = range.getCell(cellRow, vnGCol).getValue();
-    vnN     = range.getCell(cellRow, vnNCol).getValue();
-    glFinalPoint  = range.getCell(cellRow, glFinalPointCol).getValue();
-    vnFinalPoint  = range.getCell(cellRow, vnFinalPointCol).getValue();
-    if(isReg == "x") {
-      if(glG > 0 && glN != "" && glFinalPoint >= passing_point) {
-        range.getCell(cellRow, glGCol).setValue(glG + 1);
-      }
-
-      if(vnG > 0 && vnN != "" && vnFinalPoint >= passing_point) {
-        range.getCell(cellRow, vnGCol).setValue(vnG + 1);
-      }
-
-      // Clear the x
-      range.getCell(cellRow, isRegCol).setValue('');
-
-      // Clear glFinalPoint and vnFinalPoint
-
-      waitSeconds(1000);
-    }
-
-    // update rowStart cell
-    rowStartCell.setValue(cellRow);
-  }
-
-};
-
-
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-// 7 - Clear data in external classes
+// 6 - Clear data in external classes
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 function clearDataExternalClasses() {
   var ui = SpreadsheetApp.getUi(); // Same variations.
-
+  
   var response = ui.alert(
       'Warning!!!',
       'Do you want to clear data in external classes?',
@@ -648,13 +649,13 @@ function clearDataExternalClasses() {
 
 
 function clearDataExternalClassesImpl(sheetName) {
-
-
+  
+ 
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetName);
   var range = sheet.getRange(2, 1, 20, 15); //row, col, numRows, numCols
 
   var clsName, action, clsFolder;
-
+  
   // iterate through all cells in the range
   for (var cellRow = 1; cellRow <= range.getHeight(); cellRow++) {
     clsName = range.getCell(cellRow, classes_clsNameCol).getValue();
@@ -663,11 +664,11 @@ function clearDataExternalClassesImpl(sheetName) {
 
     var actionCell = range.getCell(cellRow, classes_actionCol);
     action = actionCell.getValue().trim().toLowerCase();
-
+    
     if(action == 'x') {
       var folderId = range.getCell(cellRow, classes_clsFolderIdCol).getValue();
       clsFolder = DriveApp.getFolderById(folderId);
-
+      
       // Clear data in the class spreadsheet
       // Open target class spreadsheet
       var classId = getExternalClassSpreadsheetId(clsName, clsFolder);
@@ -696,7 +697,7 @@ function clearDataExternalClassesImpl(sheetName) {
   }
 };
 
-function emptyFolder(folderId) {
+function emptyFolder(folderId) { // does not work
 
     const folder = DriveApp.getFolderById(folderId);
 
@@ -710,6 +711,9 @@ function emptyFolder(folderId) {
 
 
 
+
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // DO NOT DELETE THIS FUNCTION
@@ -717,9 +721,77 @@ function emptyFolder(folderId) {
 // This function can be used for updating individual cell in each class sheet
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-function updateSheetsInThisSpreadSheet() {
-  var ui = SpreadsheetApp.getUi(); // Same variations.
 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// deleteOldStudents
+//
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+function deleteOldStudents() {
+  var ui = SpreadsheetApp.getUi(); // Same variations.
+  
+  var response = ui.alert(
+      'Warning!!!',
+      'Do you want to delete old students?',
+      ui.ButtonSet.YES_NO);
+
+  // Process the user's response.
+  if (response == ui.Button.YES) {
+    deleteOldStudentsImpl();
+  }
+}
+
+function calculateAge(dob) { 
+    var diff_ms = Date.now() - dob.getTime();
+    var age_dt = new Date(diff_ms); 
+  
+    return Math.abs(age_dt.getUTCFullYear() - 1970);
+}
+
+function deleteOldStudentsImpl() {
+ 
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Std_VGz6v3");
+  var range = sheet.getRange(1, 1, 700, 38); //row, col, numRows, numCols
+  var rowStartCell = sheet.getRange("AI1:AI1").getCell(1, 1); // <= Need to update column
+  //var lastRow = SpreadsheetApp.getActiveSheet().getLastRow();
+
+  ////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////
+  
+  
+  var isReg, glG, glN, vnG, vnN, birthDate; 
+  for (var cellRow = rowStartCell.getValue(); cellRow > 1; cellRow--) {
+
+    isReg   = range.getCell(cellRow, isRegCol).getValue();
+    glG     = range.getCell(cellRow, glGCol).getValue();
+    glN     = range.getCell(cellRow, glNCol).getValue();
+    vnG     = range.getCell(cellRow, vnGCol).getValue();
+    vnN     = range.getCell(cellRow, vnNCol).getValue();
+    birthDate = range.getCell(cellRow, birthDateCol).getValue();
+
+    if(isReg == '') {
+      if(   (glG > 8 && vnG > 8)
+         || (glG > 8 && vnN == '')
+         || (glN == '' && vnG > 8)
+         || calculateAge(birthDate)>17) {
+        sheet.deleteRow(cellRow);
+      }
+
+      waitSeconds(500);
+    }
+   
+    // update rowStart cell
+    rowStartCell.setValue(cellRow);
+  }
+  
+};
+
+
+
+function updateSheetsInThisSpreadSheet() {
+  var ui = SpreadsheetApp.getUi();
+  
   var response = ui.alert(
       'Warning!!!',
       'Do you want to updateSheetsInThisSpreadSheet?',
@@ -739,13 +811,13 @@ function updateSheetsInThisSpreadSheetImpl() {
 
 
 function updateSheetsInThisSpreadSheetImpl2(sheetName) {
-
+  
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var sheet = ss.getSheetByName(sheetName);
   var range = sheet.getRange(2, 1, 20, 15); //row, col, numRows, numCols
 
   var clsName, action;
-
+  
   // iterate through all cells in the range
   for (var cellRow = 1; cellRow <= range.getHeight(); cellRow++) {
     clsName = range.getCell(cellRow, classes_clsNameCol).getValue();
@@ -754,7 +826,7 @@ function updateSheetsInThisSpreadSheetImpl2(sheetName) {
 
     var actionCell = range.getCell(cellRow, classes_actionCol);
     action = actionCell.getValue();
-
+   
     if(action == 'x') {
       clsFolder = DriveApp.getFolderById(range.getCell(cellRow, classes_clsFolderIdCol).getValue());
       updateSheetsInThisSpreadSheet_ClassSheet(ss.getSheetByName(clsName), clsName, clsFolder);
@@ -776,12 +848,12 @@ function updateSheetsInThisSpreadSheet_ClassSheet(sheet, clsName, clsFolder) {
     newValue = "=query(studentsclass!1:902, \"select A,B,C,D,E,K,L,N,O,V,T,S,Q where \" & if(left(A1,1)=\"G\",\"G\",\"I\") & \"=\" & mid(A1,3,1) & \" and \" & if(left(A1,1)=\"G\",\"H\",\"J\") & \"='\" & right(A1,1) & \"' order by C,E\")";
   }
   sheet.getRange("B1:B1").getCell(1, 1).setValue(newValue);
-
+  
 
   var classId = getExternalClassSpreadsheetId(clsName, clsFolder);
   newValue = "=IMPORTRANGE(\"" + classId + "\",\"Grades!F3:F80\")";
   sheet.getRange("O2:O2").getCell(1, 1).setValue(newValue);
-
+  
   newValue = "=CONCATENATE(COUNTIFS(O2:O92, \"0\"),\" | \", MIN(O2:O92),\" - \", MAX(O2:O92), \" | \", COUNTIFS(O2:O92, Q1), \":\", COUNTIFS(O2:O92, Q2)-COUNTIFS(O2:O92, Q1), \":\", COUNTIFS(O2:O92, Q3)-COUNTIFS(O2:O92, Q2), \":\", COUNTIFS(O2:O92, Q4)-COUNTIFS(O2:O92, Q3), \":\", COUNTIFS(O2:O92, Q5))";
   sheet.getRange("P1:P1").getCell(1, 1).setValue(newValue);
 
@@ -800,8 +872,8 @@ function updateSheetsInThisSpreadSheet_ClassSheet(sheet, clsName, clsFolder) {
 // This function is for setting up new GLVN database for the first time only
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 function cloneClassesUsingGL1AorVN1A() {
-  var ui = SpreadsheetApp.getUi(); // Same variations.
-
+  var ui = SpreadsheetApp.getUi();
+  
   var response = ui.alert(
       'Warning!!!',
       'Do you want to create new classes?',
@@ -827,13 +899,13 @@ function debugCloneClassesUsingGL1AorVN1AImpl2 () {
 }
 
 function cloneClassesUsingGL1AorVN1AImpl2(sheetName, templateId) {
-
+  
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var sheet = ss.getSheetByName(sheetName);
   var range = sheet.getRange(2, 1, 20, 15); //row, col, numRows, numCols
 
   var clsName, action, clsFolder;
-
+  
   // iterate through all cells in the range
   for (var cellRow = 1; cellRow <= range.getHeight(); cellRow++) {
     clsName = range.getCell(cellRow, classes_clsNameCol).getValue();
@@ -845,7 +917,7 @@ function cloneClassesUsingGL1AorVN1AImpl2(sheetName, templateId) {
 
     var actionCell = range.getCell(cellRow, classes_actionCol);
     action = actionCell.getValue();
-
+    
     if(action == 'x') {
       var folderId = range.getCell(cellRow, classes_clsFolderIdCol).getValue();
       clsFolder = DriveApp.getFolderById(folderId);
@@ -875,7 +947,7 @@ function cloneClassesUsingGL1AorVN1AImpl2(sheetName, templateId) {
             file.setName("bk");
           }
         }
-
+      
 
         /////////////////////////////////////////////////////////////////////////////
         // Make a copy and save it into the class folder
@@ -889,11 +961,11 @@ function cloneClassesUsingGL1AorVN1AImpl2(sheetName, templateId) {
         classSs = SpreadsheetApp.openById(classFile.getId());
         classSs.getSheetByName("contacts").getRange("A1:A1").getCell(1, 1).setValue(clsName);
         classSs.getSheetByName("admin").getRange("B3:B3").getCell(1, 1).setValue(reportCardsFolderId);
-        classSs.getSheetByName("contacts").getRange("B1:B1").getCell(1, 1).setValue("=IMPORTRANGE(\""
-            + ss.getId() + "\",\"" + clsName.slice(0,2).toLowerCase() + "-classes!D"
+        classSs.getSheetByName("contacts").getRange("B1:B1").getCell(1, 1).setValue("=IMPORTRANGE(\"" 
+            + ss.getId() + "\",\"" + clsName.slice(0,2).toLowerCase() + "-classes!D" 
             + (cellRow+1) + "\")");
-        classSs.getSheetByName("grades").getRange("F1:F1").getCell(1, 1).setValue("=IMPORTRANGE(\""
-            + ss.getId() + "\",\"" + clsName.slice(0,2).toLowerCase() + "-classes!E"
+        classSs.getSheetByName("grades").getRange("F1:F1").getCell(1, 1).setValue("=IMPORTRANGE(\"" 
+            + ss.getId() + "\",\"" + clsName.slice(0,2).toLowerCase() + "-classes!E" 
             + (cellRow+1) + "\")");
       }
 
@@ -927,7 +999,7 @@ function cloneClassesUsingGL1AorVN1AImpl2(sheetName, templateId) {
         /////////////////////////////////////////////////////////////////////////////
         var tstr = "=IMPORTRANGE(\"" + classFile.getId() + "\",\"Grades!F3:F80\")";
         ss.getSheetByName(clsName).getRange("O2:O2").getCell(1, 1).setValue(tstr);
-
+        
         /////////////////////////////////////////////////////////////////////////////
         // Update students-extra spreadsheet
         // Save new class spreadsheet id into the honor-gl-import or honor-vn-import sheet
@@ -977,7 +1049,7 @@ function testGenTestPoint() {
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 function updateExternalClassSpreadSheets() {
   var ui = SpreadsheetApp.getUi(); // Same variations.
-
+  
   var response = ui.alert(
       'Warning!!!',
       'Do you want to updateExternalClassSpreadSheets?',
@@ -997,13 +1069,13 @@ function updateExternalClassSpreadSheetsImpl() {
 
 
 function updateExternalClassSpreadSheetsImpl2(sheetName) {
-
+  
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var sheet = ss.getSheetByName(sheetName);
   var range = sheet.getRange(2, 1, 20, 15); //row, col, numRows, numCols
 
   var clsName, action, clsFolder;
-
+  
   // iterate through all cells in the range
   for (var cellRow = 1; cellRow <= range.getHeight(); cellRow++) {
     clsName = range.getCell(cellRow, classes_clsNameCol).getValue();
@@ -1012,11 +1084,11 @@ function updateExternalClassSpreadSheetsImpl2(sheetName) {
 
     var actionCell = range.getCell(cellRow, classes_actionCol);
     action = actionCell.getValue();
-
+    
     if(action == 'x') {
       var folderId = range.getCell(cellRow, classes_clsFolderIdCol).getValue();
       clsFolder = DriveApp.getFolderById(folderId);
-
+      
       // Open target class spreadsheet
       var classId = getExternalClassSpreadsheetId(clsName, clsFolder);
       var tss = SpreadsheetApp.openById(classId);
@@ -1047,10 +1119,10 @@ function updateExternalClassSpreadSheetsImpl2(sheetName) {
 function updateExternalClassSpreadSheets_contactsSheet(tss, studentMasterSpreadsheetId, clsName, cellRow) {
 
   var sn = 'contacts';
-
+      
   // sheet
   var sheet = tss.getSheetByName(sn);
-
+  
   //var newValue = "=IMPORTRANGE(\"" + studentMasterSpreadsheetId + "\",A1&\"!B1:N92\")";
   //sheet.getRange("A2:A2").getCell(1, 1).setValue(newValue);
 
@@ -1062,13 +1134,13 @@ function updateExternalClassSpreadSheets_contactsSheet(tss, studentMasterSpreads
 function updateExternalClassSpreadSheets_attendanceSheet(tss, studentMasterSpreadsheetId, hocKy) {
 
   var sn = 'attendance-' + hocKy;
-
+      
   // sheet
   var sheet = tss.getSheetByName(sn);
 
   var newValue = "=query(contacts!1:1, \"select A,B\")";
   sheet.getRange("A1:A1").getCell(1, 1).setValue(newValue);
-
+  
   newValue = "=query(contacts!2:92, \"select C,E,G,I\")";
   sheet.getRange("B2:B2").getCell(1, 1).setValue(newValue);
 
@@ -1082,10 +1154,10 @@ function updateExternalClassSpreadSheets_attendanceSheet(tss, studentMasterSprea
 }
 
 function updateExternalClassSpreadSheets_gradesSheet(tss, studentMasterSpreadsheetId, clsName, cellRow) {
-
+     
   // sheet
   var sheet = tss.getSheetByName('grades');
-
+  
   var newValue;
   // newValue = "=query(contacts!1:1, \"select A,B\")";
   // sheet.getRange("A1:A1").getCell(1, 1).setValue(newValue);
@@ -1136,10 +1208,10 @@ function updateExternalClassSpreadSheets_gradesSheet(tss, studentMasterSpreadshe
 
 
 function updateExternalClassSpreadSheets_honorSheet(tss) {
-
+     
   // sheet
   var sheet = tss.getSheetByName('honor-roll');
-
+  
   // sheet.getRange("A1:A1").getCell(1, 1).setValue(
   //   "=query(contacts!1:1, \"select A,B\")"
   // );
@@ -1156,10 +1228,10 @@ function updateExternalClassSpreadSheets_honorSheet(tss) {
 
 
 function updateExternalClassSpreadSheets_reviewSheet(tss) {
-
+     
   // sheet
   var sheet = tss.getSheetByName('comment-review');
-
+  
   var newValue = "=query(contacts!1:1, \"select A,B\")";
   sheet.getRange("A1:A1").getCell(1, 1).setValue(newValue);
 
@@ -1168,10 +1240,10 @@ function updateExternalClassSpreadSheets_reviewSheet(tss) {
 }
 
 function updateExternalClassSpreadSheets_adminGradesSheet(tss, studentMasterSpreadsheetId) {
-
+     
   // sheet
   var sheet = tss.getSheetByName('adminGrades');
-
+  
   var newValue = "=IMPORTRANGE(\"" + studentMasterSpreadsheetId + "\",\"adminGrades!1:10\")";
   sheet.getRange("A1:A1").getCell(1, 1).setValue(newValue);
 }
