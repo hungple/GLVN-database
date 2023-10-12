@@ -1,4 +1,4 @@
-var RELEASE = "20230913"
+var RELEASE = "20231007"
 
 // Std_VGz6v3
 var idCol               = 1;  
@@ -925,25 +925,39 @@ function cloneClassesUsingGL1AorVN1AImpl2(sheetName, templateId) {
       if(clsName != "GL1A" && clsName != "VN1A") { // don't replace GL1A or VN1A
 
         /////////////////////////////////////////////////////////////////////////////
-        // Create GLxx-report-cards folder if not exist
+        // Rename class directory name
+        /////////////////////////////////////////////////////////////////////////////
+        clsFolder.setName(clsName);
+
+        /////////////////////////////////////////////////////////////////////////////
+        // Delete old GLxx-Report-Cards
         /////////////////////////////////////////////////////////////////////////////
         var reportCardsFolderId;
-        var reportCardfolders = clsFolder.getFoldersByName(clsName + "-Report-Cards");
-        if (reportCardfolders.hasNext()) {
-          reportCardsFolderId = reportCardfolders.next().getId();
+        var folders = clsFolder.getFolders(); //getFoldersByName(clsName + "-Report-Cards");
+        while (folders.hasNext()) {
+          //reportCardsFolderId = reportCardfolders.next().getId();
+          var folder = folders.next();
+          if (folder.getName().endsWith("Report-Cards")) {
+            //reportCardsFolderId = folder.getId();
+            folder.setTrashed(true);
+            break;
+          }
         }
-        else {
-          var reportFolder = clsFolder.createFolder(clsName + "-Report-Cards");
-          reportCardsFolderId = reportFolder.getId();
-        }
+
+        /////////////////////////////////////////////////////////////////////////////
+        // Create new GLxx-report-cards folder
+        /////////////////////////////////////////////////////////////////////////////
+        var reportFolder = clsFolder.createFolder(clsName + "-Report-Cards");
+        reportCardsFolderId = reportFolder.getId();
+        
 
         /////////////////////////////////////////////////////////////////////////////
         // Rename GLxx to "bk"
         /////////////////////////////////////////////////////////////////////////////
-        var files = clsFolder.getFilesByName(clsName);
-        if (files.hasNext()) {
+        var files = clsFolder.getFiles(); //.getFilesByName(clsName);
+        while (files.hasNext()) {
           var file = files.next();
-          if (file) {
+          if (file.getName().startsWith("GL") || file.getName().startsWith("VN")) {
             file.setName("bk");
           }
         }
@@ -967,32 +981,7 @@ function cloneClassesUsingGL1AorVN1AImpl2(sheetName, templateId) {
         classSs.getSheetByName("grades").getRange("F1:F1").getCell(1, 1).setValue("=IMPORTRANGE(\"" 
             + ss.getId() + "\",\"" + clsName.slice(0,2).toLowerCase() + "-classes!E" 
             + (cellRow+1) + "\")");
-      }
 
-      if (! classFile) { // This must be GL1A or VN1A
-        var files = clsFolder.getFilesByName(clsName);
-        if (files.hasNext()) {
-          classFile = files.next();
-          classSs = SpreadsheetApp.openById(classFile.getId());
-        }
-      }
-
-
-      if (classSs) {
-        /////////////////////////////////////////////////////////////////////////////
-        // For testing
-        /////////////////////////////////////////////////////////////////////////////
-        classSs.getSheetByName("grades").getRange("K3:K3").getCell(1, 1).setValue(genTestPoint(clsName, .01));
-        classSs.getSheetByName("grades").getRange("K4:K4").getCell(1, 1).setValue(genTestPoint(clsName, .02));
-        classSs.getSheetByName("grades").getRange("K5:K5").getCell(1, 1).setValue(genTestPoint(clsName, .03));
-        classSs.getSheetByName("grades").getRange("K6:K6").getCell(1, 1).setValue(genTestPoint(clsName, .04));
-        classSs.getSheetByName("grades").getRange("S3:S3").getCell(1, 1).setValue(genTestPoint(clsName, .01));
-        classSs.getSheetByName("grades").getRange("S4:S4").getCell(1, 1).setValue(genTestPoint(clsName, .02));
-        classSs.getSheetByName("grades").getRange("S5:S5").getCell(1, 1).setValue(genTestPoint(clsName, .03));
-        classSs.getSheetByName("grades").getRange("S6:S6").getCell(1, 1).setValue(genTestPoint(clsName, .04));
-      }
-
-      if (classFile) {
         /////////////////////////////////////////////////////////////////////////////
         // Update students-master spreadsheet
         // Save new class spreadsheet id into the class worksheet (ex: GL1A) sheet
@@ -1009,10 +998,25 @@ function cloneClassesUsingGL1AorVN1AImpl2(sheetName, templateId) {
         var studentsExtraSs = SpreadsheetApp.openById(studentsExtraId);
         var hrSheet = studentsExtraSs.getSheetByName("honor-" + sheetName.slice(0, 2)+"-import"); // honor-gl-import or honor-vn-import sheet
         var hrRange = hrSheet.getRange(2, 1, 500, 15); //row, col, numRows, numCols
-        var hrCell  = hrRange.getCell(((cellRow-1)*MAX_HONOR_ROLL)+1, 2);
+        var hrRow = ((cellRow-1)*MAX_HONOR_ROLL)+1;
+        var hrCell  = hrRange.getCell(hrRow, 2);
         hrCell.setValue(imptStr);
-      }
+        for(let i=0; i<20; i++ ) {
+          hrRange.getCell(hrRow+i, 1).setValue(clsName);
+        }
 
+        /////////////////////////////////////////////////////////////////////////////
+        // For testing only
+        /////////////////////////////////////////////////////////////////////////////
+        classSs.getSheetByName("grades").getRange("K3:K3").getCell(1, 1).setValue(genTestPoint(clsName, .01));
+        classSs.getSheetByName("grades").getRange("K4:K4").getCell(1, 1).setValue(genTestPoint(clsName, .02));
+        classSs.getSheetByName("grades").getRange("K5:K5").getCell(1, 1).setValue(genTestPoint(clsName, .03));
+        classSs.getSheetByName("grades").getRange("K6:K6").getCell(1, 1).setValue(genTestPoint(clsName, .04));
+        classSs.getSheetByName("grades").getRange("S3:S3").getCell(1, 1).setValue(genTestPoint(clsName, .01));
+        classSs.getSheetByName("grades").getRange("S4:S4").getCell(1, 1).setValue(genTestPoint(clsName, .02));
+        classSs.getSheetByName("grades").getRange("S5:S5").getCell(1, 1).setValue(genTestPoint(clsName, .03));
+        classSs.getSheetByName("grades").getRange("S6:S6").getCell(1, 1).setValue(genTestPoint(clsName, .04));
+      }
 
       // Clear action x
       actionCell.setValue('');
