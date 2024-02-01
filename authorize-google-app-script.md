@@ -20,7 +20,7 @@
 ![image](https://github.com/hungple/GLVN-database/assets/25112201/6657b083-4720-4486-9a6e-922a70e9fa8a)
 
 
-### 5. Click Go to GL1A-app link
+### 5. Click Go to GL1A-app (unsafe) link
 
 ![image](https://github.com/hungple/GLVN-database/assets/25112201/30482a78-6a6b-4d2b-a353-8a72738a35b3)
 
