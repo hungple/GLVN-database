@@ -39,4 +39,6 @@
 
 ![image](https://github.com/hungple/GLVN-database/assets/25112201/6614eda7-fcee-4feb-8fcd-346240ea5f1e)
 
-If you don't see the message, just simply select menu item GLVN > "Create HK1 report cards" again.
+Notes:
+- If you don't see the message, just simply select menu item GLVN > "Create HK1 report cards" again.
+- Do not cancel the script or dismiss the script. You need to let it run until it finishes.
