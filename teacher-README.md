@@ -1,6 +1,7 @@
 # How to send report cards
 This document is for teachers who teach any GL and/or VN class.
 
+
 ### I. Accessing GLVN spreadsheets
 
 1. Enter https://drive.google.com/ into the address bar of your browser
@@ -18,6 +19,7 @@ A directory to hold report cards. When you generate and email resport cards, the
 
 #### GL1A:
 A spreadsheet to hold your student information.
+
 
 ### III. Spreadshet overview
 
@@ -93,6 +95,7 @@ If you are able to run the script, a message `Running script` is poped up as sho
 - Before you send report cards to the parents, you should use the option `x` to generate report cards and review them before sending them to the parents.
 - If you received any bounced email, check with the parent to get the correct email. Please contact your school administrators to update the email address.
 - For the first time or from time to time, Google might ask you to authorize the script. Please follow section V. to authorize the script.
+
  
 ### V. Authorizing Google apps script
 
