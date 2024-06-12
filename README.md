@@ -2,9 +2,9 @@
 
 ### I. Features
 1. Registration
-2. Share/unshare spreadshet to teachers. Teachers can only see their own classes but not others.
+2. Share/unshare spreadsheet to teachers. Teachers can only see their own classes but not others.
 3. Create/email report cards for HK1/HK2
-4. Create/email admission leters
+4. Create/email admission letters
 5. Create/email registration forms for current students
 6. Create award certificates
 7. Create eucharist/confirmation certificates
