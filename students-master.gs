@@ -1,6 +1,6 @@
-var RELEASE = "20240907"
+var RELEASE = "20251026"
 
-// Std_main
+// std-main
 var idCol               = 1;  
 var glGCol              = 7; 
 var glNCol              = 8; 
@@ -177,9 +177,23 @@ function unShareClasses() {
   }
 }
 
+function debugUnShareClasses() {
+  var ui = SpreadsheetApp.getUi();
+  
+
+
+    var glReportCardTemplateId = getStr("GL_REPORT_CARD_TEMPLATE_ID");
+    var classLibraryId         = getStr("CLASS_LIBRARY_ID");
+    shareClassesImpl("gl-classes", glReportCardTemplateId, classLibraryId, false);
+    // var vnReportCardTemplateId = getStr("VN_REPORT_CARD_TEMPLATE_ID");
+    // var classLibraryId         = getStr("CLASS_LIBRARY_ID");
+    // shareClassesImpl("vn-classes", vnReportCardTemplateId, classLibraryId, false);
+
+}
 
 function shareClassesImpl(sheetName, reportFormId, classLibraryId, isShared) {
   
+  // get admin emails
   var admins = getStr("ADMIN_IDS").split(",");
   for (var i = 0; i < admins.length; i++) {
     admins[i] = admins[i].trim();
@@ -195,7 +209,7 @@ function shareClassesImpl(sheetName, reportFormId, classLibraryId, isShared) {
     clsName = range.getCell(cellRow, classes_clsNameCol).getValue();
     gmails = range.getCell(cellRow, classes_gmailCol).getValue().trim();
     
-    if( clsName == "")
+    if(clsName == "")
       break;
 
     var actionCell = range.getCell(cellRow, classes_actionCol);
@@ -210,49 +224,54 @@ function shareClassesImpl(sheetName, reportFormId, classLibraryId, isShared) {
         gmailArr[i] = gmailArr[i].trim();
       }
 
-      // Share report card template and class library
-      var doc = DocumentApp.openById(reportFormId);
+      var reportForm = DocumentApp.openById(reportFormId);
       var libSpreadSheet = SpreadsheetApp.openById(classLibraryId);
 
       for (var i = 0; i < gmailArr.length; i++) {
         var gmail = gmailArr[i];
-        try {
-          //Only remove this gmail but don't remove other viewers or admins (admin also a teacher)
-          if(isNotAdmin(admins, gmail)) {
-            doc.removeViewer(gmail);
-            libSpreadSheet.removeViewer(gmail);
-
-            if(isShared == true){
-              doc.addViewer(gmail);
-              libSpreadSheet.addEditor(gmail);
-            }
-          }
-        }
-        catch(e) {
-        } //ignore error
-      }
-
-      // Share the whole class folder
-      try {
-        // remove current editors except admins
-        var editors = clsFolder.getEditors();
-        for (var j = 0; j < editors.length; j++) {
-          if(isNotAdmin(admins, editors[j].getEmail())){
-            clsFolder.removeEditor(editors[j].getEmail());           
-          }
-        }
         
-        // add new editors
-        for (var i = 0; i < gmailArr.length; i++) {
-          var gmail = gmailArr[i];
+        if(isNotAdmin(admins, gmail)) {
+
+          // Unshare and then share report card template and class library
+          // Only remove this gmail but don't remove other viewers or admins (admin also a teacher)
+          try {
+            reportForm.removeViewer(gmail);
+          }
+          catch(e) {
+            //ignore error because email is not the current viewer
+          }
+
+          if(isShared == true){
+            reportForm.addViewer(gmail);
+          }
+
+          // Unshare and then share report card template and class library
+          try {
+            libSpreadSheet.removeViewer(gmail);
+          }
+          catch(e) {
+            //ignore error because email is not the current viewer
+          }
+
+          if(isShared == true){
+            libSpreadSheet.addViewer(gmail);
+          }
+
+          // Unshare and then share the whole class folder
+          try {
+            clsFolder.removeEditor(gmail);           
+          }
+          catch(e) {
+          } //ignore error
+
           if(isShared == true){
             clsFolder.addEditor(gmail);
           }
-        }
+          
+        } // not admin
+
       }
-      catch(e) {
-      } //ignore error
-      
+
       actionCell.setValue('');
     }
   }
@@ -290,7 +309,7 @@ function saveFinalPoints() {
 
 function saveFinalPointsImpl() {
   
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Std_main");
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("std-main");
   var range = sheet.getRange(1, 1, 700, 34); //row, col, numRows, numCols 
   var rowStartCell = sheet.getRange("AI1:AI1").getCell(1, 1);
 
@@ -441,7 +460,7 @@ function saveStdInfoImpl(task) {
   var confLocation = getStr("CHURCH_INFO");
   var passing_point = getPassingPoint();
 
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Std_main");
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("std-main");
   var range = sheet.getRange(1, 1, 700, 34); //row, col, numRows, numCols 
   var rowStartCell = sheet.getRange("AI1:AI1").getCell(1, 1); // <= Need to update column
 
@@ -764,7 +783,7 @@ function calculateAge(dob) {
 
 function deleteOldStudentsImpl() {
  
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Std_main");
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("std-main");
   var range = sheet.getRange(1, 1, 700, 38); //row, col, numRows, numCols
   var rowStartCell = sheet.getRange("AI1:AI1").getCell(1, 1); // <= Need to update column
   //var lastRow = SpreadsheetApp.getActiveSheet().getLastRow();
@@ -900,8 +919,8 @@ function setupGLSxVNSxClasses() {
 
 
 function setupGLSxVNSxClassesImpl() {
-  var glClassTemplateId = getStr("GL1A_SPREADSHEET_ID");
-  var vnClassTemplateId = getStr("VN1A_SPREADSHEET_ID");
+  //var glClassTemplateId = getStr("GL1A_SPREADSHEET_ID");
+  //var vnClassTemplateId = getStr("VN1A_SPREADSHEET_ID");
 
   setupGLSxVNSxClassesImpl2("gl-classes");
   setupGLSxVNSxClassesImpl2("vn-classes");
@@ -915,7 +934,7 @@ function setupGLSxVNSxClassesImpl2(sheetName) {
   
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var sheet = ss.getSheetByName(sheetName);
-  var range = sheet.getRange(18, 1, 20, 15); //row, col, numRows, numCols: start at row 18
+  var range = sheet.getRange("A18:J22"); // start at row 18
 
   var clsName, action;
   
