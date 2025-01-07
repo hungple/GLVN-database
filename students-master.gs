@@ -1,4 +1,4 @@
-var RELEASE = "20251026"
+var RELEASE = "20250106"
 
 // std-main
 var idCol               = 1;  
@@ -254,7 +254,7 @@ function shareClassesImpl(sheetName, reportFormId, classLibraryId, isShared) {
           }
 
           if(isShared == true){
-            libSpreadSheet.addViewer(gmail);
+            libSpreadSheet.addEditor(gmail);
           }
 
           // Unshare and then share the whole class folder
