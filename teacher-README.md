@@ -106,27 +106,40 @@ If you are able to run the script, a message `Running script` is poped up as sho
 From time to time, Google might ask you to authorize or trust the script that is used in GLVN spreadsheets. To authorize, please follow the steps below:
 
 <img width="467" height="181" alt="s1" src="https://github.com/user-attachments/assets/3e5fe91f-4ed4-4daf-89b9-b6ec30984138" />
+
 - Click `Ok` button.
+
 <br><br>
 
 <img width="652" height="788" alt="s2" src="https://github.com/user-attachments/assets/85ac8d15-d336-41c3-81ed-77db1bc258f4" />
+
 - Click the Google account that you want to use to send out report cards or select another acount option.
+
 <br><br>
 
 <img width="652" height="788" alt="s3" src="https://github.com/user-attachments/assets/ebf75788-cb4f-49ef-bf1b-9da3eae9f05b" />
+
 - Click `Advanced` link
+
 <br><br>
 
 <img width="652" height="788" alt="s4" src="https://github.com/user-attachments/assets/475e8679-b022-4e42-80e0-04e150603cef" />
+
 - Click `Go to GL1A-app (unsafe)` link. For VN classes, click `Go to VN1A-app (unsafe)` link.
+
 <br><br>
 
 <img width="650" height="788" alt="s5" src="https://github.com/user-attachments/assets/6f60bf80-2cac-42c5-9c40-797e045d6765" />
+
 - Click `Continue` button.
+
 <br><br>
 
 <img width="1053" height="1008" alt="s6" src="https://github.com/user-attachments/assets/7cc40168-fbbb-40c4-b0a0-db0edf356cb8" />
+
 - Select `Select all` checkbox to grant permission to all required files and directories. Then click `Continue` button. You need to grant permission to all required files and directories or it won't work.
+
+<br><br>
 
 #### Note:
 If there is no popup windows showing the script is running, you can re-select GLVN menu item again. If you authorize from the previous step successfully, it should not ask you to authorize the script again.
