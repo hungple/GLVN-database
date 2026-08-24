@@ -22,15 +22,16 @@
 
 <img width="761" height="548" alt="image" src="https://github.com/user-attachments/assets/6c4374de-664d-4a1d-b700-e21c621f70a1" />
 
-1. `1-students-master`
+
+#### 1-students-master
    Contains the master spreadsheet with all student records. Only administrators have access to this folder. This spreadsheet also includes class information.
-2. `2-gl-classes`
+#### 2-gl-classes
    Contains folders for all catechism classes (GLxx). Teachers can access only the folders for their assigned GLxx classes.
-3. `3-vn-classes`
+#### 3-vn-classes
    Contains folders for all Vietnamese language classes (VNxx). Teachers can access only the folders for their assigned VNxx classes.
-4. `4-students-addition`
+#### 4-students-addition
    Contains supplementary student information that complements the 1-students-master spreadsheet. It includes lists of current students, First Eucharist candidates, Confirmation candidates, and the Honor Roll.
-5. `5-students-past`
+#### 5-students-past
    Contains spreadsheets for students from previous school years.
 
    
