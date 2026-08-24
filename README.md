@@ -13,7 +13,10 @@
 
 1. Enter https://drive.google.com/ into the address bar of your browser
 2. Select `Shared with me`
-
+3. Click `Type` drop down and select `Folders`
+4. Look for `GLVN-xxx-database` folder
+   
+<img width="649" height="533" alt="image" src="https://github.com/user-attachments/assets/10448972-4be3-4b6d-b2b0-929dd6279e56" />
 
 ### III. Administrator's responsibilities
 
