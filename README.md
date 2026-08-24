@@ -41,17 +41,17 @@
  
 2. Register new students during registration time or update student information such as updating email addresses. When teachers send out report cards, some email might be bounded due to invalid email addresses. (easy)
  
-3. Share (or unshare) class folders and spreadsheets. To share class folders and spreadsheets to teachers, go to students-master spreadsheet > gl-classes/vn-classes tab > enter an x in the action column and then select GLVN menu > Share classes. Note: the first you use GLVN menu, Google will ask you to authorize the app script before you can run the script. Please see section IV for more information. (normal)
+3. Share (or unshare) class folders and spreadsheets. To share class folders and spreadsheets to teachers, go to students-master spreadsheet > gl-classes/vn-classes tab > enter an x in the action column and then select GLVN menu > Share classes. Note: the first you use GLVN menu, Google will ask you to authorize the app script before you can run the script. Please see section IV for more information. (medium)
 
-4. Setting up for new school year by running the 6 annual admin steps in students-master spreadsheet. The 6 annual admin steps need to be executed **only once** after we are done with the current school year and getting ready for new registration. (normal)
+4. Setting up for new school year by running the 6 annual admin steps in students-master spreadsheet. The 6 annual admin steps need to be executed **only once** after we are done with the current school year and getting ready for new registration. (medium)
  
-5. Test GLVN menu items in class spreadsheets and verify all functions. Administrators should test the class spreadsheets before teachers entering any data. If a bug is found after teachers entered data, we might need to spend more time to correct any issue. (normal)
+5. Test GLVN menu items in class spreadsheets and verify all functions. Administrators should test the class spreadsheets before teachers entering any data. If a bug is found after teachers entered data, we might need to spend more time to correct any issue. (medium)
  
-6. Update code for spreadsheets students-master, students-extra, and class-library. Code in class-library is used for all class spreadsheets. However, in some cases, the library was not refreshed. In these cases, administrators will need to copy code for all class spreadsheets as well. Code can be found here https://github.com/hungple/GLVN-database. Please see section V for how to copy the source code. (normal-hard)
+6. Update code for spreadsheets students-master, students-extra, and class-library. Code in class-library is used for all class spreadsheets. However, in some cases, the library was not refreshed. In these cases, administrators will need to copy code for all class spreadsheets as well. Code can be found here https://github.com/hungple/GLVN-database. Please see section V for how to copy the source code. (advanced)
  
-7. Create custom GLxC or VNxC classes including GL9A (post confirmation). To create GLxC, clone from GL1A and update all ids. Similarly, to create VNxC, clone from VN1A. Please see section VI for detail. (hard)
+7. Create custom GLxC or VNxC classes including GL9A (post confirmation). To create GLxC, clone from GL1A and update all ids. Similarly, to create VNxC, clone from VN1A. Please see section VI for detail. (advanced)
  
-8. Become an owner of GLVN-database spreadsheets. (very hard. However, if you are computer engineer/programmer, the code is very easy to understand)
+8. Become an owner of GLVN-database spreadsheets. (expert - However, if you are computer engineer/programmer, the code is very easy to understand)
  
 
 ### V. Owner’s responsibilities:
