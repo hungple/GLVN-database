@@ -100,4 +100,18 @@ If you are able to run the script, a message `Running script` is poped up as sho
 - If you received any bounced email, check with the parent to get the correct email. Please contact your school administrators to update the email address.
 - For the first time or from time to time, Google might ask you to authorize the script. Please follow section V. to authorize the script.
 
- 
+### V. Authorizing Google apps script
+
+Google may occasionally ask you to authorize or trust the Google Apps Script used by the GLVN spreadsheets.
+
+To authorize the script, either:
+
+Follow the instructions here:
+[https://github.com/hungple/GLVN-database/blob/main/authorize-google-app-script.md](https://github.com/hungple/GLVN-database/blob/main/authorizing-google-app-script.md)
+
+or
+
+Watch the first half of this video:
+https://www.youtube.com/watch?v=4sFTQ9UAtuo
+
+
