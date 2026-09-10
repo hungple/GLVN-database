@@ -1,44 +1,80 @@
-## Steps how to authorize Google app script
+### V. Authorizing Google apps script
 
-### 1. Select menu item GLVN > "Create HK1 report cards"
+From time to time, Google might ask you to authorize or trust the script that is used in GLVN spreadsheets. To authorize, please follow the steps below:
 
-![image](https://github.com/hungple/GLVN-database/assets/25112201/483949d7-69c0-437b-8b58-d7e108f11a4a)
+<img width="467" height="181" alt="s1" src="https://github.com/user-attachments/assets/3e5fe91f-4ed4-4daf-89b9-b6ec30984138" />
+
+- Click `Ok` button.
+
+<br><br>
+
+<img width="652" height="788" alt="s2" src="https://github.com/user-attachments/assets/85ac8d15-d336-41c3-81ed-77db1bc258f4" />
+
+- Click the Google account that you want to use to send out report cards or select another acount option.
+
+<br><br>
+
+<img width="652" height="788" alt="s3" src="https://github.com/user-attachments/assets/ebf75788-cb4f-49ef-bf1b-9da3eae9f05b" />
+
+- Click `Advanced` link
+
+<br><br>
+
+<img width="652" height="788" alt="s4" src="https://github.com/user-attachments/assets/475e8679-b022-4e42-80e0-04e150603cef" />
+
+- Click `Go to GL1A-app (unsafe)` link. For VN classes, click `Go to VN1A-app (unsafe)` link.
+
+<br><br>
+
+<img width="650" height="788" alt="s5" src="https://github.com/user-attachments/assets/6f60bf80-2cac-42c5-9c40-797e045d6765" />
+
+- Click `Continue` button.
+
+<br><br>
+
+<img width="1053" height="1008" alt="s6" src="https://github.com/user-attachments/assets/7cc40168-fbbb-40c4-b0a0-db0edf356cb8" />
+
+- Select `Select all` checkbox to grant permission to all required files and directories. Then click `Continue` button. You need to grant permission to all required files and directories or it won't work.
+
+<br><br>
+
+#### Note:
+If there is no popup windows showing the script is running, you can re-select GLVN menu item again. 
+<img width="477" alt="image" src="https://github.com/hungple/GLVN-database/assets/25112201/9f91cf7b-d88a-4c38-8e82-665ec105c5a5">
+
+If you authorize from the previous step successfully, it should not ask you to authorize the script again.
 
 
-### 2. Click OK button
+### VI. Removing permission to run GL1A-app/VN1A-app Google apps script 
+For some reasons, it keeps asking to authorize GL1A or VN1A Google apps script, you might need to remove the permission by following the steps below and then re-authorize the permission again. If you want to remove permission that you grant in the section V above, please following the steps below.
 
-![image](https://github.com/hungple/GLVN-database/assets/25112201/979c0962-2402-42a4-8225-159b44d0191e)
+- Click your own profile
 
+<img width="437" height="422" alt="ss1" src="https://github.com/user-attachments/assets/9ff704f6-a21e-4de9-b032-852faeec0b87" />
 
-### 3. Select your Gmail account. In this example, I select my account hle007@gmail.com
+- Select `Manage your Google Account`
 
-![image](https://github.com/hungple/GLVN-database/assets/25112201/86dd75ca-feea-4663-905f-832cf6bf7c71)
+<br><br>
 
+<img width="449" height="595" alt="ss2" src="https://github.com/user-attachments/assets/a8856ff0-8b92-4184-8bc8-6f254139d715" />
 
-### 4. Click Advanced link
+- Select `Third-party connections`
 
-![image](https://github.com/hungple/GLVN-database/assets/25112201/6657b083-4720-4486-9a6e-922a70e9fa8a)
+<br><br>
 
+<img width="863" height="675" alt="ss3" src="https://github.com/user-attachments/assets/4922f270-c5ff-4aa1-83cf-e88c857a2b80" />
 
-### 5. Click Go to GL1A-app (unsafe) link
+- Roll down and expand `GL1A-app` or `VN1A-app`
 
-![image](https://github.com/hungple/GLVN-database/assets/25112201/30482a78-6a6b-4d2b-a353-8a72738a35b3)
+<br><br>
 
+<img width="879" height="788" alt="ss4" src="https://github.com/user-attachments/assets/52261839-3e44-40a2-bfc1-237263089e70" />
 
-### 6. Click Continue button
+- Click 'Delete all connections you have with GL1A-app` or `VN1A-app`
 
-![image](https://github.com/hungple/GLVN-database/assets/25112201/4f6dcc63-1500-4853-9b7c-06530a279fde)
+<br><br>
 
+<img width="575" height="458" alt="ss5" src="https://github.com/user-attachments/assets/1e8fc9e7-0040-4981-bb79-78ec63a9a877" />
 
-### 7. Click Allow button
+- Click 'Confirm` button
 
-![image](https://github.com/hungple/GLVN-database/assets/25112201/8d12d04d-d42a-433e-879b-09d2a558d993)
-
-
-### 8. If you authorize the script successfully, you will see a pop up message below.
-
-![image](https://github.com/hungple/GLVN-database/assets/25112201/6614eda7-fcee-4feb-8fcd-346240ea5f1e)
-
-Notes:
-- If you don't see the message, just simply select menu item GLVN > "Create HK1 report cards" again.
-- Do not cancel the script or dismiss the script. You need to let it run until it finishes.
