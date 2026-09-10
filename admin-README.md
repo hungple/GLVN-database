@@ -129,9 +129,9 @@ All other spreadsheets automatically import data from the master spreadsheet or 
 **Note:** The examples below use GL1A, but the same data flow applies to all GL and VN classes.
 
 
-## Class Spreadsheets (GLxx/VNxx)
+### Class Spreadsheets (GLxx/VNxx) Data Flow
 
-### GLxx/VNxx Data Flow
+
 
 ```mermaid
 flowchart LR
@@ -152,23 +152,29 @@ flowchart LR
 ```
 
 
-## Student Lists / First communion / Confirmation
 
-### Student Lists
+### Student Lists Data Flow
 
-students-master.Std_zzz
-        ↓
-students-master.students
-        ↓
-students-extra.students-import
-        ↓
-students-extra.students-mini
-students-extra.students-wide
-students-extra.students-registration
 
-#### First Eucharist
 
-## First Eucharist Data Flow
+```mermaid
+flowchart LR
+    A["students-master<br/>Std_zzz"]
+    B["students-master<br/>students"]
+    C["students-extra<br/>students-import"]
+    D["students-extra<br/>students-mini"]
+    E["students-extra<br/>students-wide"]
+    F["students-extra<br/>students-registration"]
+
+    A --> B
+    B --> C
+    C --> D
+    C --> E
+    C --> F
+```
+
+### First Eucharist / Confirmation Data Flow
+
 
 ```mermaid
 flowchart LR
@@ -182,9 +188,8 @@ flowchart LR
     C --> D
 ```
  
-#### Final Grade Calculation
+### Final Grade Calculation Data Flow
 
-## Final Grade Calculation
 
 ```mermaid
 flowchart LR
@@ -202,7 +207,7 @@ GLVN → Save Student Final Points
 
 
  
-#### Honor Roll
+### Honor Roll Data Flow
 
 ```mermaid
 flowchart LR
@@ -221,4 +226,4 @@ flowchart LR
 ```
 The same process applies to all VN classes.
 
-- `GL1A`.`honor-roll` -> `students-extra`.`honor-gl-import` -> `students-extra`.`honor-gl-1`, `honor-gl-2`, `honor-gl-3`, `honor-gl-4`. The same applies to VN classes as well.
+
