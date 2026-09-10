@@ -161,10 +161,10 @@ flowchart LR
 flowchart LR
     A["students-master<br/>Std_zzz"]
     B["students-master<br/>students"]
-    C["students-extra<br/>students-import"]
-    D["students-extra<br/>students-mini"]
-    E["students-extra<br/>students-wide"]
-    F["students-extra<br/>students-registration"]
+    C["students-addition<br/>students-import"]
+    D["students-addition<br/>students-mini"]
+    E["students-addition<br/>students-wide"]
+    F["students-addition<br/>students-registration"]
 
     A --> B
     B --> C
@@ -180,8 +180,8 @@ flowchart LR
 flowchart LR
     A["students-master<br/>Std_zzz"]
     B["students-master<br/>eucharist"]
-    C["students-extra<br/>eucharist-import"]
-    D["students-extra<br/>eucharist-certificates"]
+    C["students-addition<br/>eucharist-import"]
+    D["students-addition<br/>eucharist-certificates"]
 
     A --> B
     B --> C
