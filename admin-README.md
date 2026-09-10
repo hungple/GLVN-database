@@ -74,22 +74,8 @@ Note: Although this task is categorized as Expert, the source code is relatively
 3. Maintain the source code repository:
    `https://github.com/hungple/GLVN-database`
 
-## III. Authorizing Google apps script
 
-Google may occasionally ask you to authorize or trust the Google Apps Script used by the GLVN spreadsheets.
-
-To authorize the script, either:
-
-Follow the instructions here:
-[https://github.com/hungple/GLVN-database/blob/main/authorize-google-app-script.md](https://github.com/hungple/GLVN-database/blob/main/authorizing-google-app-script.md)
-
-or
-
-Watch the first half of this video:
-https://www.youtube.com/watch?v=4sFTQ9UAtuo
-
-
-## IV. Copying source code to Google spreadsheets
+## III. Copying source code to Google spreadsheets
 
 Each GLVN spreadsheet displays a `Release Date` in the `GLVN` menu.
 
