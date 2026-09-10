@@ -1,15 +1,15 @@
 
-# I. Administrator's responsibilities
+## I. Administrator's responsibilities
 
-## 1. Assist Teachers (Beginner)
+### 1. Assist Teachers (Beginner)
 
 Help teachers use the GLVN class spreadsheets. Administrators should not generate report cards on behalf of teachers. If a teacher prefers not to use Google Sheets, provide blank report cards for manual completion.
 
-## 2. Manage Student Registration (Beginner)
+### 2. Manage Student Registration (Beginner)
 
 Register new students during the registration period and update student information as needed (for example, email addresses). Keeping email addresses up to date helps prevent bounced emails when teachers send report cards.
  
-## 3. Share or Remove Access to Class Folders (Intermediate)
+### 3. Share or Remove Access to Class Folders (Intermediate)
 
 Share or unshare class folders and spreadsheets with teachers.
 
@@ -22,24 +22,24 @@ Select GLVN → Share Classes.
 
 Note: The first time you use a GLVN menu item, Google will ask you to authorize the Google Apps Script. See Section VI for instructions.
 
-## 4. Prepare for a New School Year (Intermediate)
+### 4. Prepare for a New School Year (Intermediate)
 
 Run the six annual administrator steps in the students-master spreadsheet.
 
 These six steps should be performed only once after the current school year has ended and before student registration begins for the new school year.
  
-## 5. Test All Class Spreadsheets (Intermediate)
+### 5. Test All Class Spreadsheets (Intermediate)
 
 Test all GLVN menu functions before teachers begin entering student data.
 
 Testing early helps identify and fix issues before data is entered, reducing the risk of data correction later.
 
-## 6. Update Spreadsheet Source Code (Advanced)
+### 6. Update Spreadsheet Source Code (Advanced)
 
 Maintain the source code for the following spreadsheets:
 
 students-master
-students-extra
+students-addition
 class-library
 
 The class-library code is shared by all class spreadsheets. Occasionally, Google does not refresh the library correctly. When this happens, administrators must manually copy the updated source code into every class spreadsheet.
@@ -50,7 +50,7 @@ https://github.com/hungple/GLVN-database
 
 See Section VII for instructions on copying the source code.
  
-## 7. Create New GL or VN Classes (Advanced)
+### 7. Create New GL or VN Classes (Advanced)
 
 Create new class spreadsheets such as GLxC, VNxC, or GL9A (Post-Confirmation).
 
@@ -60,21 +60,21 @@ Update all spreadsheet IDs and configuration values accordingly.
 
 See Section VIII for detailed instructions.
 
-## 8. Become a GLVN Database Owner (Expert)
+### 8. Become a GLVN Database Owner (Expert)
 
 Assume ownership of the GLVN database and spreadsheets.
 
 Note: Although this task is categorized as Expert, the source code is relatively straightforward for anyone with software engineering or programming experience.
  
 
-# II. Owner’s responsibilities:
+## II. Owner’s responsibilities:
  
 1. Monitor activity across all GLVN spreadsheets.
 2. Maintain spreadsheet formulas, functions, formatting, and data integrity.
 3. Maintain the source code repository:
    `https://github.com/hungple/GLVN-database`
 
-# III. Authorizing Google apps script
+## III. Authorizing Google apps script
 
 Google may occasionally ask you to authorize or trust the Google Apps Script used by the GLVN spreadsheets.
 
@@ -89,23 +89,23 @@ Watch the first half of this video:
 https://www.youtube.com/watch?v=4sFTQ9UAtuo
 
 
-# IV. Copying source code to Google spreadsheets
+## IV. Copying source code to Google spreadsheets
 
 Each GLVN spreadsheet displays a `Release Date` in the `GLVN` menu.
 
 If the release date in your spreadsheet is older than the release date in the GitHub source code, you should update the spreadsheet by copying the latest source code.
 
-## For students-master and students-addition
+### 1. students-master and students-addition
 
 Copy the corresponding source code directly into the Apps Script editor.
 
-## For Class Spreadsheets (GL1A, VN1A, etc.)
+### 2. Class Spreadsheets (GL1A, VN1A, etc.)
 
 Normally, you only need to copy `class-library.gs` into the `class-library` spreadsheet because all class spreadsheets use this shared library.
 
 However, if the shared library is not refreshed properly, you must also copy the updated source code into each individual class spreadsheet.
 
-## To copy the source code
+### To copy the source code
 1. Open the source code in GitHub.
 2. Select all the code (Ctrl+A) and copy it (Ctrl+C). Alternatively, click Raw, then press Ctrl+A followed by Ctrl+C.
 3. Open the target Google spreadsheet.
@@ -118,7 +118,7 @@ However, if the shared library is not refreshed properly, you must also copy the
 10. Return to the spreadsheet and refresh your browser.
 
 
-# V. Dataflow - How the Spreadsheets Are Connected
+## V. Dataflow - How the Spreadsheets Are Connected
  
 Although the GLVN database contains many spreadsheets, student information is maintained primarily in the `students-master` spreadsheet.
 
@@ -129,7 +129,7 @@ All other spreadsheets automatically import data from the master spreadsheet or 
 **Note:** The examples below use GL1A, but the same data flow applies to all GL and VN classes.
 
 
-### Class Spreadsheets (GLxx/VNxx) Data Flow
+### 1. Class Spreadsheets (GLxx/VNxx) Data Flow
 
 
 
@@ -153,7 +153,7 @@ flowchart LR
 
 
 
-### Student Lists Data Flow
+### 2. Student Lists Data Flow
 
 
 
@@ -173,7 +173,7 @@ flowchart LR
     C --> F
 ```
 
-### First Eucharist / Confirmation Data Flow
+### 3. First Eucharist / Confirmation Data Flow
 
 
 ```mermaid
@@ -188,7 +188,7 @@ flowchart LR
     C --> D
 ```
  
-### Final Grade Calculation Data Flow
+### 4. Final Grade Calculation Data Flow
 
 
 ```mermaid
@@ -207,7 +207,7 @@ GLVN → Save Student Final Points
 
 
  
-### Honor Roll Data Flow
+### 5. Honor Roll Data Flow
 
 ```mermaid
 flowchart LR
