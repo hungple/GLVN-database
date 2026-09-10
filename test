@@ -1,4 +1,4 @@
-var RELEASE = "20260824"
+var RELEASE = "20250725"
 
 // std-main
 var idCol               = 1;  
@@ -1033,19 +1033,6 @@ function setupGLSxVNSxClassesImpl2(sheetName) {
   }
 }
 
-
-
-
-
-function cloneClassesUsingGL1AorVN1A() {
-  var glClassTemplateId = getStr("GL1A_SPREADSHEET_ID");
-  var vnClassTemplateId = getStr("VN1A_SPREADSHEET_ID");
-
-  cloneClassesUsingGL1AorVN1AImpl2("gl-classes", glClassTemplateId);
-  cloneClassesUsingGL1AorVN1AImpl2("vn-classes", vnClassTemplateId);
-}
-
-
 function cloneClassesUsingGL1AorVN1AImpl2(sheetName, templateId) {
   
   var ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -1400,4 +1387,3 @@ function updateStudentsExtraSpreadSheet(sheetName, classId, cellRow) {
   var hrCell  = hrRange.getCell(((cellRow-1)*MAX_HONOR_ROLL)+1, 2);
   hrCell.setValue(imptStr);
 }
-
