@@ -134,7 +134,7 @@ All other spreadsheets automatically import data from the master spreadsheet or 
 ### GLxx/VNxx Data Flow
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["students-master<br/>Std_zzz"]
     B["students-master<br/>studentsclass"]
     C["students-master<br/>GL1A"]
@@ -168,33 +168,39 @@ students-extra.students-registration
 
 #### First Eucharist
 
-students-master.Std_zzz
-        ↓
-students-master.eucharist
-        ↓
-students-extra.eucharist-import
-        ↓
-students-extra.eucharist-certificates
+## First Eucharist Data Flow
 
-The same process applies to `Confirmation`.
+```mermaid
+flowchart LR
+    A["students-master<br/>Std_zzz"]
+    B["students-master<br/>eucharist"]
+    C["students-extra<br/>eucharist-import"]
+    D["students-extra<br/>eucharist-certificates"]
 
-- `students-master`.`Std_zzz` -> `students-master`.`students` -> `students-extra`.`students-import` -> `students-extra`.`students-mini`, `students-extra`.`students-wide`, `students-extra`.`students-registration`. 
-- `students-master`.`Std_zzz` -> `students-master`.`eucharist` -> `students-extra`.`eucharist-import` -> `students-extra`.`eucharist-certificates`. The same applies to confirmation as well.
+    A --> B
+    B --> C
+    C --> D
+```
  
 #### Final Grade Calculation
 
-GL1A.grades (Column F)
-        ↓
-students-master.GL1A (Column P)
-        ↓
-students-master.Std_zzz
-(Columns AG and AH)
+## Final Grade Calculation
+
+```mermaid
+flowchart LR
+    A["GL1A<br/>grades<br/>(Column F)"]
+    B["students-master<br/>GL1A<br/>(Column P)"]
+    C["students-master<br/>Std_zzz<br/>(Columns AG & AH)"]
+
+    A -->|Save Student Final Points| B
+    B --> C
+```
 
 To save the final scores, select:
 
 GLVN → Save Student Final Points
 
-- `GL1A`.`grades[column F]` -> `students-master`.`GL1A[column P]` ->  `students-master`.`Std_zzz[column AG and AH]` (by selecting GLVN menu item > Save student final points )
+
  
 #### Honor Roll
 
