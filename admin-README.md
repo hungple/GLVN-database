@@ -130,7 +130,25 @@ All other spreadsheets automatically import data from the master spreadsheet or 
 
 
 #### Class Spreadsheets (GLxx/VNxx)
+
+## Honor Roll Data Flow
+
 ```mermaid
+flowchart LR
+    A["GL1A<br/>honor-roll"]
+    B["students-extra<br/>honor-gl-import"]
+    C["honor-gl-1"]
+    D["honor-gl-2"]
+    E["honor-gl-3"]
+    F["honor-gl-4"]
+
+    A --> B
+    B --> C
+    B --> D
+    B --> E
+    B --> F
+```
+
 students-master.Std_zzz
         ↓
 students-master.studentsclass
@@ -142,7 +160,7 @@ GL1A.contacts
 GL1A.attendance-HK1
 GL1A.attendance-HK2
 GL1A.grades
-```
+
 - `students-master`.`Std_zzz` -> `students-master`.`studentsclass` -> `students-master`.`GL1A` -> `GL1A`.`contacts` -> `GL1A`.`attendance-HK1`, `GL1A`.`attendance-HK2`, and `GL1A`.`graces`
  
 #### Student Lists / First communion / Confirmation
