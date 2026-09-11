@@ -48,13 +48,14 @@ The secondary data is linked to the primary data `by row number`. Once teachers 
 
 For this reason, please follow these rules:
 
-1. After teachers begin entering data into their class spreadsheets, administrators must not add, remove, or reorder students in the students-master spreadsheet.
-2. After teachers begin entering data, administrators should not change student names. For example, do not add Vietnamese tone marks to student names after the school year has started.
-3. Student names should not contain Vietnamese tone marks.
-4. Dates must use the format MM/DD/YYYY.
-5. Phone numbers should use the format 408-123-4567.
-5. Email addresses must be entered in lowercase.
- 
+1. **Do not delete or modify any files that you do not own.** If you need your own version, make a copy of the spreadsheet instead. Please note that copied spreadsheets are not the official master copies and will quickly become out of sync with the GLVN database. Changes made to your copy will not be reflected in the master spreadsheets, and updates to the master spreadsheets will not appear in your copy.
+2. After teachers begin entering data into their class spreadsheets, administrators must not add, remove, or reorder students in the students-master spreadsheet.
+3. After teachers begin entering data, administrators should not change student names. For example, do not add Vietnamese tone marks to student names after the school year has started.
+4. Student names should not contain Vietnamese tone marks.
+5. Dates must use the format MM/DD/YYYY.
+6. Phone numbers should use the format 408-123-4567.
+7. Email addresses must be entered in lowercase.
+
 
  
 
