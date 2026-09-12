@@ -70,7 +70,7 @@ If Google repeatedly asks you to authorize the GL1A-app or VN1A-app script, you 
 To remove the permission previously granted in Section I, follow these steps:
 
 - Click your `Google profile picture`.
-- 
+
 <p align="center">
 <img width="437" height="422" alt="ss1" src="https://github.com/user-attachments/assets/9ff704f6-a21e-4de9-b032-852faeec0b87" />
 </p>
