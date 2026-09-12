@@ -1,5 +1,15 @@
+# GLVN Administrator Guide
 
-## I. Administrator's responsibilities
+
+## Table of Contents
+
+- [I. Administrator Responsibilities](#i-administrator-responsibilities)
+- [II. Owner Responsibilities](#ii-owner-responsibilities)
+- [III. Copying source code to Google spreadsheets](#iii-copying-source-code-to-google-spreadsheets)
+- [IV. Dataflow](#iv-dataflow)
+
+  
+## I. Administrator Responsibilities
 
 ### 1. Assist Teachers (Beginner)
 
@@ -67,7 +77,7 @@ Assume ownership of the GLVN database and spreadsheets.
 Note: Although this task is categorized as Expert, the source code is relatively straightforward for anyone with software engineering or programming experience.
  
 
-## II. Owner’s responsibilities:
+## II. Owner Responsibilities
  
 1. Monitor activity across all GLVN spreadsheets.
 2. Maintain spreadsheet formulas, functions, formatting, and data integrity.
