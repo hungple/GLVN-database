@@ -93,6 +93,7 @@ Enter `x` for each row of students if you want to generate report card. The repo
 
 
 Enter `e` for each row of students if you want to generate and email report card. The report cards can be found in `GL1A-Report-Cards` folder. The emails and report cards can be found in your `sent` folder.
+<br>
 <img width="879" alt="image" src="https://github.com/hungple/GLVN-database/assets/25112201/ca646bbb-a705-4883-800e-76af80e42434">
 
 After entering `x` or `e` into column Action, select GLVN menu > Create HK1/HK2 Report Cards
@@ -100,7 +101,7 @@ After entering `x` or `e` into column Action, select GLVN menu > Create HK1/HK2 
 If you have not generated report cards recently, Google will ask you to authorize the script.
 
 If you are able to run the script, a message `Running script` is poped up as shown below. The message will be disappeared when the script is completed.
-
+<br>
 <img width="477" alt="image" src="https://github.com/hungple/GLVN-database/assets/25112201/9f91cf7b-d88a-4c38-8e82-665ec105c5a5">
 
 #### Note:
