@@ -12,36 +12,42 @@ From time to time, Google may ask you to authorize or trust the Google Apps Scri
 <p align="center">
 <img width="467" height="181" alt="s1" src="https://github.com/user-attachments/assets/3e5fe91f-4ed4-4daf-89b9-b6ec30984138" />
 </p>
+
 - Click `Ok`.
 
 <br><br>
 <p align="center">
 <img width="652" height="788" alt="s2" src="https://github.com/user-attachments/assets/85ac8d15-d336-41c3-81ed-77db1bc258f4" />
 </p>
+
 - Select the Google account you want to use to send report cards, or click Use another account if necessary.
 
 <br><br>
 <p align="center">
 <img width="652" height="788" alt="s3" src="https://github.com/user-attachments/assets/ebf75788-cb4f-49ef-bf1b-9da3eae9f05b" />
 </p>
+
 - Click `Advanced`.
 
 <br><br>
 <p align="center">
 <img width="652" height="788" alt="s4" src="https://github.com/user-attachments/assets/475e8679-b022-4e42-80e0-04e150603cef" />
 </p>
+
 - Click `Go to GL1A-app (unsafe)`. For VN classes, click `Go to VN1A-app (unsafe)`.
 
 <br><br>
 <p align="center">
 <img width="650" height="788" alt="s5" src="https://github.com/user-attachments/assets/6f60bf80-2cac-42c5-9c40-797e045d6765" />
 </p>
+
 - Click `Continue`.
 
 <br><br>
 <p align="center">
 <img width="1053" height="1008" alt="s6" src="https://github.com/user-attachments/assets/7cc40168-fbbb-40c4-b0a0-db0edf356cb8" />
 </p>
+
 - Select the `Select all` checkbox to grant access to all required files and folders.
 - Click `Continue`.
 `Important:` You must grant permission to all requested files and folders. Otherwise, the application will not function correctly.
@@ -50,9 +56,11 @@ From time to time, Google may ask you to authorize or trust the Google Apps Scri
 
 #### Note:
 If no pop-up window appears after selecting a GLVN menu item, simply select the menu item again.
+
 <p align="center">
 <img width="477" alt="image" src="https://github.com/hungple/GLVN-database/assets/25112201/9f91cf7b-d88a-4c38-8e82-665ec105c5a5">
 </p>
+
 Once you have successfully completed the authorization process, Google should not ask you to authorize the script again unless the permissions are revoked or the script changes.
 
 
@@ -62,6 +70,7 @@ If Google repeatedly asks you to authorize the GL1A-app or VN1A-app script, you 
 To remove the permission previously granted in Section I, follow these steps:
 
 - Click your `Google profile picture`.
+- 
 <p align="center">
 <img width="437" height="422" alt="ss1" src="https://github.com/user-attachments/assets/9ff704f6-a21e-4de9-b032-852faeec0b87" />
 </p>
