@@ -1,8 +1,16 @@
-# How to send report cards
-This document is for teachers who teach any GL and/or VN class.
+# GLVN Teacher Guide
+
+## Table of Contents
+
+- [I. Accessing GLVN Spreadsheets](#i-accessing-glvn-spreadsheets)
+- [II. Directory Overview](#ii-directory-overview)
+- [III. Class Spreadsheet Overview](#iii-class-spreadsheet-overview)
+- [IV. Entering Grade Points, Attendance and Comments](#iv-entering-grade-points-,-attendance-and-comments)
+- [V. Authorizing Google Apps Script](#v-authorizing-google-apps-script)
 
 
-### I. Accessing GLVN spreadsheets
+
+## I. Accessing GLVN spreadsheets
 
 1. Enter https://drive.google.com/ into the address bar of your browser
 2. Select `Shared with me`
@@ -11,17 +19,17 @@ This document is for teachers who teach any GL and/or VN class.
 <img width="588" alt="image" src="https://github.com/hungple/GLVN-database/assets/25112201/7520c410-6e03-41da-8e30-f45a9d8a8c11">
 
 
-### II. Directory overview
+## II. Directory Overview
 In this section, GL1A is used as your class.
 
 #### GL1A-Report-Cards: 
-A directory to hold report cards. When you generate and email resport cards, the report cards will be generated in this folder. You don't need to save report cards if you send report cards to the parents. In case you need to save the report cards, please save them in your own Google drive or somewhere. The old report cards will be deleted after the school year ends.
+A directory to hold report cards. When you generate and email report cards, the report cards will be generated in this folder. You don't need to save report cards if you send report cards to the parents. In case you need to save the report cards, please save them in your own Google drive or somewhere. The old report cards will be deleted after the school year ends.
 
 #### GL1A:
 A spreadsheet to hold your student information.
 
 
-### III. Spreadshet overview
+## III. Class Spreadsheet Overview
 
 #### contacts: 
 Contains contact information for your students. This sheet is read only. If you want to change anything, please contact your school administrators.
@@ -46,7 +54,7 @@ Lists students in order from the top score to lowest score. As a result, you can
 
 
 
-### IV. Entering grade points, attendance and comments
+## IV. Entering grade points, attendance and comments
  
 
 #### Part1 / Part2
@@ -100,7 +108,7 @@ If you are able to run the script, a message `Running script` is poped up as sho
 - If you received any bounced email, check with the parent to get the correct email. Please contact your school administrators to update the email address.
 - For the first time or from time to time, Google might ask you to authorize the script. Please follow section V. to authorize the script.
 
-### V. Authorizing Google apps script
+## V. Authorizing Google Apps Script
 
 Google may occasionally ask you to authorize or trust the Google Apps Script used by the GLVN spreadsheets.
 
@@ -109,9 +117,6 @@ To authorize the script, either:
 Follow the instructions here:
 [https://github.com/hungple/GLVN-database/blob/main/authorize-google-app-script.md](https://github.com/hungple/GLVN-database/blob/main/authorizing-google-app-script.md)
 
-or
 
-Watch the first half of this video:
-https://www.youtube.com/watch?v=4sFTQ9UAtuo
 
 
