@@ -1,5 +1,13 @@
-### I. Authorizing Google Apps Script
+# Authorizing Google Apps Script
 
+
+## Table of Contents
+
+- [I. Granting Permission to Run Google Apps Script](#i-granting-permission-to-run-google-apps-script)
+- [II. Removing Permission to Run Google Apps Script](#ii-removing-permission-to-run-google-apps-script)
+
+
+## I. Granting Permission to Run Google Apps Script
 From time to time, Google may ask you to authorize or trust the Google Apps Script used by the GLVN spreadsheets. To authorize the script, follow the steps below.
 
 <img width="467" height="181" alt="s1" src="https://github.com/user-attachments/assets/3e5fe91f-4ed4-4daf-89b9-b6ec30984138" />
@@ -47,7 +55,7 @@ If no pop-up window appears after selecting a GLVN menu item, simply select the 
 Once you have successfully completed the authorization process, Google should not ask you to authorize the script again unless the permissions are revoked or the script changes.
 
 
-### II. Removing permission to run GL1A-app/VN1A-app Google apps script 
+## II. Removing Permission to Run Google Apps Script 
 If Google repeatedly asks you to authorize the GL1A-app or VN1A-app script, you may need to remove the existing permission and authorize it again.
 
 To remove the permission previously granted in Section I, follow these steps:
