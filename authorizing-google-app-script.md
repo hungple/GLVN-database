@@ -60,21 +60,25 @@ To remove the permission previously granted in Section I, follow these steps:
 
 <br><br>
 
-<img width="449" height="595" alt="ss2" src="https://github.com/user-attachments/assets/a8856ff0-8b92-4184-8bc8-6f254139d715" />
+<img width="515" height="694" alt="image" src="https://github.com/user-attachments/assets/294c85e3-09e8-4810-bd73-83d62b7f1aab" />
 
-- Select `Third-party connections`
+
+- Select `Security & sign-in`
 
 <br><br>
 
-<img width="863" height="675" alt="ss3" src="https://github.com/user-attachments/assets/4922f270-c5ff-4aa1-83cf-e88c857a2b80" />
+- Roll down until you see `Your linked apps`. If you see `GLxx-app` or `VNxx-app`, go to the next step. If not, click `See all linked apps`.
 
-- Roll down and expand `GL1A-app` or `VN1A-app`
+<img width="445" height="883" alt="image" src="https://github.com/user-attachments/assets/d725964a-afa4-4663-82f9-cfd483bb36fd" />
+
+
+- Click `GLxx-app` or `VNxx-app`
 
 <br><br>
 
 <img width="879" height="788" alt="ss4" src="https://github.com/user-attachments/assets/52261839-3e44-40a2-bfc1-237263089e70" />
 
-- Click 'Delete all connections you have with GL1A-app` or `VN1A-app`
+- Click 'Delete all connections you have with GLxx-app` or `VNxx-app`
 
 <br><br>
 
