@@ -1,6 +1,15 @@
 # GLVN-database
 
-### I. Features
+
+## Table of Contents
+
+- [I. Features](#i-features)
+- [II. Accessing GLVN Spreadsheets](#ii-accessing-glvn-spreadsheets)
+- [III. GLVN Spreadsheet Overview](#iii-glvn-spreadsheet-overview)
+- [IV. Important Notes](#iv-important-notes)
+
+  
+## I. Features
 1. Student registration
 2. Share or unshare spreadsheets with teachers. Teachers can view only their own classes, not those of other teachers.
 3. Generate and email report cards for Semester 1 (HK1) and Semester 2 (HK2)
@@ -9,7 +18,7 @@
 6. Generate award certificates
 7. Generate First Eucharist and Confirmation certificates
 
-### II. Accessing GLVN spreadsheets
+## II. Accessing GLVN Spreadsheets
 
 1. Open your web browser and go to https://drive.google.com/
 2. Select `Shared with me` from the left navigation panel.
@@ -18,7 +27,7 @@
    
 <img width="649" height="533" alt="image" src="https://github.com/user-attachments/assets/10448972-4be3-4b6d-b2b0-929dd6279e56" />
 
-### III. GLVN spreadsheets Overview
+## III. GLVN Spreadsheets Overview
 
 <img width="761" height="548" alt="image" src="https://github.com/user-attachments/assets/6c4374de-664d-4a1d-b700-e21c621f70a1" />
 
@@ -35,7 +44,7 @@
    Contains spreadsheets for students from previous school years.
 
    
-### IV. Important Notes
+## IV. Important Notes
 
 The `GLVN-database` is not a traditional database. Instead, it is a collection of Google spreadsheets that are linked together. Because of this design, there are several limitations that administrators and teachers must understand and follow.
 
