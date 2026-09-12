@@ -5,7 +5,7 @@
 - [I. Accessing GLVN Spreadsheets](#i-accessing-glvn-spreadsheets)
 - [II. Directory Overview](#ii-directory-overview)
 - [III. Class Spreadsheet Overview](#iii-class-spreadsheet-overview)
-- [IV. Entering Grade Points, Attendance and Comments](#iv-entering-grade-points-,-attendance-and-comments)
+- [IV. Entering Grade Points, Attendance and Comments](#iv-entering-grade-points-attendance-and-comments)
 - [V. Authorizing Google Apps Script](#v-authorizing-google-apps-script)
 
 
