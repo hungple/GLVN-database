@@ -84,8 +84,8 @@ This is absence column. This column is optional. The valid value is from 0 to 20
 This is comment column. This column is optional. However, you should write very meaningful messages to your students. If you leave blank, it will look very bad in the report cards.
 
 #### Action
-This column is used with the `GLVN` menu items 
-<br>
+This column is used with the `GLVN` menu items<br/>
+
 <img width="410" alt="image" src="https://github.com/hungple/GLVN-database/assets/25112201/eb38f3b7-9caa-4363-a2db-7a89dd77424c">
 
 Enter `x` for each row of students if you want to generate report card. The report cards can be found in `GL1A-Report-Cards` folder.
