@@ -6,7 +6,7 @@
 - [I. Administrator Responsibilities](#i-administrator-responsibilities)
 - [II. Owner Responsibilities](#ii-owner-responsibilities)
 - [III. Copying source code to Google spreadsheets](#iii-copying-source-code-to-google-spreadsheets)
-- [IV. Dataflow](#iv-dataflow)
+- [IV. Dataflow How the Spreadsheets Are Connected](#iv-dataflow-how-the-spreadsheets-are-connected)
 
   
 ## I. Administrator Responsibilities
