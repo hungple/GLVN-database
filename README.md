@@ -24,13 +24,13 @@
 2. Select `Shared with me` from the left navigation panel.
 3. Click the `Type` drop-down menu and select `Folders`.
 4. Locate and open the `GLVN-xxx-database` folder
-   
+<p align="center">   
 <img width="649" height="533" alt="image" src="https://github.com/user-attachments/assets/10448972-4be3-4b6d-b2b0-929dd6279e56" />
-
+</p>
 ## III. GLVN Spreadsheet Overview
-
+<p align="center">
 <img width="761" height="548" alt="image" src="https://github.com/user-attachments/assets/6c4374de-664d-4a1d-b700-e21c621f70a1" />
-
+</p>
 
 #### 1-students-master
    Contains the master spreadsheet with all student records. Only administrators have access to this folder. This spreadsheet also includes class information.
