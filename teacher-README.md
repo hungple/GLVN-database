@@ -86,22 +86,22 @@ This is comment column. This column is optional. However, you should write very 
 #### Action
 This column is used with the `GLVN` menu items<br/>
 
-<img width="410" alt="image" src="https://github.com/hungple/GLVN-database/assets/25112201/eb38f3b7-9caa-4363-a2db-7a89dd77424c">
+<img width="410" alt="image" src="https://github.com/hungple/GLVN-database/assets/25112201/eb38f3b7-9caa-4363-a2db-7a89dd77424c"><br/>
 
 Enter `x` for each row of students if you want to generate report card. The report cards can be found in `GL1A-Report-Cards` folder.
 ![image](https://github.com/hungple/GLVN-database/assets/25112201/80ff9c61-e269-49d6-8037-af353fa700b5)
 
 
-Enter `e` for each row of students if you want to generate and email report card. The report cards can be found in `GL1A-Report-Cards` folder. The emails and report cards can be found in your `sent` folder.
-<br>
-<img width="879" alt="image" src="https://github.com/hungple/GLVN-database/assets/25112201/ca646bbb-a705-4883-800e-76af80e42434">
+Enter `e` for each row of students if you want to generate and email report card. The report cards can be found in `GL1A-Report-Cards` folder. The emails and report cards can be found in your `sent` folder.<br/>
+
+<img width="879" alt="image" src="https://github.com/hungple/GLVN-database/assets/25112201/ca646bbb-a705-4883-800e-76af80e42434"><br/>
 
 After entering `x` or `e` into column Action, select GLVN menu > Create HK1/HK2 Report Cards
 
 If you have not generated report cards recently, Google will ask you to authorize the script.
 
-If you are able to run the script, a message `Running script` is poped up as shown below. The message will be disappeared when the script is completed.
-<br>
+If you are able to run the script, a message `Running script` is poped up as shown below. The message will be disappeared when the script is completed.<br/>
+
 <img width="477" alt="image" src="https://github.com/hungple/GLVN-database/assets/25112201/9f91cf7b-d88a-4c38-8e82-665ec105c5a5">
 
 #### Note:
