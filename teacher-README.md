@@ -81,6 +81,7 @@ Even though this column can accept a value up to 20, it does not mean that you h
 <p align="center">
 <img width="209" alt="image" src="https://github.com/hungple/GLVN-database/assets/25112201/b420d9a4-88ed-467b-9bae-bb14c75f4bef">
 </p>
+
 #### Absence1 / Absence2
 This is absence column. This column is optional. The valid value is from 0 to 20. If you leave this column blank, the script that generates report cards won't print out anything.
 
@@ -98,17 +99,21 @@ Enter `x` for each row of students if you want to generate report card. The repo
 </p>
 
 Enter `e` for each row of students if you want to generate and email report card. The report cards can be found in `GL1A-Report-Cards` folder. The emails and report cards can be found in your `sent` folder.<br/><br/>
+
 <p align="center">
 <img width="879" alt="image" src="https://github.com/hungple/GLVN-database/assets/25112201/ca646bbb-a705-4883-800e-76af80e42434"><br/>
 </p>
+
 After entering `x` or `e` into column Action, select GLVN menu > Create HK1/HK2 Report Cards
 
 If you have not generated report cards recently, Google will ask you to authorize the script.
 
 If you are able to run the script, a message `Running script` is poped up as shown below. The message will be disappeared when the script is completed.<br/><br/>
+
 <p align="center">
 <img width="477" alt="image" src="https://github.com/hungple/GLVN-database/assets/25112201/9f91cf7b-d88a-4c38-8e82-665ec105c5a5">
 </p>
+
 #### Note:
 - Before you send report cards to the parents, you should use the option `x` to generate report cards and review them before sending them to the parents.
 - If you received any bounced email, check with the parent to get the correct email. Please contact your school administrators to update the email address.
