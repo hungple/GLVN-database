@@ -65,6 +65,7 @@ To remove the permission previously granted in Section I, follow these steps:
 <p align="center">
 <img width="437" height="422" alt="ss1" src="https://github.com/user-attachments/assets/9ff704f6-a21e-4de9-b032-852faeec0b87" />
 </p>
+
 - Select `Manage your Google Account`
 
 <br><br>
@@ -87,11 +88,13 @@ To remove the permission previously granted in Section I, follow these steps:
 <p align="center">
 <img width="879" height="788" alt="ss4" src="https://github.com/user-attachments/assets/52261839-3e44-40a2-bfc1-237263089e70" />
 </p>
+
 - Click 'Delete all connections you have with GLxx-app` or `VNxx-app`
 
 <br><br>
 <p align="center">
 <img width="575" height="458" alt="ss5" src="https://github.com/user-attachments/assets/1e8fc9e7-0040-4981-bb79-78ec63a9a877" />
 </p>
+
 - Click `Confirm`.
 
