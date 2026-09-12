@@ -93,5 +93,5 @@ To remove the permission previously granted in Section I, follow these steps:
 <p align="center">
 <img width="575" height="458" alt="ss5" src="https://github.com/user-attachments/assets/1e8fc9e7-0040-4981-bb79-78ec63a9a877" />
 </p>
-- Click 'Confirm`.
+- Click `Confirm`.
 
