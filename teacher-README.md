@@ -16,8 +16,9 @@
 2. Select `Shared with me`
 3. If you can not see your class folder, you can search for your class folder in the search box.
 
+<p align="center">
 <img width="588" alt="image" src="https://github.com/hungple/GLVN-database/assets/25112201/7520c410-6e03-41da-8e30-f45a9d8a8c11">
-
+</p>
 
 ## II. Directory Overview
 In this section, GL1A is used as your class.
