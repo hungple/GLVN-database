@@ -48,9 +48,9 @@ From time to time, Google may ask you to authorize or trust the Google Apps Scri
 <img width="1053" height="1008" alt="s6" src="https://github.com/user-attachments/assets/7cc40168-fbbb-40c4-b0a0-db0edf356cb8" />
 </p>
 
-- Select the `Select all` checkbox to grant access to all required files and folders.
+- Select the `Select all` checkbox to grant access to all required files and folders. **Important:** You must grant permission to all requested files and folders. Otherwise, the application will not function correctly.
 - Click `Continue`.
-`Important:` You must grant permission to all requested files and folders. Otherwise, the application will not function correctly.
+
 
 <br><br>
 
