@@ -41,18 +41,20 @@ You can use this sheet to keep track of your student attendance. However, this s
 #### grades: 
 This is the most important sheet of the spreadsheet. You are required to enter grades/scores and all other needed information of students during the school year.
 
+<p align="center">
 <img width="740" alt="image" src="https://github.com/hungple/GLVN-database/assets/25112201/75e6e229-2f47-47bc-952d-5e82e66c9e28">
+</p>
 
 #### honor-roll: 
 Lists students in order from the top score to lowest score. As a result, the top students will be sent to the honor roll. In most of the cases, you are not required to change anything unless you want different students to receive different awards. If you want to change anything in this sheet, please let the director of your school know. 
-
+<p align="center">
 <img width="315" alt="image" src="https://github.com/hungple/GLVN-database/assets/25112201/cc483357-a75f-4f89-905f-8dbcff3f238b">
-
+</p>
 #### comment-review:
 Lists students in order from the top score to lowest score. As a result, you can review your comments easier.
-
+<p align="center">
 <img width="929" alt="image" src="https://github.com/hungple/GLVN-database/assets/25112201/1bc8d6c0-d40f-4219-9c59-f691cef9e2ba">
-
+</p>
 
 
 ## IV. Entering grade points, attendance and comments
@@ -75,9 +77,9 @@ This is extra credit column. This column is optional. The valid value is blank o
 
 #### Note:
 Even though this column can accept a value up to 20, it does not mean that you have to use this column. In fact, this column should be used for special cases only. If you give too many points for many students, there will be a lot of students can have a total point greater than 100 points but only limited top students can receive award certificates. For example, in the screen shot below, there are 4 students who have total score from 100 to 101.5; however, these students do not receive any award certificates. The parents of these students might ask why their child get perfect score (above 100) and not receive any award.
-
+<p align="center">
 <img width="209" alt="image" src="https://github.com/hungple/GLVN-database/assets/25112201/b420d9a4-88ed-467b-9bae-bb14c75f4bef">
-
+</p>
 #### Absence1 / Absence2
 This is absence column. This column is optional. The valid value is from 0 to 20. If you leave this column blank, the script that generates report cards won't print out anything.
 
@@ -86,25 +88,26 @@ This is comment column. This column is optional. However, you should write very 
 
 #### Action
 This column is used with the `GLVN` menu items<br/>
-
+<p align="center">
 <img width="410" alt="image" src="https://github.com/hungple/GLVN-database/assets/25112201/eb38f3b7-9caa-4363-a2db-7a89dd77424c"><br/>
-
+</p>
 Enter `x` for each row of students if you want to generate report card. The report cards can be found in `GL1A-Report-Cards` folder.<br/><br/>
+<p align="center">
 ![image](https://github.com/hungple/GLVN-database/assets/25112201/80ff9c61-e269-49d6-8037-af353fa700b5)
-
+</p>
 
 Enter `e` for each row of students if you want to generate and email report card. The report cards can be found in `GL1A-Report-Cards` folder. The emails and report cards can be found in your `sent` folder.<br/><br/>
-
+<p align="center">
 <img width="879" alt="image" src="https://github.com/hungple/GLVN-database/assets/25112201/ca646bbb-a705-4883-800e-76af80e42434"><br/>
-
+</p>
 After entering `x` or `e` into column Action, select GLVN menu > Create HK1/HK2 Report Cards
 
 If you have not generated report cards recently, Google will ask you to authorize the script.
 
 If you are able to run the script, a message `Running script` is poped up as shown below. The message will be disappeared when the script is completed.<br/><br/>
-
+<p align="center">
 <img width="477" alt="image" src="https://github.com/hungple/GLVN-database/assets/25112201/9f91cf7b-d88a-4c38-8e82-665ec105c5a5">
-
+</p>
 #### Note:
 - Before you send report cards to the parents, you should use the option `x` to generate report cards and review them before sending them to the parents.
 - If you received any bounced email, check with the parent to get the correct email. Please contact your school administrators to update the email address.
