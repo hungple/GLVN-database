@@ -50,6 +50,7 @@ Lists students in order from the top score to lowest score. As a result, the top
 <p align="center">
 <img width="315" alt="image" src="https://github.com/hungple/GLVN-database/assets/25112201/cc483357-a75f-4f89-905f-8dbcff3f238b">
 </p>
+
 #### comment-review:
 Lists students in order from the top score to lowest score. As a result, you can review your comments easier.
 <p align="center">
